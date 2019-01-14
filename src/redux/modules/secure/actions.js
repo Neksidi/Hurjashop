@@ -1,0 +1,1 @@
+export const STORE_SECURE = 'STORE_SECURE'

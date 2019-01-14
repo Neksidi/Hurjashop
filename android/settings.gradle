@@ -1,3 +1,3 @@
-rootProject.name = 'HurjaShopClient'
+rootProject.name = 'HurjaShop'
 
 include ':app'

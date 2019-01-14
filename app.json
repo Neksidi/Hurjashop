@@ -1,4 +1,5 @@
 {
-  "name": "HurjaShopClient",
-  "displayName": "HurjaShopClient"
+  "name": "HurjaShop",
+  "displayName": "Hurja Shop",
+  "orientation": "portrait"
 }
