@@ -1,44 +1,43 @@
 import React, { Component } from 'react'
-import Example1Stack from '../Stacks/Stack1/'
-import Example2Stack from '../Stacks/Stack2'
-import Example3Stack from '../Stacks/Stack3/'
+import HomeScreen from '../../screens/home'
+import SearchScreen from '../../screens/search'
+import ProfileScreen from '../../screens/profile'
 import {createBottomTabNavigator} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 const icon_size = 20;
 
-var Tab = createBottomTabNavigator({
+const Tab = createBottomTabNavigator({
+	Profile: {
+		screen: ProfileScreen,
+		navigationOptions: () => ({
+			secure: false,
+			tabBarIcon: ({tintColor}) => (
+				<FAIcon name='home' color={tintColor} size={icon_size} />
+			),
+			tabBarLabel: "Oma tili",
+		})
+	},
+	Home: {
+		screen: HomeScreen,
+		navigationOptions: () => ({
+			secure: false,
+			tabBarIcon: ({tintColor}) => (
+				<FAIcon name='home' color={tintColor} size={icon_size} />
+			),
+		})
+	},
 	Search: {
-		screen: Example1Stack,
+		screen: SearchScreen,
 		navigationOptions: () => ({
 			secure: false, 
 			tabBarIcon: ({tintColor}) => (
 				<FAIcon name='home' color={tintColor} size={icon_size} />
 			),
-			tabBarLabel: trans('navigation.search'),
+			tabBarLabel: "Haku",
 		})
 
 	},
-	Home: {
-		screen: Example2Stack,
-		navigationOptions: () => ({
-			secure: false,
-			tabBarIcon: ({tintColor}) => (
-				<FAIcon name='home' color={tintColor} size={icon_size} />
-			),
-			tabBarLabel: trans('navigation.home'),
-		})
-	},
-	Profile: {
-		screen: Example3Stack,
-		navigationOptions: () => ({
-			secure: false,
-			tabBarIcon: ({tintColor}) => (
-				<FAIcon name='home' color={tintColor} size={icon_size} />
-			),
-			tabBarLabel: trans('navigation.profile'),
-		})
-	}
 }, {
 	lazy: true,
 	initialRouteName: 'Home',
@@ -55,17 +54,12 @@ var Tab = createBottomTabNavigator({
 			fontSize: 15
 		},
 		inactiveTintColor: '#222',
-		activeTintColor: theme.color.highlight.main,
-		indicatorStyle: {
-			backgroundColor: theme.color.bg.main
-		},
 		style: {
 			paddingTop: 5,
-	  		backgroundColor: theme.color.bg.main
 		}
 	},
 	animationEnabled: true,
 	tabBarPosition: 'bottom'
 })
 
-export default Tab
+export default Tab;
