@@ -4,8 +4,8 @@ import SearchScreen from '../screens/search'
 import ProfileScreen from '../screens/profile'
 import {createStackNavigator, createDrawerNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-import DrawerScreen from '/Drawers/DrawerScreen';
-import Tab from '/Tab'
+import DrawerScreen from './Drawers/DrawerScreen';
+import Tab from './Tab'
 
 const DrawerNavigator = createDrawerNavigator({
 	Home: {

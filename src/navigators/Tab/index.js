@@ -4,7 +4,7 @@ import SearchScreen from '../../screens/search'
 import ProfileScreen from '../../screens/profile'
 import {createBottomTabNavigator} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-
+import { theme } from '../../styles/Global'
 const icon_size = 20;
 
 const Tab = createBottomTabNavigator({
@@ -53,9 +53,10 @@ const Tab = createBottomTabNavigator({
 		labelStyle: {
 			fontSize: 15
 		},
-		inactiveTintColor: '#222',
+		inactiveTintColor: '#FFFFFF',
 		style: {
 			paddingTop: 5,
+			backgroundColor:'#e80d0d'
 		}
 	},
 	animationEnabled: true,
