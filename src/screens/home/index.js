@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { addProduct } from '../../redux/shopactions'
 
-class Index extends Component {
+class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,15 +22,45 @@ class Index extends Component {
 	}
 
 	componentDidMount() {
-    }
+	}
+
 	render() {
 		return (
 			<View>
                 <Text>Welcome Home!</Text>
+				{
+          			this.props.products.possible.map((product, index) => {
+						const button = <Button
+              				key={ product }
+              				title={  product  }
+              				onPress={() =>
+								this.props.addProduct(index)
+              				}
+            			/>
+						return button;
+						})
+				}
+				<Text>{
+					this.props.products.current.map((product, index) => {
+						return <Text>
+							{product} { index }
+						</Text>
+					})
+				}</Text>
 			</View>
 		);
 	}
 }
 
-export default 
-(Index);
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+	  addProduct,
+	}, dispatch)
+  );
+
+const mapStateToProps = (state) => {
+	const { products } = state
+	return { products }
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

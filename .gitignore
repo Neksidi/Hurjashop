@@ -56,5 +56,5 @@ buck-out/
 *.jsbundle
 
 
-#Android Bundle
-index.android.bundle
+# Android Bundle
+android/app/src/main/assets/index.android.bundle

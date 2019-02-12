@@ -1,24 +1,12 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../modules/cart/actions'
+import Config from 'react-native-config'
 
-export const ADD_TO_CART_ACTION ={
-  type: ADD_TO_CART,
-}
+const PORT = Config.PORT;
+const BASE_URL = Config.BASE_URL
+export const WEB_URL   = BASE_URL + ":" + PORT + "/" + Config.WEB_URL;
+export const PH_URL    = BASE_URL + ":" + PORT + "/" + Config.PH_URL;
+export const AUTH_URL  = BASE_URL + ":" + PORT + "/" + Config.AUTH_URL;
+export const DB_URL    = BASE_URL + ":" + PORT + "/" + Config.DB_URL;
+export const POSTI_URL = BASE_URL + ":" + PORT + "/" + Config.POSTI_URL;
+export const MAIL_URL  = BASE_URL + ":" + PORT + "/" + Config.MAIL_URL;
 
-export const REMOVE_FROM_CART_ACTION ={
-  type: REMOVE_FROM_CART,
-  text: 'Decreace counter by one'
-}
 
-export const WEB_URL = "http://api.hurjashop.qs.fi:8082/api";
-export const PH_URL = "http://api.hurjashop.qs.fi:8082/ph";
-export const AUTH_URL = "http://api.hurjashop.qs.fi:8082/auth";
-export const DB_URL = "http://api.hurjashop.qs.fi:8082/base";
-export const POSTI_URL = "http://api.hurjashop.qs.fi:8082/posti";
-export const MAIL_URL = "http://api.hurjashop.qs.fi:8082/mail";
-
-//export const WEB_URL = "http://localhost:8082/api";
-//export const PH_URL = "http://localhost:8082/ph";
-//export const AUTH_URL = "http://localhost:8082/auth";
-//export const DB_URL = "http://localhost:8082/base";
-//export const POSTI_URL = "http://localhost:8082/posti";
-//export const MAIL_URL = "http://localhost:8082/mail";
