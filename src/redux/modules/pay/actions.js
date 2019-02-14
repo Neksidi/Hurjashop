@@ -1,1 +1,0 @@
-export const STORE_PAY_DATA = 'STORE_PAY_DATA'

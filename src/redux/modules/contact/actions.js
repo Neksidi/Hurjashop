@@ -1,5 +1,0 @@
-export const ADD_CONTACT = 'ADD_CONTACT'
-export const STORE_SHIPPING = 'STORE_SHIPPING'
-export const STORE_METHODS = 'STORE_METHODS'
-export const REMOVE_USER_DATA = 'REMOVE_USER_DATA'
-export const IS_LOGGED = 'IS_LOGGED'

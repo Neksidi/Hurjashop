@@ -1,1 +1,0 @@
-export const READ_PRODUCTS = 'READ_PRODUCTS'
