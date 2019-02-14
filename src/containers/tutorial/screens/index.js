@@ -29,6 +29,15 @@ class Home extends Component {
 
 	render() {
 		return (
+			/**
+			 * 
+			 * 
+			 * 
+			 * THIS WHOLE TUTORIAL FOLDER IS FOR REDUX EDUCATION PURPOSES.
+			 * YOU CAN REFACTOR THIS TO ANYTHING YOU WANT
+			 * 
+			 * 
+			 */
 			<View>
                 <Text>Welcome to Henq's redux tutorial!</Text>
 				{

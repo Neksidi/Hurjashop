@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import HomeScreen from '../../containers/home/screens'
-import SearchScreen from '../../containers/search/screens'
-import ProfileScreen from '../../containers/profile/screens'
+import HomeStack from '../stacks/homeTabStack'
+import SearchStack from '../stacks/searchTabStack'
+import ProfileStack from '../stacks/profileTabStack'
 import {createBottomTabNavigator} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-import { theme } from '../../app/styles/Global'
+import { theme } from '../../../app/styles/Global'
 const icon_size = 20;
 
 const Tab = createBottomTabNavigator({
 	Profile: {
-		screen: ProfileScreen,
+		screen: ProfileStack,
 		navigationOptions: () => ({
 			secure: false,
 			tabBarIcon: ({tintColor}) => (
@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator({
 		})
 	},
 	Home: {
-		screen: HomeScreen,
+		screen: HomeStack,
 		navigationOptions: () => ({
 			secure: false,
 			tabBarIcon: ({tintColor}) => (
@@ -28,7 +28,7 @@ const Tab = createBottomTabNavigator({
 		})
 	},
 	Search: {
-		screen: SearchScreen,
+		screen: SearchStack,
 		navigationOptions: () => ({
 			secure: false, 
 			tabBarIcon: ({tintColor}) => (
@@ -36,7 +36,6 @@ const Tab = createBottomTabNavigator({
 			),
 			tabBarLabel: "Haku",
 		})
-
 	},
 }, {
 	lazy: true,

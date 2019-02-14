@@ -17,7 +17,7 @@ class DrawerScreen extends Component {
     drawerLabel: 'Profile',
     drawerIcon: ({ tintColor }) => (
       <Image
-        source={require('../../assets/images/seppo.jpg')}
+        source={require('../../../assets/images/seppo.jpg')}
       />
     ),
   };
@@ -28,18 +28,19 @@ class DrawerScreen extends Component {
         <ScrollView>
           <View>
             <View>
-              <Text onPress={this.navigateToScreen('Home')}>
-                Home
-              </Text>
+              <Button 
+                title="Home"
+                onPress={this.navigateToScreen('Home')}>
+              </Button>
             </View>
             <View>
               <Text onPress={this.navigateToScreen('Payment')}>
-               Maksamaan
+                Maksamaan
               </Text>
             </View>
             <View>
               <Text onPress={this.navigateToScreen('Profile')}>
-              Mee profiiliin
+                Mee profiiliin
               </Text>
               <Button
                 onPress={() => this.props.navigation.goBack()}

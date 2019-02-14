@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-import Tab from '../tab'
-import MainNavigator from '../stacks'
-import DrawerScreen from '../drawers/drawerScreen' 
+import Tab from '../navigators/tab'
+import PaymentStack from '../navigators/stacks/paymentStack'
+import DrawerScreen from '../../containers/drawer/screens/drawerScreen' 
 // 
 
-const Drawer = createDrawerNavigator({
+const MainNavigator = createDrawerNavigator({
 	Tab: { screen: Tab },
-	Main: { screen: MainNavigator }
+	PaymentProcess: { screen: PaymentStack }
 },{
 	navigationOptions: {
 		header: null
@@ -26,6 +26,6 @@ const StackNavigator = createStackNavigator({
 });
 */
 
-const AppContainer = createAppContainer(Drawer);
 
-export default AppContainer;
+
+export default MainNavigator;

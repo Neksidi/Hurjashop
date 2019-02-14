@@ -1,9 +1,6 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { View, Text, Easing, Animated, ScrollView } from 'react-native'
-import HomeScreen from '../../containers/home/screens'
-import ProfileScreen from '../../containers/profile/screens'
-import PaymentScreen from '../../containers/payment/screens'
-import TutorialScreen from '../../containers/tutorial/screens'
+import SearchScreen from '../../../containers/search/screens'
 
 const transitionConfig = () => {
     return {
@@ -30,13 +27,10 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  Payment: {screen: PaymentScreen},
-  Profile: {screen: ProfileScreen},
-  Tutorial: {screen: TutorialScreen},
+  Search: {screen: SearchScreen}
 }, {
     transitionConfig,
-    initialRouteName: 'Home',
+    initialRouteName: 'Search',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#e94641',

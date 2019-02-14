@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import Navigation from './navigation/navigators'
+import Navigation from './navigation'
 import Reducers from './app/redux/reducers'
-import Tab from './navigation/tab'
+
 //import fetchMiddleware from './redux/middleware/fetchMiddleware'
 
 const store = createStore(Reducers);

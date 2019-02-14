@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
 
 
-class Profile extends Component {
+class CustomerOrders extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -16,13 +16,7 @@ class Profile extends Component {
     render() {
 		return (
 			<View>
-                <Text>This is your profile</Text>
-				<Button 
-					title="Tehtyihin tilauksiin"
-					onPress={() =>
-						this.props.navigation.navigate('CustomerOrders')
-					}
-				/>
+                <Text>Your orders:</Text>
 			</View>
 		);
 	}
@@ -33,4 +27,4 @@ export default
 	map_state_props,
 	map_dispach_props
 )
-*/(Profile);
+*/(CustomerOrders);

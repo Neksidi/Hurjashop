@@ -67,6 +67,18 @@ class Home extends Component {
 						this.props.navigation.navigate('Main')
 					}
 				/>
+				<Button 
+					title="Tutoriaaliin"
+					onPress={() =>
+						this.props.navigation.navigate('Tutorial')
+					}
+				/>
+				<Button 
+					title="Kategoriaan"
+					onPress={() =>
+						this.props.navigation.navigate('Category')
+					}
+				/>
 			</View>
 		);
 	}
