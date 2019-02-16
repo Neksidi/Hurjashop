@@ -35,7 +35,7 @@ class Home extends Component {
 	render() {
 		return (
 			<View>
-                <Text>Welcome Home!</Text>
+        <Text>Welcome Home!</Text>
 				{
           			this.props.products.possible.map((product, index) => {
 									const button = <Button
@@ -62,9 +62,9 @@ class Home extends Component {
 					}
 				/>
 				<Button 
-					title="Mainiin"
+					title="Kaikki tuotteet"
 					onPress={() =>
-						this.props.navigation.navigate('Main')
+						this.props.navigation.navigate('AllProducts')
 					}
 				/>
 				<Button 
