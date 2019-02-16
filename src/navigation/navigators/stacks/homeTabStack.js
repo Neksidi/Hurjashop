@@ -1,6 +1,6 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { View, Text, Easing, Animated, ScrollView } from 'react-native'
-import HomeScreen from '../../../containers/home/screens/HomeScreen'
+import HomeScreen from '../../../containers/home/screens/homeScreen'
 import CategoryScreen from '../../../containers/category/screens/categoryScreen'
 import ProductScreen from '../../../containers/product/screens/productScreen'
 import AllProductsScreen from '../../../containers/product/screens/allProductsScreen'
