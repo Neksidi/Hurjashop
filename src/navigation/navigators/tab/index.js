@@ -4,7 +4,7 @@ import SearchStack from '../stacks/searchTabStack'
 import ProfileStack from '../stacks/profileTabStack'
 import {createBottomTabNavigator} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-import { theme } from '../../../app/styles/Global'
+import { theme } from '../../../app/styles/global'
 const icon_size = 20;
 
 const Tab = createBottomTabNavigator({
