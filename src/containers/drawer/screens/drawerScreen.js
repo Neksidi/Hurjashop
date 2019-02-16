@@ -5,7 +5,7 @@ import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Imag
 import { DrawerActions } from 'react-navigation';
 import Item from '../Item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-import { theme } from '../../../app/styles/Global'
+import { theme } from '../../../app/styles/global'
 
 
 class DrawerScreen extends Component {

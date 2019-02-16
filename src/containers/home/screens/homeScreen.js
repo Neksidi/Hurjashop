@@ -76,11 +76,7 @@ class Home extends Component {
 
 		return (
 			<View>
-<<<<<<< HEAD:src/containers/home/screens/HomeScreen.js
 				<Text>Welcome Home!</Text>
-=======
-        <Text>Welcome Home!</Text>
->>>>>>> 5308a1196dbd1c6c56720599e7ead286d3ea5233:src/containers/home/screens/homeScreen.js
 				{
 					this.props.products.possible.map((product, index) => {
 						const button = <Button
