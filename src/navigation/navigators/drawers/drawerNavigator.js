@@ -1,3 +1,4 @@
+/*
 import React from 'react'
 import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation'
 import { createBundleRenderer } from 'react-navigation'
@@ -23,3 +24,4 @@ const Drawer = createDrawerNavigator({
 });
 
 export default Drawer
+*/
