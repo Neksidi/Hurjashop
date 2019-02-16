@@ -1,14 +1,12 @@
 import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
-export function getProducts() {
-  return Api.get(WEB_URL + '/products')
-    /*
-    .then((result) => {
-	 return result;
-    })
-    .catch((error) => {
-        return false;
-    })
-*/
+export default async function getProducts() {
+  var response = await Api.get(WEB_URL + '/products');  
+
+  if(response){
+    if(response.error)
+      return response.error;  //TODO: return modal with the custom error msg or don't return the error at all.
+    return response
+  } 
 }

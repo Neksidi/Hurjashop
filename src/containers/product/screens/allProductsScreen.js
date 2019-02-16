@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { getProducts } from '../controllers/requests'
+import { setProducts } from '../redux/productActions'
+import getProducts from '../controllers/requests'
 
 class AllProducts extends Component {
 	constructor(props) {
@@ -27,32 +28,54 @@ class AllProducts extends Component {
   };
 
 	componentWillMount() {
-		var products = getProducts();
-		console.log(products)
 	}
 
 	componentWillUnmount() {
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		//console.log("Mount asd")
+		if(!this.props.products.length > 0) {
+			//console.log("starting to get products")
+			
+			const products = await getProducts();
+			//console.log(products)																					//	Debug fetched products by uncommenting this
+			await this.props.setProducts(products);
+		}
 	}
 
 	render() {
-		if(this.state.isLoading){
+		console.log("RENDERIINO")
+		console.log(this.props)
+		
+		if(!this.props.products){
 			return (
 				<View>
-        <Text>Loading</Text>
-			</View>
+        	<Text>Loading animation here</Text>
+				</View>
 			)
 		}
 		else {
 			return (
 				<View>
-					<Text>All products</Text>
+					<Text>Tuotteet</Text>
+					{
+						this.props.products.map((product, index) => {
+							return <Text key={product.id}>{product.name}</Text>
+						})
+					}
 				</View>
 			);
 		}
 	}
 }
 
-export default (AllProducts);
+const mapStateToProps = (state) => {
+	const products = state.products.all
+	return { products }
+};
+
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ setProducts }, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps) (AllProducts);

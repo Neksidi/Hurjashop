@@ -7,8 +7,8 @@ class Api {
       }
     }
   
-    static get(route) {
-      return this.xhr(route, null, 'GET');
+    static async get(route) {
+      return await this.xhr(route, null, 'GET');
     }
   
     static put(route, params) {
@@ -23,17 +23,30 @@ class Api {
       return this.xhr(route, params, 'DELETE');
     }
   
-    static xhr(route, params, method) {
+    static async xhr(route, params, method) {
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
       options.headers = Api.headers()
-      console.log(route)
-      return fetch(route, options)
-        .then((res) => res.json())
-        .then((responseJson) => {
-            return responseJson;
+      return await fetch(route, options)
+        .then((response) => {
+          if(response.status === 404) {
+            response.error = "Not found";
+            return response;
+          }
+          if(response.status === 200) {
+            return response.json()
+              .then((responseJson) => {
+                return responseJson;
+              })
+              .catch((error) => {
+                return "Parse error";
+              });
+          }
         })
         .catch((error) => {
-            throw error;
+          const response = {
+            error: "Error connecting to server"
+          }
+          return response;
         });
     }
   }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { addProduct } from '../redux/productActions'
+import { addProduct } from '../redux/homeActions'
 
 class Home extends Component {
 	constructor(props) {
@@ -11,14 +11,14 @@ class Home extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: '#fcf',
+      	backgroundColor: '#fcf',
     },
     headerTitle: "Koti",
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}
         title="Info"
-				color="green"
+		color="green"
       />
     ),
   };
@@ -35,23 +35,23 @@ class Home extends Component {
 	render() {
 		return (
 			<View>
-        <Text>Welcome Home!</Text>
+        		<Text>Welcome Home!</Text>
 				{
-          			this.props.products.possible.map((product, index) => {
-									const button = <Button
-              				key={ product }
-              				title={  product  }
+          			this.props.home.possible.map((item, index) => {
+						const button = <Button
+              				key={ item }
+              				title={  item  }
               				onPress={() =>
-												this.props.addProduct("Uusi " + product)
+												this.props.addProduct("Uusi " + item)
               				}
             			/>
 						return button;
-						})
+					})
 				}
 				{
-					this.props.products.current.map((product, index) => {
-						return <Text key={ product }>
-							{product} { index }
+					this.props.home.current.map((item, index) => {
+						return <Text key={ item }>
+							{item} { index }
 						</Text>
 					})
 				}
@@ -85,8 +85,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-	const { products } = state
-	return { products }
+	const { home } = state
+	return { home }
 };
 
 const mapDispatchToProps = dispatch => (
