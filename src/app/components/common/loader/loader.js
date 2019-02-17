@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { View, ActivityIndicator } from 'react-native'
-import { theme } from '../../../app/styles/global'
+import { theme } from '../../../styles/global'
 import PropTypes from 'prop-types';
 
 export default class Loader extends PureComponent {

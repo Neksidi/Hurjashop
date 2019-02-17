@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { app_style } from '../../../app/styles/global'
 
-import Badge from '../../../components/common/badge/cart'
-import Gallery from '../../../components/common/images/gallery'
+import Badge from '../../../app/components/common/badge/cart'
+import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import Loader from '../../../components/common/loader/loader'
-import ColorPicker from '../../../components/list/attributes/color/container'
+import Loader from '../../../app/components/common/loader/loader'
+import ColorPicker from '../../../app/components/list/attributes/color/container'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 

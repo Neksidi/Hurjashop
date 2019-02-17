@@ -3,7 +3,7 @@ import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import { DrawerActions } from 'react-navigation';
-import Item from '../Item'
+import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
 

@@ -4,17 +4,17 @@ import { View, Text, Button, Dimensions, ScrollView} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { addProduct } from '../redux/homeActions'
 import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
-import Loader from '../../../components/common/loader/loader';
+import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import { WEB_URL} from '../../../app/redux/actionTypes';
-import Platform from '../../../utility/platform';
-import Item from '../../../components/list/horizontal/item';
+//import Platform from '../../../utility/platform';
+import Item from '../../../app/components/list/horizontal/item';
 
-let { width, height } = Dimensions.get('screen');
+//let { width, height } = Dimensions.get('screen');
 
 //Puhelimen leveys ja korkeus portraitissa
-let pWidth = Platform.isPortrait() ? width : height;
-let pHeight = Platform.isPortrait() ? height : width;
+//let pWidth = Platform.isPortrait() ? width : height;
+//let pHeight = Platform.isPortrait() ? height : width;
 
 class Home extends Component {
 	constructor(props) {

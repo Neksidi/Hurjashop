@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import Item from './item'
-import { theme } from '../../../../app/styles/global'
+import Item from './Item'
+import { theme } from '../../../../styles/global'
 
 class AttributeList extends Component {
 
 
   _onPress(item){
-    this.props.parent.selectColor(item);
+    this.props.parent.selectSize(item);
   }
 
   render(){
