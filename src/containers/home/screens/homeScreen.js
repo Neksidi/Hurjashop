@@ -7,14 +7,11 @@ import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import { WEB_URL} from '../../../app/redux/actionTypes';
-//import Platform from '../../../utility/platform';
 import Item from '../../../app/components/list/horizontal/item';
+import getProducts from '../../product/controllers/requests'
+import { setProducts } from '../../product/redux/productActions'
 
-//let { width, height } = Dimensions.get('screen');
-
-//Puhelimen leveys ja korkeus portraitissa
-//let pWidth = Platform.isPortrait() ? width : height;
-//let pHeight = Platform.isPortrait() ? height : width;
+let { width, height } = Dimensions.get('screen');
 
 class Home extends Component {
 	constructor(props) {
@@ -42,32 +39,53 @@ class Home extends Component {
 	componentWillUnmount() {
 	}
 
-	componentDidMount() {
-		//!  !! ! ! ! this.setState(data: products)
-		this.setState({isLoading: false});
-
-
+	async componentDidMount() {
+		if(!this.props.products.length) {
+			const products = await getProducts();
+			this.props.setProducts(products)		
+		}
 	}
 
 	render() {
-		/*let output =
-		!this.state.isLoading && this.state.data != null ? (
-			<Carousel
-				data={this.state.data}
-				firstItem={(this.state.data.length - 1) / 2}
+
+
+		let output =
+		this.props.products ? (
+
+			
+			/*<Carousel
+				data={this.props.products}
+				firstItem={(this.props.products.length - 1) / 2}
 				keyExtractor={(item, index) => index.toString()}
-				sliderWidth={oWidth}
-				itemWidth={oWidth / 2 - 15}
+				sliderWidth={width}
+				itemWidth={width / 2 - 15}
 				inactiveSlideOpacity={1}
 				renderItem={({ item }) => (
 					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
 				)}
-			/>
+			/>*/
+			<View>
+				<Text>Tuotteet</Text>
+				{
+					this.props.products.map((product, index) => {
+						return <Text key={product.id}>{product.name}</Text>
+					})
+				}
+			</View>
+			
 		) : (
 			<Loader />
 		);
-		*/
 
+		let test = 
+		this.props.products ? (
+			<Text>True!</Text>
+		) : (
+			<Text>False!</Text>
+		);
+			
+		
+		
 		return (
 			<View>
 				<Button 
@@ -89,21 +107,24 @@ class Home extends Component {
 					}
 				/>
 				
-				{/*output*/}
+				{output}
+				{test}
 
 			</View>
 		);
+		
+		
 	}
 }
 
 
 const mapStateToProps = (state) => {
 	const { home } = state
-	return { home }
+	const products = state.products.all
+	return { home, products}
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ readProducts }, dispatch));
+	bindActionCreators({ readProducts, setProducts }, dispatch));
 	
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

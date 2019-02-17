@@ -1,4 +1,4 @@
-import { READ_PRODUCTS, SET_PRODUCTS } from './productActions';
+import { READ_PRODUCTS, SET_PRODUCTS, SET_PRODUCT } from './productActions';
 
 const INITIAL_STATE = {
     all: [],
@@ -7,6 +7,12 @@ const INITIAL_STATE = {
   
   const productReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+      case SET_PRODUCT: {
+        let { all } = state;
+        all = action.payload;
+        let newState = { all };
+        return newState;
+      }
       case SET_PRODUCTS: {
         let { all } = state;
         all = action.payload;

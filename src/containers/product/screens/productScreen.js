@@ -9,7 +9,8 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
 import ColorPicker from '../../../app/components/list/attributes/color/container'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-
+import { setProduct } from '../redux/productActions'
+import getProduct from '../controllers/requests'
 
 class Product extends Component {
 	constructor(props) {
@@ -22,7 +23,6 @@ class Product extends Component {
       TextInputValueHolder: '',
       selectedSize: 'XXL', //DEFAULT
       selectedColor: 'Valkea',//KOVAKOODATTU PLS FIX
-      isLoading: true,
       preview: true,
       activeSlide: 0,
       slideUpContent: null,
@@ -37,11 +37,13 @@ class Product extends Component {
     	headerTitle: "<tuotteen nimi tähän>"
   	};
 
-  componentDidMount() {
-  
+  async componentDidMount() {
+    if(!this.props.product.length) {
+			const product = await getProduct();
+			this.props.setProduct(products)
+		}
   }
   componentWillMount() {
-      //TODO fetch
   }
 
 	componentWillUnmount() {
@@ -287,7 +289,7 @@ class Product extends Component {
   }
 
   render() {
-    if(this.state.isLoading) {
+    if(!this.props.product){
       return (
         <Loader />
       );
@@ -406,23 +408,15 @@ class Product extends Component {
   }
 }
 
-let map_state_props = state => {
-	return {
-		//cart_length: state.cart_reducer.cart.length,
-		//contact: state.contact_reducer.contact
-	};
+const mapStateToProps = (state) => {
+	const product = state.product
+	return { product }
 };
+
 let map_dispach_props = dispatch => ({
 	readProducts: products => {
 		dispatch(readProducts(products));
-	}//,
-	/*addInfo: info => {
-		dispatch(addContact(info));
-	},
-	isLogged: logged => {
-		dispatch(isLoggedIn(logged));
-	}*/
+	}
 });
-
 
 export default (Product);
