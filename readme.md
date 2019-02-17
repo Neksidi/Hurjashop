@@ -1,8 +1,8 @@
-#Installation
+##Installation
 git clone
 npm install
 
-#Running
+##Running
 First terminal:
 - npm start --reset-cache
 
