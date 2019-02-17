@@ -34,9 +34,8 @@ class AllProducts extends Component {
 	}
 
 	async componentDidMount() {
-		if(!this.props.products.length > 0) {
+		if(!this.props.products.length) {
 			const products = await getProducts();
-			console.log(products)
 			this.props.setProducts(products)
 		}
 	}

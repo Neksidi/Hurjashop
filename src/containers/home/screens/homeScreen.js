@@ -70,13 +70,6 @@ class Home extends Component {
 
 		return (
 			<View>
-        		<Text>Welcome Home!</Text>
-				<Button 
-					title="Avaa Drawer"
-					onPress={() =>
-						this.props.navigation.toggleDrawer()
-					}
-				/>
 				<Button 
 					title="Kaikki tuotteet"
 					onPress={() =>
