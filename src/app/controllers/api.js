@@ -28,6 +28,7 @@ class Api {
       options.headers = Api.headers()
       return await fetch(route, options)
         .then((response) => {
+          //console.log(response)     DEBUG
           if(response.status === 404) {
             response.error = "Not found";
             return response;

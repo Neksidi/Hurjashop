@@ -28,8 +28,8 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-  Profile: {screen: ProfileScreen},
-  CustomerOrders: {screen: CustomerOrdersScreen}
+  Profile: { screen: ProfileScreen },
+  CustomerOrders: { screen: CustomerOrdersScreen }
 }, {
     transitionConfig,
     initialRouteName: 'Profile',

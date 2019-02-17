@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
-import getProducts from '../controllers/requests'
+import { getProducts } from '../controllers/requests'
 
 class AllProducts extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			isLoading: true
-		}
 	}
 
 	static navigationOptions = {
@@ -33,10 +30,9 @@ class AllProducts extends Component {
 	componentWillUnmount() {
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		if(!this.props.products.length) {
-			const products = await getProducts();
-			this.props.setProducts(products)
+			getProducts(this.props);
 		}
 	}
 
