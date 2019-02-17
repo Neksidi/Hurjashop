@@ -1,12 +1,17 @@
-##Installation
-git clone
-npm install
+## Installation :wrench:
+`git clone git@gitlab.hurja.fi:HenkkaH/hurja-shop-client.git` OR `https://gitlab.hurja.fi/HenkkaH/hurja-shop-client.git`
+`npm install`
 
-##Running
+## Running
+It's recommended to have three terminals for running this project
+
 First terminal:
-- npm start --reset-cache
+- Run the android emulator by navigating to your Android SDK folder and doing `./emulator @yourEmulatorName`
 
 Second terminal:
-- npm run android-dev: Run in localhost environment
-- npm run android-staging: Run in staging environment
-- npm run android-production: Run in production environment
+- `npm start --reset-cache`
+
+Third terminal:
+- `npm run android-dev`: Run in localhost environment
+- `npm run android-staging`: Run in staging environment
+- `npm run android-production`: Run in production environment
