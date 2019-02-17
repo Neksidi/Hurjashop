@@ -5,6 +5,9 @@ import ProfileStack from '../stacks/profileTabStack'
 import {createBottomTabNavigator} from 'react-navigation'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
+import CustomTabBar from '../../../app/components/tab/customTabBar'
+import CustomProfileTabButton from '../../../app/components/tab/customProfileTabButton'
+
 const icon_size = 20;
 
 const Tab = createBottomTabNavigator({
@@ -12,10 +15,9 @@ const Tab = createBottomTabNavigator({
 		screen: ProfileStack,
 		navigationOptions: () => ({
 			secure: false,
-			tabBarIcon: ({tintColor}) => (
-				<FAIcon name='home' color={tintColor} size={icon_size} />
-			),
-			tabBarLabel: "Oma tili",
+			tabBarIcon: <CustomProfileTabButton />,
+			//tabBarLabel: "Oma tili",
+			showLabel: false
 		})
 	},
 	Home: {
@@ -38,6 +40,7 @@ const Tab = createBottomTabNavigator({
 		})
 	},
 }, {
+	tabBarComponent: CustomTabBar,
 	lazy: true,
 	initialRouteName: 'Home',
 	navigationOptions: ({navigation}) => {
@@ -47,7 +50,7 @@ const Tab = createBottomTabNavigator({
 	},
 	tabBarOptions: {
 		showIcon: true,
-		showLabel: true,
+		showLabel: false,
 		upperCaseLabel: false,
 		labelStyle: {
 			fontSize: 15

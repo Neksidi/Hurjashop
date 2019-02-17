@@ -42,3 +42,4 @@ const MainNavigator = createStackNavigator({
 );
 
 export default MainNavigator;
+
