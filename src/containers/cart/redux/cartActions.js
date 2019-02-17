@@ -10,3 +10,35 @@ export const INCREASE_QUANTITY_WITH_VARIATIONS = 'INCREASE_QUANTITY_WITH_VARIATI
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 export const DECREASE_QUANTITY_WITH_VARIATIONS = 'DECREASE_QUANTITY_WITH_VARIATIONS'
 export const ADD_VARIATIONS = 'ADD_VARIATIONS'
+
+const increaseCartQuantity = (item) => {
+    return {
+      type: INCREASE_QUANTITY,
+      item: item,
+    }
+  }
+  const increaseCartQuantityWithVariations = (item) => {
+    return {
+      type: INCREASE_QUANTITY_WITH_VARIATIONS,
+      item: item,
+    }
+  }
+  const decreaseCartQuantity = (item) => {
+    return {
+      type: DECREASE_QUANTITY,
+      item: item,
+    }
+  }
+  const decreaseCartQuantityWithVariations = (item) => {
+    return {
+      type: DECREASE_QUANTITY_WITH_VARIATIONS,
+      item: item,
+    }
+  }
+
+export {
+    increaseCartQuantity,
+    increaseCartQuantityWithVariations,
+    decreaseCartQuantity,
+    decreaseCartQuantityWithVariations
+}
