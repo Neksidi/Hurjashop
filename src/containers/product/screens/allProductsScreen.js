@@ -22,7 +22,7 @@ class AllProducts extends Component {
       <Button
         onPress={() => alert('This is a button!')}
         title="Info"
-				color="green"
+		color="green"
       />
     ),
   };
@@ -34,19 +34,15 @@ class AllProducts extends Component {
 	}
 
 	async componentDidMount() {
-		//console.log("Mount asd")
 		if(!this.props.products.length > 0) {
-			//console.log("starting to get products")
-			
 			const products = await getProducts();
-			//console.log(products)																					//	Debug fetched products by uncommenting this
-			await this.props.setProducts(products);
+			console.log(products)
+			this.props.setProducts(products)
 		}
 	}
 
 	render() {
-		console.log("RENDERIINO")
-		console.log(this.props)
+		//console.log(this.props.products)				//	Debug fetched products by uncommenting this										
 		
 		if(!this.props.products){
 			return (

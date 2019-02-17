@@ -1,4 +1,6 @@
-import { StyleSheet, } from 'react-native'
+import { StyleSheet, Dimensions} from 'react-native'
+const { width, height } = Dimensions.get('screen');
+
 export const theme = {
   underline: {
     light: {
@@ -40,7 +42,7 @@ export const theme = {
   },
   navigation: {
     height: 50,
-  }
+  }, 
 };
 export const btn = {
 
@@ -202,5 +204,99 @@ export const app_style = StyleSheet.create({
     textDecorationStyle: 'solid',
     fontSize: 20,
     fontFamily: 'BarlowCondensed-Regular',
+  },
+
+  body: {
+      flex: 1,
+      paddingBottom: 20,
+      backgroundColor: '#fff',
+  }, 
+    containerRow: {
+      flex: 1, 
+      flexDirection: 'row', 
+      justifyContent: 'center', 
+      alignItems: 'center' 
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    productTitle: {
+      fontSize: 20,
+    },
+    productImage: {
+      height: 200,
+      width: 300,
+    },
+    price: {
+      fontSize: 20,
+    },
+    quantityButton: {
+      marginHorizontal: 10,
+      fontSize: 20,
+    },
+    countText: {
+      fontSize: 40,
+    },
+    separatorContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 20,
+      maxWidth: 400
+    },
+    separatorLine: {
+      flex: 2,
+      borderBottomWidth: 1,
+      borderColor: '#8a8a8a',
+      alignItems: 'center',
+    },
+    productDescription: {
+      justifyContent: 'center',
+      marginLeft: 30,
+      marginRight: 30,
+    }
+
+});
+
+export const carousel = {
+  layout: {
+    width: width,
+    height: 300,
+    item: {
+      width: (width/2) - 15,
+      height: 300,
+    }
+  }
+}
+
+export const carousel_styles = StyleSheet.create({
+  carouselItem: {
+    height: carousel.layout.item.height,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
   }
 });
+
+export const product_item_list = {
+  color: {
+    background: '#fff',
+    grid: {
+      main: '#bbb',
+      selected: '#777',
+    }
+  },
+  layout: {
+    grid: {
+      height: 270,
+    },
+    list: {
+      height: 200,
+    },
+    detailPadding: 10,
+  },
+  btn_size: 25,
+}

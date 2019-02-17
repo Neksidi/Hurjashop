@@ -1,27 +1,40 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { addProduct } from '../redux/homeActions'
+import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
+import Loader from '../../../components/common/loader/loader';
+import Carousel from 'react-native-snap-carousel';
+import { WEB_URL} from '../../../app/redux/actionTypes';
+import Platform from '../../../utility/platform';
+import Item from '../../../components/list/horizontal/item';
+
+let { width, height } = Dimensions.get('screen');
+
+//Puhelimen leveys ja korkeus portraitissa
+let pWidth = Platform.isPortrait() ? width : height;
+let pHeight = Platform.isPortrait() ? height : width;
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
 	}
 
+
 	static navigationOptions = {
 		headerStyle: {
-      	backgroundColor: '#fcf',
-    },
-    headerTitle: "Koti",
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Info"
-		color="green"
-      />
-    ),
-  };
+      		backgroundColor: '#fcf',
+    	},
+    	headerTitle: "Koti",
+    	headerRight: (
+    	  <Button
+    	    onPress={() => alert('This is a button!')}
+    	    title="Info"
+			color="green"
+    	  />
+    	),
+  	};
 
 	componentWillMount() {
 	}
@@ -30,31 +43,34 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
+		//!  !! ! ! ! this.setState(data: products)
+		this.setState({isLoading: false});
+
+
 	}
 
 	render() {
+		/*let output =
+		!this.state.isLoading && this.state.data != null ? (
+			<Carousel
+				data={this.state.data}
+				firstItem={(this.state.data.length - 1) / 2}
+				keyExtractor={(item, index) => index.toString()}
+				sliderWidth={oWidth}
+				itemWidth={oWidth / 2 - 15}
+				inactiveSlideOpacity={1}
+				renderItem={({ item }) => (
+					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
+				)}
+			/>
+		) : (
+			<Loader />
+		);
+		*/
+
 		return (
 			<View>
         		<Text>Welcome Home!</Text>
-				{
-          			this.props.home.possible.map((item, index) => {
-						const button = <Button
-              				key={ item }
-              				title={  item  }
-              				onPress={() =>
-												this.props.addProduct("Uusi " + item)
-              				}
-            			/>
-						return button;
-					})
-				}
-				{
-					this.props.home.current.map((item, index) => {
-						return <Text key={ item }>
-							{item} { index }
-						</Text>
-					})
-				}
 				<Button 
 					title="Avaa Drawer"
 					onPress={() =>
@@ -79,10 +95,14 @@ class Home extends Component {
 						this.props.navigation.navigate('Category')
 					}
 				/>
+				
+				{/*output*/}
+
 			</View>
 		);
 	}
 }
+
 
 const mapStateToProps = (state) => {
 	const { home } = state
@@ -90,6 +110,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ addProduct }, dispatch));
+	bindActionCreators({ readProducts }, dispatch));
+	
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
