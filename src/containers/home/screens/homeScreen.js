@@ -87,7 +87,12 @@ class Home extends Component {
 						this.props.navigation.navigate('Category')
 					}
 				/>
-				
+				<Button 
+					title="Ostoskoriin"
+					onPress={() =>
+						this.props.navigation.navigate('Cart')
+					}
+				/>
 				{output}
 
 			</View>
