@@ -2,8 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button, Dimensions, ScrollView} from 'react-native';
 import { bindActionCreators } from 'redux';
-import { addProduct } from '../redux/homeActions'
-import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
+import {  addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import { WEB_URL} from '../../../app/redux/actionTypes';
@@ -105,6 +104,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ readProducts, setProducts }, dispatch));
+	bindActionCreators({ setProducts }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
