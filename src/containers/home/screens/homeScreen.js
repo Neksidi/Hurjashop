@@ -6,7 +6,6 @@ import { addProduct } from '../redux/homeActions'
 import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
-import { WEB_URL} from '../../../app/redux/actionTypes';
 import Item from '../../../app/components/list/horizontal/item';
 import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'

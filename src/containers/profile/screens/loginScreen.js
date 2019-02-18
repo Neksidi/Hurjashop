@@ -18,6 +18,8 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 //import { theme } from '../../../app/styles/global'
 import { styles } from '../styles/loginStyles'
 import { validate, handleLogin, fetchUser } from '../controllers/loginController'
+import { setLoginStatus, addContact } from '../redux/userActions'
+import { bindActionCreators } from 'redux';
 //Facebook login
 /*import {
   LoginManager,
@@ -33,13 +35,13 @@ class Login extends Component {
     super(props);
     this.state = {
       visible: false, //Password eye
-      email: '', //STRING
-      emailValidation: null, //BOOL
-      password: '',//STRING
-      passwordValidation: null,//BOOL
-      isLoggingIn: false,//BOOL
-      correctCredentials: null,//BOOL
-      displayErrorMessage: false,//BOOL
+      email: 'cat@cat.cat',       //Default ''
+      emailValidation: true,      //Default false
+      password: 'cat',//STRING    //Default ''
+      passwordValidation: true,   //Default false
+      isLoggingIn: false,
+      correctCredentials: null,
+      displayErrorMessage: false,
     }
   }
   //Header
@@ -48,158 +50,20 @@ class Login extends Component {
       header: null,
     }
   };
-  //Validate textinputs
-  //Handle login
-  /*loginHandler() {
-    console.log('Logging in');
-    Keyboard.dismiss();
-    this.setState({ isLoggingIn: true })
-    return fetch(AUTH_URL + "/wordpress", {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(
-        {
-          "username": this.state.email,
-          "password": this.state.password,
-        })
 
-
-      }).then((response) => {
-        if (response.status == 201) {
-          this.refs.login_button.success();
-          response.json().then((responseJson) =>{
-            this.fetchUser(responseJson)
-          })
-        } else {
-          this.refs.login_button.dismiss();
-          this.setState({
-            correctCredentials: false,
-          });
-
-        }
-
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    }*/
-
-    /*fetchUser(user) {
-      return fetch(WEB_URL + "/customer/email/" + user, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          //TODO: Auth
-        },
-
-      }).then((response) => response.json())
-      .then((responseJson) => {
-        let contactData = {
-          id: responseJson.id,
-          email: responseJson.email,
-          first_name: responseJson.first_name,
-          last_name: responseJson.last_name,
-          billing: responseJson.billing,
-          shipping: responseJson.shipping,
-        }
-        this.props.addInfo(contactData)
-        this.props.isLogged(true)
-        if (responseJson.billing.address_1 === undefined) {
-          this.props.navigation.navigate('Home');
-        } else {
-          this.props.navigation.navigate('Home');
-        }
-
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    }*/
-
-    async newLoginLogic() {
-        const userEmail = await hadleLogin(email, password);
-        console.log(userEmail)
-
-        const userData = await fetchUser(userEmail);
-        
-        if(userData) {
-            //this.props.addInfo(contactData)
-        }
-        
-        //this.props.isLogged(true)
-        if (userData.billing.address_1 === undefined) {
-          this.props.navigation.navigate('Home');
-        } else {
-          this.props.navigation.navigate('Home');
-        }
-    }
-    /*
-    async afterLoginComplete(token) {
-      const response = await fetch(
-        `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
-        let result = await response.json();
-
-        // use this result as per the requirement
-        this.props.isLogged(true);
-        this.props.social.facebook.logged = true;
-        this.props.social.facebook.profilePictureURL = result.picture.data.url;
-        let data = {
-          id: null,
-          email: result.email,
-          first_name: result.first_name,
-          last_name: result.last_name,
-          billing: {},
-          shipping: {},
-        }
-        //this.props.addInfo(data);
-        this.props.navigation.navigate('Home');
-      };
-      */
-      /*
-      async _fbAuth() {
-        let { isCancelled } = await LoginManager.logInWithReadPermissions(['public_profile','email', ]);
-
-        if ( !isCancelled ) {
-          let data = await AccessToken.getCurrentAccessToken();
-          let token = data.accessToken.toString();
-          console.log(token);
-          await this.afterLoginComplete(token);
-        }
-        else {
-          //console.log('Login incomplete');
-        }
-
-      }
-
-      handleFacebookLogin(){
-        this._fbAuth();
-      }
-
-      handleLoginButtonPress(){
-        this.loginHandler();
-      }
       //Start login button animation onsubmitediting
       _handleLoginOnSubmitEditing(){
         if(this.state.emailValidation && this.state.password.length > 0){
           this.refs.login_button.animateIn();
         }
       }
+
       //Display login errors
       _handleLoginErrors(){
         this.setState({displayErrorMessage: true})
       }
-      */
-      _handleLoginOnSubmitEditing() {
-          /*
-          if(this.props.reduxState && this.props.reduxState) {
-            this.refs.login_button.animateIn();
-          }
-          */
-      }
+
+
 
       render() {
         let visibleIcon = this.state.visible ? ('eye-off') : ('eye');
@@ -236,7 +100,7 @@ class Login extends Component {
                 blurOnSubmit={false}
                 onSubmitEditing={() => {
                   this.passwordTextInput.focus();
-                  validate('email', this.state.email, this.state.password);
+                  validate('email', this);
                 }}/>
             </View>
           </View>
@@ -252,11 +116,12 @@ class Login extends Component {
             selectionColor={'#fff'}
             secureTextEntry={!this.state.visible}
             onChangeText={(password) => this.setState({password: password})}
+            value={this.state.password}
             ref={(input) => this.passwordTextInput = input}
             blurOnSubmit={false}
             onSubmitEditing={() =>{
               Keyboard.dismiss();
-              validate('password', this.state.email, this.state.password);
+              validate('password', this);
               this._handleLoginOnSubmitEditing();
             }}
           />
@@ -271,7 +136,7 @@ class Login extends Component {
 </View>
 
 <View style={styles.submitButtonContainer}>
-  <ButtonWithAnimatedLoader ref='login_button' title='Kirjaudu sisään' errorHandler={() => {this._handleLoginErrors()}} onAnimationFinished={() => {this.setState({isLoggingIn: false})}} onPress={() => {this.handleLoginButtonPress()}} disabled={!(this.state.emailValidation && this.state.password.length > 0)}/>
+  <ButtonWithAnimatedLoader ref='login_button' title='Kirjaudu sisään' errorHandler={() => {this._handleLoginErrors()}} onAnimationFinished={() => {this.setState({isLoggingIn: false})}} onPress={() => { handleLogin(this) }} disabled={!(this.state.emailValidation && this.state.password.length > 0)}/>
 </View>
 
 <Separator text='TAI'/>
@@ -290,15 +155,6 @@ class Login extends Component {
 }
 }
 
-/*
-const map_state_props = (state) => {
-  return {
-    contact: state.contact_reducer.contact,
-    logged: state.contact_reducer.isLogged,
-    social: state.contact_reducer.social,
-  }
-}
-*/
 
 /*
 const map_dispatch_props = (dispatch) => ({
@@ -311,5 +167,7 @@ const map_dispatch_props = (dispatch) => ({
 });
 */
 
-export default //connect(map_state_props, map_dispatch_props)
-(Login);
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ setLoginStatus, addContact }, dispatch));
+
+export default connect(null, mapDispatchToProps)(Login);
