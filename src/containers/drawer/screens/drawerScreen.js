@@ -24,7 +24,7 @@ class DrawerScreen extends Component {
   renderLinks() {
     return (
       <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
-        <Item title='Kirjaudu sisään' icon='sign-in' onPress={this.navigateToScreen('Home')} />
+        <Item title='Kirjaudu sisään' icon='sign-in' onPress={this.navigateToScreen('Login')} />
         <Item title='Rekisteröidy' icon='user-plus' onPress={this.navigateToScreen('Home')} />
         <Item title='Kategoriat' icon='star' onPress={this.navigateToScreen('Home')} />
         <Item title='Tietoa meistä' icon='info-circle' onPress={this.navigateToScreen('Home')} />

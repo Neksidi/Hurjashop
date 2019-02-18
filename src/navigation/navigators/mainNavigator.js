@@ -3,12 +3,14 @@ import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'r
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import Tab from '../navigators/tab'
 import PaymentStack from '../navigators/stacks/paymentStack'
+import LoginStack from '../navigators/stacks/loginStack'
 import DrawerScreen from '../../containers/drawer/screens/drawerScreen' 
 // 
 
 const MainNavigator = createDrawerNavigator({
 	Tab: { screen: Tab },
-	PaymentProcess: { screen: PaymentStack }
+	PaymentProcess: { screen: PaymentStack },
+	LoginProcess: { screen: LoginStack }
 },{
 	navigationOptions: {
 		header: null

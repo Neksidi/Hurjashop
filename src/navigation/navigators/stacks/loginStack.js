@@ -1,7 +1,7 @@
 import {createStackNavigator} from 'react-navigation';
 import { Easing, Animated } from 'react-native'
-import PaymentScreen from '../../../containers/payment/screens/paymentScreen'
-import TutorialScreen from '../../../containers/tutorial/screens'
+import LoginScreen from '../../../containers/profile/screens/loginScreen'
+
 
 const transitionConfig = () => {
     return {
@@ -28,11 +28,10 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-  Payment: {screen: PaymentScreen},
-  Tutorial: {screen: TutorialScreen}
+    Login: { screen: LoginScreen }
 }, {
     transitionConfig,
-    initialRouteName: 'Payment',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#e94641',
