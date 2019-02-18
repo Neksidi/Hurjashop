@@ -10,7 +10,7 @@ const INITIAL_STATE = {
       case SET_PRODUCT: {
         let { all, single } = state;
         all = action.payload;
-        let newState = { single, all };
+        let newState = { all, single };
         return newState;
       }
       case SET_PRODUCTS: {
