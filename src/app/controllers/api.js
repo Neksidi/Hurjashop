@@ -24,6 +24,7 @@ class Api {
     }
   
     static async xhr(route, params, method) {
+      console.log(route);
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
       options.headers = Api.headers()
       return await fetch(route, options)

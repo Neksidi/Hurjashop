@@ -8,15 +8,15 @@ const INITIAL_STATE = {
   const productReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case SET_PRODUCT: {
-        let { single } = state;
+        let { all, single } = state;
         all = action.payload;
-        let newState = { single };
+        let newState = { all, single };
         return newState;
       }
       case SET_PRODUCTS: {
-        let { all } = state;
+        let { all, single } = state;
         all = action.payload;
-        let newState = { all };
+        let newState = { all, single };
         return newState;
       }
       default:
