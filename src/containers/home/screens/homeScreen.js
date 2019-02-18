@@ -50,9 +50,8 @@ class Home extends Component {
 
 		let output =
 		this.props.products ? (
-
 			
-			/*<Carousel
+			<Carousel
 				data={this.props.products}
 				firstItem={(this.props.products.length - 1) / 2}
 				keyExtractor={(item, index) => index.toString()}
@@ -62,29 +61,12 @@ class Home extends Component {
 				renderItem={({ item }) => (
 					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
 				)}
-			/>*/
-			<View>
-				<Text>Tuotteet</Text>
-				{
-					this.props.products.map((product, index) => {
-						return <Text key={product.id}>{product.name}</Text>
-					})
-				}
-			</View>
-			
+			/>
+
 		) : (
 			<Loader />
 		);
-
-		let test = 
-		this.props.products ? (
-			<Text>True!</Text>
-		) : (
-			<Text>False!</Text>
-		);
 			
-		
-		
 		return (
 			<View>
 				<Button 
@@ -107,7 +89,6 @@ class Home extends Component {
 				/>
 				
 				{output}
-				{test}
 
 			</View>
 		);

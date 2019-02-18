@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions  } from 'react-native';
 import { app_style } from '../../../app/styles/global'
 
 import Badge from '../../../app/components/common/badge/cart'
@@ -10,7 +10,11 @@ import Loader from '../../../app/components/common/loader/loader'
 import ColorPicker from '../../../app/components/list/attributes/color/container'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { setProduct } from '../redux/productActions'
-import getProduct from '../controllers/requests'
+import { getProducts, getProduct } from '../controllers/requests'
+import Toast from '../../../app/components/common/toast'
+
+const imageHeight = 340;
+let { width, height } = Dimensions.get('screen');
 
 class Product extends Component {
 	constructor(props) {
@@ -34,15 +38,19 @@ class Product extends Component {
 		headerStyle: {
       		backgroundColor: '#fcf',
     	},
-    	headerTitle: "<tuotteen nimi tähän>"
+    	headerTitle: "<Tuotteen nimi tähän>"
   	};
 
-  async componentDidMount() {
-    if(!this.props.product.length) {
-			const product = await getProduct();
-			this.props.setProduct(products)
-		}
+  componentDidMount() {
+  
+    this.setState({item: this.props.navigation.getParam('item', null)});
+
+
+    //if(this.item != null) {
+    //  this.setState({item: getProduct(this.state.item.id)})      
+    //}
   }
+  
   componentWillMount() {
   }
 
@@ -151,19 +159,21 @@ class Product extends Component {
   }
   
   handleAddToCart(){
-    if(this.state.item.variations.length > 0){
-      //ON VARIAATIOITA!
-      const varId = this.getVariationId();
-      this.props.addItemWithVariations(this.state.item, varId, this.state.count);
-  
-      this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, varId, this.state.count)})
-  
-    } else {
-      this.props.addItem(this.state.item, this.state.count);
-      this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, null, this.state.count)})
+    if(this.state.item.variations) {
+      if(this.state.item.variations.length > 0){
+        //ON VARIAATIOITA!
+        const varId = this.getVariationId();
+        this.props.addItemWithVariations(this.state.item, varId, this.state.count);
+    
+        this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, varId, this.state.count)})
+    
+      } else {
+        this.props.addItem(this.state.item, this.state.count);
+        this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, null, this.state.count)})
+      }
+      this.setState({count: 1});
+      this.refs.slideup.show();
     }
-    this.setState({count: 1});
-    this.refs.slideup.show();
   }
 
   _renderSlideUpContent(item, varId, count){
@@ -242,21 +252,26 @@ class Product extends Component {
     return null;
   }
 
+
   ItemPrice(){
     if(this.state.item.attributes.length > 0){
-      price = Parser.parsePriceFromHtml(this.state.item.price_html);
+      let price = this.state.item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
+      for(i in price){
+        price[i] = price[i].replace('&nbsp;&euro;', '');
+      }
+
       if(price.length === 2){
         return(
           <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
-            { price[0] }€ </Text><Text style={styles.price}> {price[1]}€ </Text></View>
+            { price[0] }€ </Text><Text style={app_style.price}> {price[1]}€ </Text></View>
         );
       }
     }
     if(this.state.item.sale_price != ''){
       return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
-        { this.state.item.regular_price } € </Text><Text style={styles.price}>{this.state.item.sale_price} € </Text></View>
+        { this.state.item.regular_price } € </Text><Text style={app_style.price}>{this.state.item.sale_price} € </Text></View>
     } else {
-      return <Text style={styles.price}>{this.state.item.price} € </Text>
+      return <Text style={app_style.price}>{this.state.item.price} € </Text>
     }
   }
 
@@ -268,36 +283,47 @@ class Product extends Component {
 
   renderItem(item){
     return(
-      <View style={{width: oWidth, height: imageHeight, padding: 0}}>
-          <Image source={{uri: item.src}} style={{height: imageHeight, width: oWidth}} resizeMode='cover' />
+      <View style={{width: width, height: imageHeight, padding: 0}}>
+          <Image source={{uri: item.src}} style={{height: imageHeight, width: width}} resizeMode='cover' />
       </View>
     );
   }
   
   renderRelatedItems(){
-    return this.props.products.map((a, index) => {
-      for(i in this.state.item.related_ids){
-        if(a.id == this.state.item.related_ids[i]){
-          return(
-            <View key={index} style={{ width: 100, height: 200, backgroundColor: '#0f0', marginHorizontal: 10,}}>
-  
-            </View>
-          );
+    if(this.props.products) {
+      return this.props.products.map((a, index) => {
+        for(i in this.state.item.related_ids){
+          if(a.id == this.state.item.related_ids[i]){
+            return(
+              <View key={index} style={{ width: 100, height: 200, backgroundColor: '#0f0', marginHorizontal: 10,}}>
+    
+              </View>
+            );
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   render() {
-    if(!this.props.product){
+    if(this.state.item == null){
       return (
         <Loader />
       );
     } else {
-      let size = this.contains('Koko') ? (<View style={{height: 30, marginBottom: 10}}><AttributeList data={this.state.item.attributes[this.getAttributeIndex('Koko')]} parent={this} selected={this.state.selectedSize} /></View>) : (<View></View>);
-      let color = this.contains('Väri') ? (<View style={{height: 30}}><ColorPicker data={this.state.item.attributes[this.getAttributeIndex('Väri')]} parent={this} selected={this.state.selectedColor} /></View>) : (<View></View>);
-      let sale = this.state.item.sale_price != '' ? (<View style={{position: 'absolute', top: 0, left: 0, backgroundColor: '#292929', elevation: 5, padding: 10, paddingHorizontal: 20,}}><Text style={{color: '#fff', fontSize: 18}}>- {this.getSaleProcent()}%</Text></View>) : (<View></View>);
+      console.log(this.state.item);
+      
+
+      ////let size = this.contains('Koko') ? (<View style={{height: 30, marginBottom: 10}}><AttributeList data={this.state.item.attributes[this.getAttributeIndex('Koko')]} parent={this} selected={this.state.selectedSize} /></View>) : (<View></View>);
+      //let color = this.contains('Väri') ? (<View style={{height: 30}}><ColorPicker data={this.state.item.attributes[this.getAttributeIndex('Väri')]} parent={this} selected={this.state.selectedColor} /></View>) : (<View></View>);
+      //let sale = this.state.item.sale_price != '' ? (<View style={{position: 'absolute', top: 0, left: 0, backgroundColor: '#292929', elevation: 5, padding: 10, paddingHorizontal: 20,}}><Text style={{color: '#fff', fontSize: 18}}>- {this.getSaleProcent()}%</Text></View>) : (<View></View>);
+      //let images = null;
+
+      let size = "XL";
+      let color= "WHITE";
+      let sale = "";
       let images = null;
+
       let arrowLeft = (
         <View style={{ position: 'absolute', left: 0, bottom: '45%', justifyContent: 'center'}}>
           <TouchableOpacity onPress={() => this._carousel.snapToPrev()} style={{paddingLeft: 10, padding: 5}}>
@@ -328,12 +354,12 @@ class Product extends Component {
       );
   
       images = (
-        <View style={{height: imageHeight, width: oWidth,}}>
+        <View style={{height: imageHeight, width: width,}}>
           <Carousel
             data={this.state.item.images}
             keyExtractor={(item, index) => index.toString()}
-            sliderWidth={oWidth}
-            itemWidth={oWidth}
+            sliderWidth={width}
+            itemWidth={width}
             renderItem={({item}) => this.renderItem(item)}
             onSnapToItem={(index) => this.setState({ activeSlide: index }) }
             enableSnap={true}
@@ -362,15 +388,15 @@ class Product extends Component {
         </View>
       );
   
-      let badge = this.props.cart.length > 0 ? (
-        <Badge count={this.props.cart.length} />
-      ) : (null);
+     // let badge = this.props.cart.length > 0 ? (
+      //  <Badge count={this.props.cart.length} />
+      //) : (null);
   
       return (
         <View style={{flex: 1, paddingBottom: 20, backgroundColor: '#fff'}}>
-          {badge}
+          
           <ScrollView>
-            <View style={styles.container}>
+            <View style={app_style.container}>
               <Toast ref='toastWarn'/>
   
               <View style={{flex: 1}}>
@@ -380,7 +406,7 @@ class Product extends Component {
   
               <Text style={app_style.medium_title}>{this.state.item.name}</Text>
   
-              <Text style={styles.price}>{this.state.item.featured_src}</Text>
+              <Text style={app_style.price}>{this.state.item.featured_src}</Text>
               <View>{this.ItemPrice()}</View>
               {size}
               {color}
@@ -389,7 +415,7 @@ class Product extends Component {
                 <TouchableOpacity onPress={() => { this.decreaceCount() }}>
                   <FAIcon name={'minus'} size={30}></FAIcon>
                 </TouchableOpacity>
-                <Text style={styles.countText}>    {this.state.count}    </Text>
+                <Text style={app_style.countText}>    {this.state.count}    </Text>
                 <TouchableOpacity onPress={() => { this.setState({ count: this.state.count + 1 }) }}>
                   <FAIcon name={'plus-circle'} size={30}></FAIcon>
                 </TouchableOpacity>
@@ -408,15 +434,14 @@ class Product extends Component {
   }
 }
 
+
 const mapStateToProps = (state) => {
+  const products = state.products.all
 	const product = state.product
-	return { product }
+	return { products, product }
 };
 
-let map_dispach_props = dispatch => ({
-	readProducts: products => {
-		dispatch(readProducts(products));
-	}
-});
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ setProducts }, dispatch));
 
-export default (Product);
+export default ( mapStateToProps, mapDispatchToProps, Product);
