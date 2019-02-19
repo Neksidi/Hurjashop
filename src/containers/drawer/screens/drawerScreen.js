@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
-import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback, Linking } from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
-import { renderUserLinks, renderAuthLinks, logOut } from '../controllers/drawerController'
+import { renderUserLinks, renderAuthLinks, renderCategories, logOut } from '../controllers/drawerController'
 import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
 
@@ -27,7 +27,7 @@ class DrawerScreen extends Component {
   static navigationOptions = {
     drawerLabel: 'Profile',
   };
-  
+
   render() {
     return (
       /*<TouchableWithoutFeedback
@@ -58,6 +58,9 @@ class DrawerScreen extends Component {
                       )
                     }
                   </View>
+                  <View>
+                    {/*renderCategories(this.props.categories)*/}
+                  </View>
                   <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
                     <Item title='Tietoa meistä' icon='info-circle' onPress={this.navigateToScreen('Home')} />
                     <Item title='Käyttöehdot' icon='handshake-o' onPress={this.navigateToScreen('Home')} />
@@ -65,11 +68,24 @@ class DrawerScreen extends Component {
                   </View>
                 </View>
               </View>
-
+            </View>
+            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 30, paddingBottom: 30 }}>
+              <TouchableOpacity onPress={() => { Linking.openURL('https://www.facebook.com/hurjasolutions/') }}>
+                <FAIcon name={'facebook'} color="white" size={30}></FAIcon>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { Linking.openURL('https://www.instagram.com/hurjasolutions/') }}>
+                <FAIcon name={'instagram'} color="white" size={30}></FAIcon>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { Linking.openURL('https://www.linkedin.com/company/hurja/') }}>
+                <FAIcon name={'linkedin'} color="white" size={30}></FAIcon>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { Linking.openURL('https://twitter.com/hurjasolutions') }}>
+                <FAIcon name={'twitter'} color="white" size={30}></FAIcon>
+              </TouchableOpacity>
             </View>
           </ImageBackground>
         </View>
-      //</TouchableWithoutFeedback>
+      //</View></TouchableWithoutFeedback>
 
     );
 

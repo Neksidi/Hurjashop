@@ -13,15 +13,15 @@ async function getProducts(props) {
   } 
 }
 
-async function getProduct(props, id) {
-  var response = await Api.get(WEB_URL + '/products/'+id+"/variations");  
+async function getProduct(id) {
+  var response = await Api.get(WEB_URL + '/product/'+id);  
 
   if(response){
     if(response.error) {
       return;  //TODO: return modal with the custom error msg or don't return the error at all.
     }
     else {
-      props.setProduct(response)
+      return response;
     }
   } 
 }

@@ -4,6 +4,10 @@ import HomeScreen from '../../../containers/home/screens/homeScreen'
 import CategoryScreen from '../../../containers/category/screens/categoryScreen'
 import ProductScreen from '../../../containers/product/screens/productScreen'
 import AllProductsScreen from '../../../containers/product/screens/allProductsScreen'
+import CartScreen from '../../../containers/cart/screens/cartScreen'
+import ShippingScreen from '../../../containers/cart/screens/shippingScreen'
+import MethodsScreen from  '../../../containers/payment/screens/methodsScreen'
+
 
 const transitionConfig = () => {
     return {
@@ -34,6 +38,10 @@ const MainNavigator = createStackNavigator({
   Category: {screen: CategoryScreen},
   Product: {screen: ProductScreen},
   AllProducts: {screen: AllProductsScreen},
+  Cart: {screen: CartScreen},
+  Shipping: {screen: ShippingScreen},
+  Methods: {screen: MethodsScreen},
+
 }, {
     transitionConfig,
     initialRouteName: 'Home',

@@ -23,6 +23,21 @@ function renderAuthLinks(props) {
   );
 }
 
+function renderCategories(categories){
+  const categoryItems = 
+    categories.map((category, index) => {
+      return (
+        <Item title={category.name + ' (' + category.count + ')'} arrow onPress={() => this.props.navigation.navigate('Category', {item: category})}/>
+      );
+    })
+  const view = <View>
+                <Item title='Kategoriat' icon='star' onPress={this.navigateToScreen('Home')} />
+                {/*categoryItems*/}
+              </View>
+
+  return view;
+}
+
 function logOut(props){
   /*
   * TODO: handle logout with back-end
@@ -38,14 +53,6 @@ function logOut(props){
       ],
       {cancellable: true}
     );
-}
-
-function renderCategories(categories){
-    return categories.map((category, index) => {
-      return (
-        <Item title={category.name + ' (' + category.count + ')'} arrow onPress={() => this.props.navigation.navigate('Category', {item: category})}/>
-      );
-    })
 }
 
 export {

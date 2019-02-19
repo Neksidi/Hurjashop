@@ -2,8 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button, Dimensions, ScrollView} from 'react-native';
 import { bindActionCreators } from 'redux';
-import { addProduct } from '../redux/homeActions'
-import { readProducts, addContact, isLoggedIn } from '../redux/homeActions';
+import {  addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import Item from '../../../app/components/list/horizontal/item';
@@ -49,9 +48,8 @@ class Home extends Component {
 
 		let output =
 		this.props.products ? (
-
 			
-			/*<Carousel
+			<Carousel
 				data={this.props.products}
 				firstItem={(this.props.products.length - 1) / 2}
 				keyExtractor={(item, index) => index.toString()}
@@ -61,29 +59,12 @@ class Home extends Component {
 				renderItem={({ item }) => (
 					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
 				)}
-			/>*/
-			<View>
-				<Text>Tuotteet</Text>
-				{
-					this.props.products.map((product, index) => {
-						return <Text key={product.id}>{product.name}</Text>
-					})
-				}
-			</View>
-			
+			/>
+
 		) : (
 			<Loader />
 		);
-
-		let test = 
-		this.props.products ? (
-			<Text>True!</Text>
-		) : (
-			<Text>False!</Text>
-		);
 			
-		
-		
 		return (
 			<View>
 				<Button 
@@ -104,9 +85,13 @@ class Home extends Component {
 						this.props.navigation.navigate('Category')
 					}
 				/>
-				
+				<Button 
+					title="Ostoskoriin"
+					onPress={() =>
+						this.props.navigation.navigate('Cart')
+					}
+				/>
 				{output}
-				{test}
 
 			</View>
 		);
@@ -123,6 +108,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ readProducts, setProducts }, dispatch));
+	bindActionCreators({ setProducts }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
