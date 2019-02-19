@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, Text, View, Button, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import Item from '../components/item'
 import { app_style } from '../../../app/styles/global'
 
@@ -43,12 +43,12 @@ function logOut(props){
   * TODO: handle logout with back-end
   */
   console.log("Logging out")
-  this.props.navigation.closeDrawer();
+  props.navigation.closeDrawer();
     Alert.alert(
       'Kirjaudu ulos',
       'Haluatko varmasti kirjautua ulos?',
       [
-        {text: 'Peruuta', onPress:()=> this.props.navigation.openDrawer()},
+        {text: 'Peruuta', onPress:()=> props.navigation.openDrawer()},
         {text: 'Kyllä', onPress: () => props.setLoginStatus(false)}
       ],
       {cancellable: true}

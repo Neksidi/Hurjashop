@@ -1,5 +1,6 @@
 import Api from '../../../app/controllers/api'
 import { AUTH_URL, WEB_URL } from '../../../app/config'
+import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
 
 function validate(type, parent) {
     switch (type) {
@@ -54,13 +55,26 @@ async function handleLogin(parent) {
     if (!response.error) {
       console.log("Success")
       parent.refs.login_button.success();
-      const session = {
-        sessionId: response.sessionId,
-        sessionUser: response.username
-      }
+      var id = response.sessionId;
+      var username = response.username;
+      
+      //Save session
+      
+      await RNSecureStorage.set("sessionId", id, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+        .then((res) => {
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        });
+      
+      await RNSecureStorage.set("sessionUser", username, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+        .then((res) => {
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        })
 
-      //TODO: save session
-      fetchUser(session, parent)
+      fetchUser(username, parent)
     } 
     else {
       parent.refs.login_button.dismiss();
@@ -69,9 +83,9 @@ async function handleLogin(parent) {
     }
 }
 
-async function fetchUser(session, parent) {
+async function fetchUser(username, parent) {
     console.log("fetching user")
-    const response = await Api.get(WEB_URL + "/customer/email/" + session.sessionUser)
+    const response = await Api.get(WEB_URL + "/customer/email/" + username)
   
     console.log(response)
     if(!response.error) {

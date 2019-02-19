@@ -1,10 +1,30 @@
+import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
+
 class Api {
-    static headers() {
+    static async headers() {
+      var id = '';
+      var user = '';
       //Check if session exists in phone storage
       //Then set values if found
-      var id = '1343'
-      var user = 'cat@cat.cat';
+      await RNSecureStorage.get("sessionId").then((value) => {
+        console.log("Getting id")
+        console.log(value) // Will return direct value
+        id = value;
+        }).catch((err) => {
+          console.log(err)
+        })
 
+      await RNSecureStorage.get("sessionUser").then((value) => {
+        console.log("Getting user")
+        console.log(value) // Will return direct value
+        user = value;
+        }).catch((err) => {
+          console.log(err)
+        });
+
+      console.log("Double check")
+      console.log(user)
+      console.log(id)
       /*
       *Replace id and user with values
       * id = storage.get("sessionId")
@@ -38,7 +58,7 @@ class Api {
   
     static async xhr(route, params, method) {
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
-      options.headers = Api.headers()
+      options.headers = await Api.headers()
       //options.credentials = 'same-origin'
       console.log(options)
       return await fetch(route, options)
