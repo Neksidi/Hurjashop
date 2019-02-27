@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Animated } from 'react-native'
-import { theme, app_style } from '../../styles/Global'
+import { theme, app_style } from '../../styles/global'
 
 
 class Header extends Component {
@@ -58,7 +58,7 @@ class Header extends Component {
 
     return (
       <View style={[{ ...this.props.style }, styles.container]}>
-        <ImageBackground source={require('../../assets/images/header_tmp.jpg')} style={{height: 300, width: '100%'}} resizeMode='cover'>
+        <ImageBackground source={require('../../../assets/images/header_tmp.jpg')} style={{height: 300, width: '100%'}} resizeMode='cover'>
           <View style={styles.innerContainer}>
             <Animated.View style={[{opacity: this.state.topOpacity}, topScale]}>
               <Text style={styles.pacifico}>Myö viännellään</Text>
