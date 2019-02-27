@@ -12,7 +12,7 @@ import Header from '../../../app/components/header/header'
 import { styles, theme } from '../../../app/styles/global'
 
 let { width, height } = Dimensions.get('screen');
-
+//TEST TEST
 class Home extends Component {
 	constructor(props) {
 		super(props);
