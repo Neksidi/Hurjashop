@@ -7,13 +7,18 @@ import { DrawerActions } from 'react-navigation';
 import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
-import { renderUserLinks, renderAuthLinks, renderCategories, logOut } from '../controllers/drawerController'
+import { renderUserLinks, renderAuthLinks, logOut } from '../controllers/drawerController'
 import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
+import Categories from '../components/categories'
+import UserButtons from '../components/userButtons'
 
 class DrawerScreen extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      categories: ['Paidat', 'Lippikset', 'Mäkiautot']      // FOR DEBUG ONLY!
+    }
   };
   
   navigateToScreen = (route) => () => {
@@ -50,16 +55,10 @@ class DrawerScreen extends Component {
                 </TouchableOpacity>
                 <View style={{ width: '100%' }}>
                   <View>
-                    {
-                      this.props.isLoggedIn ? (
-                        renderUserLinks(this.props)
-                      ) : (
-                        renderAuthLinks(this.props)
-                      )
-                    }
+                    <UserButtons navigation={this.props.navigation}/>
                   </View>
                   <View>
-                    {/*renderCategories(this.props.categories)*/}
+                    <Categories navigation={this.props.navigation}/>
                   </View>
                   <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
                     <Item title='Tietoa meistä' icon='info-circle' onPress={this.navigateToScreen('Home')} />

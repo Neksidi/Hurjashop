@@ -316,7 +316,7 @@ export const styles = StyleSheet.create({
     zIndex: 4,
     alignSelf: 'center',
     top: -40,
-    elevation: 99
+    //elevation: 99,
   },
   slidercContainer: {
     flex: 1,
