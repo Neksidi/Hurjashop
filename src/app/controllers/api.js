@@ -6,12 +6,13 @@ class Api {
       var user = '';
       //Check if session exists in phone storage
       //Then set values if found
+      console.log("header start")
       await RNSecureStorage.get("sessionId").then((value) => {
         console.log("Getting id")
         console.log(value) // Will return direct value
         id = value;
         }).catch((err) => {
-          console.log(err)
+          //console.log(err)
         })
 
       await RNSecureStorage.get("sessionUser").then((value) => {
@@ -19,7 +20,7 @@ class Api {
         console.log(value) // Will return direct value
         user = value;
         }).catch((err) => {
-          console.log(err)
+          //console.log(err)
         });
 
       console.log("Double check")
@@ -61,6 +62,7 @@ class Api {
       options.headers = await Api.headers()
       //options.credentials = 'same-origin'
       console.log(options)
+      console.log(route)
       return await fetch(route, options)
         .then((response) => {
           console.log(response)     
