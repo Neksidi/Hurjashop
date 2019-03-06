@@ -18,7 +18,7 @@ class Product extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      		backgroundColor: '#fcf',
+      		backgroundColor: theme.color.navigation.background,
     	},
       headerTitle: "Tuotesivu",
       backgroundColor: theme.color.hurja.main,

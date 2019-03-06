@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,} from 'react-native';
 import { bindActionCreators } from 'redux';
+import { theme } from '../../../app/styles/global'
 
 
 
@@ -16,7 +17,7 @@ class Cart extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: '#fcf',
+      backgroundColor: theme.color.navigation.background,
     },
     headerTitle: "Ostoskori",
  

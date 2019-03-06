@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux';
-
+import { theme } from '../../../app/styles/global'
+//import CustomHeader from '../../../app/components/header/customHeader'
 class Category extends Component {
 	constructor(props) {
 		super(props);
@@ -10,9 +11,9 @@ class Category extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: '#fcf',
+      backgroundColor: theme.color.navigation.background,
     },
-    headerTitle: "Kategoria",
+    headerTitle: "Kategoria", //<CustomHeader/>
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}

@@ -43,11 +43,11 @@ const Tab = createBottomTabNavigator({
 	tabBarComponent: CustomTabBar,
 	lazy: true,
 	initialRouteName: 'Home',
-	navigationOptions: ({navigation}) => {
+	/*navigationOptions: ({navigation}) => {
 		return {
 			header: null
 		}
-	},
+	},*/
 	tabBarOptions: {
 		showIcon: true,
 		showLabel: false,

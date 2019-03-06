@@ -10,6 +10,9 @@ import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
 import Header from '../../../app/components/header/header'
 import { styles, theme } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
+
+
 
 let { width, height } = Dimensions.get('screen');
 
@@ -18,21 +21,19 @@ class Home extends Component {
 		super(props);
 	}
 
-
 	static navigationOptions = {
-		headerStyle: { 
+		headerStyle: {
 			backgroundColor: theme.color.navigation.background,
 			height: theme.navigation.height,
 		},
-		headerTitle: "Koti",
-		headerRight: (
-			<Button
-				onPress={() => alert('This is a button!')}
-				title="Info"
-				color="green"
-			/>
-		),
+		headerTitle: <CustomHeader/>,
+		headerLeft: (
+			<View></View>
+			//<Text style={{fontSize: 20, color:"white", right:-80}}>lolllllll</Text>
+		  ),
+		
 	};
+
 
 	componentWillMount() {
 	}
@@ -71,11 +72,7 @@ class Home extends Component {
 		return (
 
 			<View>
-				<Image
-					style={styles.logo}
-					source={require('../../../assets/images/hurja_shop_logo.png')}
-					resizeMode="contain"
-				/>
+			
 
 				<Header />
 
