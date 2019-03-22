@@ -1,25 +1,29 @@
+import { SET_NEWPRODUCTS, SET_SALEPRODUCTS } from './homeActions';
+
 const INITIAL_STATE = {
-  current: [],
-  possible: [
-    'Lippis',
-    'Mäkiauto',
-  ],
+  newp: [],
+  salep: [],
 };
 
-const productReducer = (state = INITIAL_STATE, action) => {
+const homeReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'ADD_PRODUCT':
-      const {current, possible} = state;
-
-      const addedProduct = action.payload;
-
-      current.push(addedProduct);
-
-      const newState = { current, possible };
+    case SET_NEWPRODUCTS: {
+      let { newp, salep } = state;
+      newp = action.payload;
+      let newState = { newp, salep };
       return newState;
+    }
+    case SET_SALEPRODUCTS: {
+      let { newp, salep } = state;
+      sale = action.payload;
+      let newState = { newp, salep };
+      return newState;
+    }
     default:
       return state;
   }
 };
 
-export default productReducer;
+export default homeReducer;
+
+

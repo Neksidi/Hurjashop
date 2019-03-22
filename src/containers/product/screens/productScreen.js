@@ -192,24 +192,7 @@ class Product extends Component {
     );
   }
 
-  contains(name){
 
-    for(i in this.state.item.attributes){
-      if(this.state.item.attributes[i].name == name){
-        return true;
-      }
-    }
-    return false;
-  }
-
-  getAttributeIndex(name){
-    for(i in this.state.item.attributes){
-      if(this.state.item.attributes[i].name == name){
-        return i;
-      }
-    }
-    return null;
-  }
 
   share(){
     //TODO SHARE
@@ -304,6 +287,7 @@ class Product extends Component {
       )
     }
   }
+  
   decreaseCartCount(){
     if(this.state.count > 1) this.setState({count: this.state.count - 1})
   }

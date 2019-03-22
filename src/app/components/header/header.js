@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Animated } from 'react-native'
-import { theme, app_style } from '../../styles/Global'
+import { theme, app_style } from '../../styles/global'
 
 
 class Header extends Component {

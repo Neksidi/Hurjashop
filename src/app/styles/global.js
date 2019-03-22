@@ -256,8 +256,28 @@ export const app_style = StyleSheet.create({
       justifyContent: 'center',
       marginLeft: 30,
       marginRight: 30,
-    }
+    },
 
+    logo: {
+      width: 75,
+      height: 75
+    },
+    
+    sliderContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingTop: 10,
+      paddingBottom: 15,
+      paddingHorizontal: 5
+    },
+    footer: {
+      backgroundColor: '#e94641',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: 20,
+      paddingBottom: 15
+    }
 });
 
 export const carousel = {

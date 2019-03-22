@@ -17,5 +17,5 @@ const setProducts = products => (
 
 export {
   setProducts,
-  setProduct
+  setProduct,
 }
