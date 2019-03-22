@@ -1,26 +1,34 @@
 import Api from '../../../app/controllers/api'
 import { AUTH_URL, WEB_URL } from '../../../app/config'
+import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
 
-function validate(type, email, password) {
+function validate(type, parent) {
     switch (type) {
       case 'email':
       console.log('VALIDOI EMAIL');
       const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
-      if(reg.test(email) === true){
+      if(reg.test(parent.state.email) === true){
+        parent.setState({emailValidation: true});
         //this.setState({emailValidation: true});        REDUX
+        console.log("true")
         return true;
       }else {
+        console.log("false")
+        parent.setState({emailValidation: false});
         //this.setState({emailValidation: false});        REDUX
         return false;
       }
       case 'password':
       console.log('VALIDOI SALIS');
-      if(password.length > 0){
+      if(parent.state.password.length > 0){
+        parent.setState({passwordValidation: true});
         //this.setState({passwordValidation: true});        REDUX
+        console.log("true")
         return true;
       }else {
-        return false;
+        console.log("false")
+        parent.setState({passwordValidation: false});
         //this.setState({passwordValidation: false});        REDUX
       }
       default:
@@ -29,35 +37,58 @@ function validate(type, email, password) {
     }
 }
 
-async function handleLogin(email, password) {
+async function handleLogin(parent) {
     console.log('Logging in');
+    console.log(parent)
     //Keyboard.dismiss();                           loginScreeniin?
     //this.setState({ isLoggingIn: true })          loginScreeniin?
 
     const body = {
-        "username": email,
-        "password": password,
+        "username": parent.state.email,
+        "password": parent.state.password,
     }
-    const response = await Api.post(AUTH_URL + "/wordpress", body)
+    console.log(body)
+    const response = await Api.post(AUTH_URL + "/wordpress", body);
     
     console.log(response)
-    if (response.status == 201) {
-      //this.refs.login_button.success();     loginScreeniin?
-      //this.fetchUser(responseJson)
+    console.log("MIKSI")
+    if (!response.error) {
+      console.log("Success")
+      parent.refs.login_button.success();
+      var id = response.sessionId;
+      var username = response.username;
+      
+      //Save session
+      
+      await RNSecureStorage.set("sessionId", id, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+        .then((res) => {
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        });
+      
+      await RNSecureStorage.set("sessionUser", username, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+        .then((res) => {
+          console.log(res);
+        }, (err) => {
+          console.log(err);
+        })
+
+      fetchUser(username, parent)
     } 
     else {
-      //this.refs.login_button.dismiss();     loginScreeniin?
-      /*this.setState({                       loginScreeniin?
-        correctCredentials: false,
-      });   */
+      parent.refs.login_button.dismiss();
+      parent.setState({ correctCredentials: false });
+      console.log("handleLogin fail")
     }
 }
 
-async function fetchUser(user) {
-    const response = await Api.get(WEB_URL + "/customer/email/" + user)
+async function fetchUser(username, parent) {
+    console.log("fetching user")
+    const response = await Api.get(WEB_URL + "/customer/email/" + username)
   
     console.log(response)
-    if(response) {
+    if(!response.error) {
 
         let contactData = {
             id: response.id,
@@ -67,42 +98,37 @@ async function fetchUser(user) {
             billing: response.billing,
             shipping: response.shipping,
         }
-
-        return contactData;
+        parent.props.addContact(contactData)
+        parent.props.setLoginStatus(true)
+        parent.props.navigation.navigate('Home');
+    } else {
+      // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
+      console.log("Error fetching user")
     }
     
-
-  /*
-    this.props.addInfo(contactData)
-    this.props.isLogged(true)
-    if (responseJson.billing.address_1 === undefined) {
-      this.props.navigation.navigate('Home');
-    } else {
-      this.props.navigation.navigate('Home');
-    }
-    */
+    
 }
 
 async function afterLoginComplete(token) {
-    const response = await fetch(
-      `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
-      let result = await response.json();
-
-      // use this result as per the requirement
-      //this.props.isLogged(true);                      REDUX
-      //this.props.social.facebook.logged = true;                           REDUX
-      //this.props.social.facebook.profilePictureURL = result.picture.data.url;                     REDUX
-      let data = {
-        id: null,
-        email: result.email,
-        first_name: result.first_name,
-        last_name: result.last_name,
-        billing: {},
-        shipping: {},
-      }
-      //this.props.addInfo(data);                       //REDUX
-      //this.props.navigation.navigate('Home');
-    };
+  console.log("after Login complete")
+  const response = await fetch(
+    `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
+  let result = await response.json();
+  // use this result as per the requirement
+  //this.props.setLoginStatus(true);                      REDUX
+  //this.props.social.facebook.logged = true;                           REDUX
+  //this.props.social.facebook.profilePictureURL = result.picture.data.url;                     REDUX
+  let data = {
+    id: null,
+    email: result.email,
+    first_name: result.first_name,
+    last_name: result.last_name,
+    billing: {},
+    shipping: {},
+  }
+    //this.props.addContact(data);                       //REDUX
+    //this.props.navigation.navigate('Home');
+};
 
 export {
     validate,

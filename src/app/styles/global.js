@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions} from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 
 export const theme = {
@@ -42,7 +42,7 @@ export const theme = {
   },
   navigation: {
     height: 50,
-  }, 
+  },
 };
 export const btn = {
 
@@ -207,6 +207,7 @@ export const app_style = StyleSheet.create({
   },
 
   body: {
+<<<<<<< HEAD
       flex: 1,
       paddingBottom: 20,
       backgroundColor: '#fff',
@@ -257,6 +258,58 @@ export const app_style = StyleSheet.create({
       marginLeft: 30,
       marginRight: 30,
     },
+=======
+    flex: 1,
+    paddingBottom: 20,
+    backgroundColor: '#fff',
+  },
+  containerRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  productTitle: {
+    fontSize: 20,
+  },
+  productImage: {
+    height: 200,
+    width: 300,
+  },
+  price: {
+    fontSize: 20,
+  },
+  quantityButton: {
+    marginHorizontal: 10,
+    fontSize: 20,
+  },
+  countText: {
+    fontSize: 40,
+  },
+  separatorContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    maxWidth: 400
+  },
+  separatorLine: {
+    flex: 2,
+    borderBottomWidth: 1,
+    borderColor: '#8a8a8a',
+    alignItems: 'center',
+  },
+  productDescription: {
+    justifyContent: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+  }
+>>>>>>> 774accccd804264904875b4bcfbd92d723d941af
 
     logo: {
       width: 75,
@@ -285,7 +338,7 @@ export const carousel = {
     width: width,
     height: 300,
     item: {
-      width: (width/2) - 15,
+      width: (width / 2) - 15,
       height: 300,
     }
   }
@@ -320,3 +373,35 @@ export const product_item_list = {
   },
   btn_size: 25,
 }
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logo: {
+    width: 75,//75, 80
+    height: 75,
+    position: 'absolute',
+    zIndex: 4,
+    alignSelf: 'center',
+    top: -40,
+    //elevation: 99,
+  },
+  slidercContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingBottom: 15,
+    paddingHorizontal: 5
+  },
+  footer: {
+    backgroundColor: '#e94641',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 15
+  }
+});

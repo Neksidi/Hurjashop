@@ -1,17 +1,22 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, He} from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, He, IMage} from 'react-native';
 import { bindActionCreators } from 'redux';
 
+import { addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
-import { WEB_URL} from '../../../app/redux/actionTypes';
 import Item from '../../../app/components/list/horizontal/item';
 import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
 import { setNewProducts, setSaleProducts } from '../redux/homeActions';
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import { app_style } from '../../../app/styles/global'
+import Header from '../../../app/components/header/header'
+import { styles, theme } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
+
+
 
 let { width, height } = Dimensions.get('screen');
 
@@ -20,20 +25,19 @@ class Home extends Component {
 		super(props);
 	}
 
-
 	static navigationOptions = {
 		headerStyle: {
-      		backgroundColor: '#fcf',
-    	},
-    	headerTitle: "Koti",
-    	headerRight: (
-    	  <Button
-    	    onPress={() => alert('This is a button!')}
-    	    title="Info"
-			color="green"
-    	  />
-    	),
-  	};
+			backgroundColor: theme.color.navigation.background,
+			height: theme.navigation.height,
+		},
+		headerTitle: <CustomHeader/>,
+		headerLeft: (
+			<View></View>
+			//<Text style={{fontSize: 20, color:"white", right:-80}}>lolllllll</Text>
+		  ),
+		
+	};
+
 
 	componentWillMount() {
 	}
@@ -42,7 +46,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		if(!this.props.products.length) {
+		if (!this.props.products.length) {
 			getProducts(this.props);
 
 			getNewProducts(this.props);
@@ -135,20 +139,25 @@ class Home extends Component {
 		);
 			
 		return (
+
 			<View>
-				<Button 
+			
+
+				<Header />
+
+				<Button
 					title="Kaikki tuotteet"
 					onPress={() =>
 						this.props.navigation.navigate('AllProducts')
 					}
 				/>
-				<Button 
+				<Button
 					title="Tutoriaaliin"
 					onPress={() =>
 						this.props.navigation.navigate('Tutorial')
 					}
 				/>
-				<Button 
+				<Button
 					title="Kategoriaan"
 					onPress={() =>
 						this.props.navigation.navigate('Category')

@@ -3,6 +3,7 @@ package com.hurjashopclient;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.taluttasgiran.rnsecurestorage.RNSecureStoragePackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSecureStoragePackage(),
             new ReactNativeConfigPackage(),
             new VectorIconsPackage(),
             new RNSensitiveInfoPackage(),

@@ -5,6 +5,7 @@ import Tab from '../navigators/tab'
 import PaymentStack from '../navigators/stacks/paymentStack'
 import LoginStack from '../navigators/stacks/loginStack'
 import DrawerScreen from '../../containers/drawer/screens/drawerScreen' 
+import CustomHeader from '../../app/components/header/customHeader'
 // 
 
 const MainNavigator = createDrawerNavigator({
@@ -12,8 +13,8 @@ const MainNavigator = createDrawerNavigator({
 	PaymentProcess: { screen: PaymentStack },
 	LoginProcess: { screen: LoginStack }
 },{
-	navigationOptions: {
-		header: null
+	defaultNavigationOptions: {
+		headerTitle: <CustomHeader/>,
 	},
 	contentComponent: DrawerScreen,
 	InitialRouteName: 'Tab'

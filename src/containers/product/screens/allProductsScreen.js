@@ -4,7 +4,8 @@ import { View, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
 import { getProducts } from '../controllers/requests'
-
+import {  theme } from '../../../app/styles/global'
+//import CustomHeader from '../../../app/components/header/customHeader'
 class AllProducts extends Component {
 	constructor(props) {
 		super(props);
@@ -12,9 +13,9 @@ class AllProducts extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: '#fcf',
+      backgroundColor: theme.color.navigation.background,
     },
-    headerTitle: "Kaikki tuotteet",
+    headerTitle: "Kaikki tuotteet", //<CustomHeader/>
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}
