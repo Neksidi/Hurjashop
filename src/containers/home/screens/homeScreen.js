@@ -28,8 +28,8 @@ class Home extends Component {
 		},
 		headerTitle: <CustomHeader/>,
 		headerLeft: (
-			<View></View>
-			//<Text style={{fontSize: 20, color:"white", right:-80}}>lolllllll</Text>
+			<View></View> //needed to justify logo in center
+		
 		  ),
 		
 	};

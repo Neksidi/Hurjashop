@@ -308,7 +308,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logo: {
-    width: 75,//75, 80
+    width: 78,
     height: 75,
     position: 'absolute',
     zIndex: 4,
