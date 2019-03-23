@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     switch (action.type) {
       case SET_PRODUCT: {
         let { all, single } = state;
-        all = action.payload;
+        single = action.payload;
         let newState = { all, single };
         return newState;
       }
