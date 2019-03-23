@@ -207,58 +207,6 @@ export const app_style = StyleSheet.create({
   },
 
   body: {
-<<<<<<< HEAD
-      flex: 1,
-      paddingBottom: 20,
-      backgroundColor: '#fff',
-  }, 
-    containerRow: {
-      flex: 1, 
-      flexDirection: 'row', 
-      justifyContent: 'center', 
-      alignItems: 'center' 
-    },
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    productTitle: {
-      fontSize: 20,
-    },
-    productImage: {
-      height: 200,
-      width: 300,
-    },
-    price: {
-      fontSize: 20,
-    },
-    quantityButton: {
-      marginHorizontal: 10,
-      fontSize: 20,
-    },
-    countText: {
-      fontSize: 40,
-    },
-    separatorContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginVertical: 20,
-      maxWidth: 400
-    },
-    separatorLine: {
-      flex: 2,
-      borderBottomWidth: 1,
-      borderColor: '#8a8a8a',
-      alignItems: 'center',
-    },
-    productDescription: {
-      justifyContent: 'center',
-      marginLeft: 30,
-      marginRight: 30,
-    },
-=======
     flex: 1,
     paddingBottom: 20,
     backgroundColor: '#fff',
@@ -308,8 +256,7 @@ export const app_style = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 30,
     marginRight: 30,
-  }
->>>>>>> 774accccd804264904875b4bcfbd92d723d941af
+  },
 
     logo: {
       width: 75,

@@ -27,5 +27,5 @@ function getNewProducts(props) {
 
 export { 
   getSaleProducts,
-  getNewProducts
+  getNewProducts,
 }
