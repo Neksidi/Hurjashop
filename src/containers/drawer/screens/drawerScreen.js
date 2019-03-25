@@ -57,7 +57,7 @@ class DrawerScreen extends Component {
                   <View>
                     <UserButtons navigation={this.props.navigation}/>
                   </View>
-                  <View>
+                  <View> 
                     <Categories navigation={this.props.navigation}/>
                   </View>
                   <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
