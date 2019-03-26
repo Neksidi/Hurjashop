@@ -19,8 +19,6 @@
   }
 
   
-
-
   export {
       contains,
       getAttributeIndex
