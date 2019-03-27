@@ -28,7 +28,7 @@ class Categories extends Component {
       <View style={{ width: '100%', borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
         <View>
           <Item title='Kategoriat' icon='cubes' onPress={this.categoryButtonHandler} />
-          <ScrollView style={{ height: 100 }}>
+          <ScrollView style={{ height: 220 }}>
             {
               this.state.categories.map((category, index) => {
                 return (
