@@ -10,7 +10,7 @@ const setProduct = productIndex => (
 
 const setProducts = products => (
   {
-    type: SET_PRODUCT,
+    type: SET_PRODUCTS,
     payload: products,
   }
 );

@@ -1,28 +1,32 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, He, IMage} from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, He, Image, FlatList, TouchableHighlight } from 'react-native';
 import { bindActionCreators } from 'redux';
 
-import { addContact, isLoggedIn } from '../redux/homeActions';
 import Loader from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import Item from '../../../app/components/list/horizontal/item';
-import { getProducts , getCategories } from '../../product/controllers/requests'
+import { getCategories } from '../../category/controller/requests'
+import { setCategories } from '../../category/redux/categoryActions'
+
+import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
-import { setNewProducts, setSaleProducts } from '../redux/homeActions';
+
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import { app_style } from '../../../app/styles/global'
 import Header from '../../../app/components/header/header'
-import { styles, theme } from '../../../app/styles/global'
+import { theme, grid } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
-
-
 
 let { width, height } = Dimensions.get('screen');
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			saleProducts: [],
+			newProducts: [],
+		  }
 	}
 
 	static navigationOptions = {
@@ -47,32 +51,56 @@ class Home extends Component {
 
 	componentDidMount() {
 		if (!this.props.products.length) {
-			getProducts(this.props);
-			getNewProducts(this.props);
-			getSaleProducts(this.props);
-			getCategories(this.props);
-
-			//console.log(props.products);
-			//console.log(props.saleProducts);
-
-			/*
-			if(this.props.products) {
-				console.log(this.props.products);
-				this.setState({
-					saleProducts: getSaleProducts(this.props.products), 
-					//newProducts: getNewProducts(this.props.products), 
-				});
-				console.log(this.state.saleProducts);
-			}
-			*/
+			getProducts(this.props);		
 		}
+
+		if(!this.props.categories.length) {
+			getCategories(this.props);
+		}
+	}
+
+	componentDidUpdate() {
+		if(this.props.products.length) {
+			if(!this.state.saleProducts.length || !this.state.newProducts.length) {
+				this.setState(
+					{
+						saleProducts : getSaleProducts(this.props.products), 
+						newProducts : getNewProducts(this.props.products),
+					}
+				);
+			}
+		}
+		console.log("start");
+		console.log(this.props.categories);
+		console.log("end");
+	}
+
+	renderItem = ({item, index}) => {
+		if (item.empty === true) {
+		  return <View style={[grid.item, grid.itemInvisible]} />;
+		}
+		return (
+		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { item: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
+				<Text style={grid.itemText}>{item.name}</Text>
+			</TouchableHighlight>
+		);
+	}
+
+	formatRow = (data, numColumns) => {
+		const numberOfFullRows = Math.floor(data.length / numColumns);
+		let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
+		while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
+		  data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+		  numberOfElementsLastRow++;
+		}
+		return data;
 	}
 
 	render() {
 
-
 		let all =
-		this.props.products && this.props.products.length > 0 ? (
+		this.props.products ? (
+			
 			<Carousel
 				data={this.props.products}
 				firstItem={(this.props.products - 1) / 2}
@@ -89,10 +117,10 @@ class Home extends Component {
 		);
 
 		let sales =
-		this.props.saleProducts ? (
+		this.state.saleProducts ? (
 			<Carousel
-				data={this.props.saleProducts}
-				firstItem={(this.props.saleProducts - 1) / 2}
+				data={this.state.saleProducts}
+				firstItem={(this.state.saleProducts - 1) / 2}
 				keyExtractor={(item, index) => index.toString()}
 				sliderWidth={width}
 				itemWidth={width / 2 - 15}
@@ -106,7 +134,7 @@ class Home extends Component {
 		);
 
 		let news =
-		this.props.newProducts ? (
+		this.state.newProducts ? (
 			<Carousel
 				data={this.state.newProducts}
 				firstItem={(this.state.newProducts - 1) / 2}
@@ -123,24 +151,37 @@ class Home extends Component {
 			<Loader />
 		);
 
-		let categories = 
+		
+		  
+		
+
+		let productCategories = 
 		this.props.categories ? (
-			<FlatList
-				data={this.props.categories}
-				renderItem={({ item }) => (
-					<View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
-				  	<Item data={item} onPress={() => this.props.navigation.navigate('Category', { item: category })}/>
-	
-					{/*<Image style={styles.imageThumbnail} source={{ uri: item.src }} />*/}
+			/*
+			  <FlatList
+       
+				data={ this.props.categories }
+				renderItem={({item}) => 
+				
+					<View onPress={() => this.props.navigation.navigate('Category', { item: item })} style={{flex:1, flexDirection: 'row', width:'100%', alignSelf: 'center'}}>
+						<Image source = {{ uri: item.image.src }} style={theme.imageView} />
+						<Text style={theme.textView}>{item.name}</Text>
 					</View>
-				)}
-				numColumns={3}
-				keyExtractor={(item, index) => index}
-			/>
+				}
+
+				keyExtractor={(item, index) => index.toString()}
+				*/
+				<FlatList 
+					data={this.formatRow(this.props.categories, 2)}
+					style={grid.container}
+					renderItem={this.renderItem}
+					numColumns={2}
+				/>
+
 		) : (
 			<Loader />
 		);
-			
+		
 		return (
 
 			<View>
@@ -185,7 +226,7 @@ class Home extends Component {
 
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Tuote kategoriat</Text>
-							{categories}
+							{productCategories}
 						</View>
 				</ScrollView>
 
@@ -198,12 +239,11 @@ class Home extends Component {
 const mapStateToProps = (state) => {
 	const { home } = state
 	const products = state.products.all
-	const newProducts = state.products.newProducts
-	const saleProducts = state.products.saleProducts
-	return { home, products, newProducts, saleProducts }
+	const categories = state.categories.all;
+	return { home, products , categories }
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts , setNewProducts, setSaleProducts }, dispatch));
+	bindActionCreators({ setProducts, setCategories }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
