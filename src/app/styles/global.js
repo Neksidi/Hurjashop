@@ -59,7 +59,7 @@ export const theme = {
       padding:10,
       color: '#000'
   
-  }
+  },
 
 };
 export const btn = {

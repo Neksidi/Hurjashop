@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, He, Image, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight } from 'react-native';
 import { bindActionCreators } from 'redux';
 
 import Loader from '../../../app/components/common/loader/loader';
@@ -70,9 +70,6 @@ class Home extends Component {
 				);
 			}
 		}
-		console.log("start");
-		console.log(this.props.categories);
-		console.log("end");
 	}
 
 	renderItem = ({item, index}) => {
@@ -81,7 +78,13 @@ class Home extends Component {
 		}
 		return (
 		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { item: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
-				<Text style={grid.itemText}>{item.name}</Text>
+				<ImageBackground style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.image.src}}>
+					<Text style={[grid.itemText, {backgroundColor:theme.color.bg.main, color:theme.color.hurja.main}]}>
+						{item.name}
+					</Text>
+				</ImageBackground>
+
+				
 			</TouchableHighlight>
 		);
 	}
@@ -157,20 +160,6 @@ class Home extends Component {
 
 		let productCategories = 
 		this.props.categories ? (
-			/*
-			  <FlatList
-       
-				data={ this.props.categories }
-				renderItem={({item}) => 
-				
-					<View onPress={() => this.props.navigation.navigate('Category', { item: item })} style={{flex:1, flexDirection: 'row', width:'100%', alignSelf: 'center'}}>
-						<Image source = {{ uri: item.image.src }} style={theme.imageView} />
-						<Text style={theme.textView}>{item.name}</Text>
-					</View>
-				}
-
-				keyExtractor={(item, index) => index.toString()}
-				*/
 				<FlatList 
 					data={this.formatRow(this.props.categories, 2)}
 					style={grid.container}
