@@ -7,8 +7,6 @@ import { DrawerActions } from 'react-navigation';
 import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
-import { renderUserLinks, renderAuthLinks, logOut } from '../controllers/drawerController'
-import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
 import Categories from '../components/categories'
 import UserButtons from '../components/userButtons'
@@ -55,7 +53,9 @@ class DrawerScreen extends Component {
                 </TouchableOpacity>
                 <View style={{ width: '100%' }}>
                   <View>
-                    <UserButtons navigation={this.props.navigation}/>
+                    {
+                      <UserButtons navigation={this.props.navigation}/>
+                    }
                   </View>
                   <View>
                     <Categories navigation={this.props.navigation}/>
@@ -96,13 +96,9 @@ DrawerScreen.propTypes = {
   navigation: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setLoginStatus }, dispatch));
-
 const mapStateToProps = (state) => {
-  const  isLoggedIn  = state.user.loggedIn
   const contact = state.user.contact
-	return { isLoggedIn, contact }
+	return { contact }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (DrawerScreen);
+export default connect(mapStateToProps, null) (DrawerScreen);

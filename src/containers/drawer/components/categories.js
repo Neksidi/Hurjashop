@@ -7,7 +7,6 @@ import { DrawerActions } from 'react-navigation';
 import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
-import { renderUserLinks, renderAuthLinks, logOut } from '../controllers/drawerController'
 import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
 

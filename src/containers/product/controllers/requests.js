@@ -2,7 +2,7 @@ import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
 async function getProducts(props) {  
-  var response = await Api.get(WEB_URL + '/products');  
+  var response = await Api.get(WEB_URL + '/products', false);  
   console.log(response)
   if(response){
     if(response.error) {
@@ -15,7 +15,7 @@ async function getProducts(props) {
 }
 
 async function getProduct(id) {
-  var response = await Api.get(WEB_URL + '/product/'+id);  
+  var response = await Api.get(WEB_URL + '/product/'+id, false);  
 
   if(response){
     if(response.error) {
