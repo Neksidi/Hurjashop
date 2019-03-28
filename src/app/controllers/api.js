@@ -1,65 +1,58 @@
-import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
+import { getSessionId, getSessionUser } from '../controllers/secureStorage'
+
 
 class Api {
-    static async headers() {
-      var id = '';
-      var user = '';
-      //Check if session exists in phone storage
-      //Then set values if found
-      console.log("header start")
-      await RNSecureStorage.get("sessionId").then((value) => {
-        console.log("Getting id")
-        console.log(value) // Will return direct value
-        id = value;
-        }).catch((err) => {
-          //console.log(err)
-        })
-
-      await RNSecureStorage.get("sessionUser").then((value) => {
-        console.log("Getting user")
-        console.log(value) // Will return direct value
-        user = value;
-        }).catch((err) => {
-          //console.log(err)
-        });
-
-      console.log("Double check")
-      console.log(user)
-      console.log(id)
-      /*
-      *Replace id and user with values
-      * id = storage.get("sessionId")
-      * user = storage.get("sessionUser")
-      */
-
-      return {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'dataType': 'json',
-        'sessionId': id,
-        'sessionUser': user,
+    static async headers(requiresAuth) {
+      var id = false;
+      var user = false;
+      
+      if (requiresAuth) {
+        var id = await getSessionId();
+        var user = await getSessionUser();
+      }
+        //Check if session exists in phone storage
+        //Then set values if found
+        console.log("header start")
+        console.log(user)
+        console.log(id)
+      
+      if(requiresAuth && id && user) {
+        return {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'dataType': 'json',
+          'sessionId': id,
+          'sessionUser': user,
+        }
+      }
+      else  {
+        return {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'dataType': 'json',
+        }
       }
     }
   
-    static async get(route) {
-      return await this.xhr(route, null, 'GET');
+    static async get(route, requiresAuth) {
+      return await this.xhr(route, null, 'GET', requiresAuth);
     }
   
-    static async put(route, params) {
-      return this.xhr(route, params, 'PUT');
+    static async put(route, params, requiresAuth) {
+      return this.xhr(route, params, 'PUT', requiresAuth);
     }
   
-    static async post(route, params) {
-      return this.xhr(route, params, 'POST');
+    static async post(route, params, requiresAuth) {
+      return this.xhr(route, params, 'POST', requiresAuth);
     }
   
-    static async delete(route, params) {
-      return this.xhr(route, params, 'DELETE');
+    static async delete(route, params, requiresAuth) {
+      return this.xhr(route, params, 'DELETE', requiresAuth);
     }
   
-    static async xhr(route, params, method) {
+    static async xhr(route, params, method, requiresAuth) {
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
-      options.headers = await Api.headers()
+      options.headers = await Api.headers(requiresAuth)
       //options.credentials = 'same-origin'
       console.log(options)
       console.log(route)
@@ -80,6 +73,10 @@ class Api {
             }
             case '4': {
               response.error = "Failed";
+              return response;
+            }
+            case '5': {
+              response.error = "Server error";
               return response;
             }
             default: {

@@ -7,12 +7,11 @@ import { DrawerActions } from 'react-navigation';
 import Item from '../components/item'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { theme } from '../../../app/styles/global'
-import { renderUserLinks, renderAuthLinks, logOut } from '../controllers/drawerController'
 import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
 
 class Categories extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       categories: ['Paidat', 'Lippikset', 'Mäkiautot']
@@ -20,25 +19,25 @@ class Categories extends Component {
   };
 
   categoryButtonHandler() {
-      console.log("clicketi click")
+    console.log("clicketi click")
   }
-  
+
   render() {
-    return (      
-              <View style={{ width: '100%' }}>  
-                    <View>
-                        <Item title='Kategoriat' icon='cubes' onPress={this.categoryButtonHandler} />
-                        <ScrollView>
-                        {
-                        this.state.categories.map((category, index) => {
-                            return (
-                                <Item key={index} title={category + ' (' + category.count + ')'} arrow onPress={() => this.props.navigation.navigate('Category', {item: category})}/>
-                            );
-                        })
-                        }
-                        </ScrollView>
-                    </View>
-                </View>
+    return (
+      <View style={{ width: '100%', borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
+        <View>
+          <Item title='Kategoriat' icon='cubes' onPress={this.categoryButtonHandler} />
+          <ScrollView style={{ height: 220 }}>
+            {
+              this.state.categories.map((category, index) => {
+                return (
+                  <Item key={index} title={category + ' (' + category.count + ')'} arrow onPress={() => this.props.navigation.navigate('Category', { item: category })} />
+                );
+              })
+            }
+          </ScrollView>
+        </View>
+      </View>
     );
   }
 }
@@ -48,4 +47,4 @@ const mapStateToProps = (state) => {
 };
 */
 
-export default connect(null, null) (Categories);
+export default connect(null, null)(Categories);

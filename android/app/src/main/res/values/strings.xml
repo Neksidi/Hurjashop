@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HurjaShopClient</string>
+    <string name="facebook_app_id">2089912547923967</string>
+    <string name="fb_login_protocol_scheme">fb2089912547923967</string>
 </resources>

@@ -43,6 +43,24 @@ export const theme = {
   navigation: {
     height: 50,
   },
+
+  imageView: {
+  
+      width: '50%',
+      height: 100 ,
+      margin: 7,
+      borderRadius : 7
+  
+  },
+  
+  textView: {
+      width:'50%', 
+      textAlignVertical:'center',
+      padding:10,
+      color: '#000'
+  
+  },
+
 };
 export const btn = {
 
@@ -179,7 +197,6 @@ export const app_style = StyleSheet.create({
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 28,
     alignSelf: 'center',
-    paddingBottom: 5,
   },
   front_slider_title: {
     fontFamily: 'BarlowCondensed-Light',
@@ -256,8 +273,28 @@ export const app_style = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 30,
     marginRight: 30,
-  }
+  },
 
+    logo: {
+      width: 75,
+      height: 75
+    },
+    
+    sliderContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingTop: 5,
+      paddingBottom: 15,
+      paddingHorizontal: 5
+    },
+    footer: {
+      backgroundColor: '#e94641',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: 20,
+      paddingBottom: 15
+    }
 });
 
 export const carousel = {
@@ -269,6 +306,27 @@ export const carousel = {
       height: 300,
     }
   }
+}
+
+export const grid = {
+    container: {
+      flex: 1,
+      marginVertical: 20,
+    },
+    item: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      margin: 5,
+    },
+    itemInvisible: {
+      backgroundColor: 'transparent',
+    },
+    itemText: {
+      color: '#fff',
+      fontSize:30,
+      fontWeight:'bold',
+    },
 }
 
 export const carousel_styles = StyleSheet.create({
@@ -308,7 +366,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logo: {
-    width: 75,//75, 80
+    width: 78,
     height: 75,
     position: 'absolute',
     zIndex: 4,
