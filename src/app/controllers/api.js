@@ -75,6 +75,10 @@ class Api {
               response.error = "Failed";
               return response;
             }
+            case '5': {
+              response.error = "Server error";
+              return response;
+            }
             default: {
               response.error = "No status given";
               return response;

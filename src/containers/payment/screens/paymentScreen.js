@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, ScrollView, Image, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, Dimensions, TouchableOpacity, ImageBackground, Button } from 'react-native';
+import { newCardPayment, existingCardPayment } from '../controllers/paymentController'
 
 
 class Payment extends Component {
@@ -10,7 +11,11 @@ class Payment extends Component {
 			//TODO: change to true when loading function is working
 			isLoading: false,
 			data: null,
-			categories: null
+			categories: null,
+			isPaid: false,
+			isCancelled: false,
+			isLoading: false,
+			token: "asd"
 		};
     }
 
@@ -18,6 +23,16 @@ class Payment extends Component {
 		return (
 			<View>
                 <Text>Pay pls</Text>
+				<Button
+				title="New card"
+				onPress={() => { newCardPayment(1234, "Test order") }}
+				>
+				</Button>
+				<Button
+				title="Existing card"
+				onPress={() => { existingCardPayment(1234, this.state.token) }}
+				>
+				</Button>
 			</View>
 		);
 	}

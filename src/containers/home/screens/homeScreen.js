@@ -214,7 +214,7 @@ class Home extends Component {
 						</View>
 
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Tuote kategoriat</Text>
+							<Text style={app_style.front_item_title}>Tuotekategoriat</Text>
 							{productCategories}
 						</View>
 				</ScrollView>

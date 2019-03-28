@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, ScrollView, Image, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, Dimensions, TouchableOpacity, ImageBackground, Button } from 'react-native';
 
 class Search extends Component {
 	constructor(props) {
@@ -17,6 +17,10 @@ class Search extends Component {
 		return (
 			<View>
                 <Text>Search</Text>
+				<Button 
+				title="To payment (DEBUG)"
+				onPress={() => this.props.navigation.navigate('Payment')}>
+				</Button>
 			</View>
 		);
 	}
