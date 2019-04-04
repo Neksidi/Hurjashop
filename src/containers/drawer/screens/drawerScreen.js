@@ -51,7 +51,7 @@ class DrawerScreen extends Component {
                   onPress={() => this.props.navigation.closeDrawer()}>
                   <FAIcon name='times' size={25} color='#fff' />
                 </TouchableOpacity>
-                <View style={{ width: '100%' }}>
+                <View style={{ width: '100%', maxHeight:220 }}>
                   <View>
                     {
                       <UserButtons navigation={this.props.navigation}/>
