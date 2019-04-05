@@ -5,6 +5,7 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Register extends Component {
 
@@ -35,19 +36,19 @@ export default class Register extends Component {
     }
   };
 
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.first_name !== this.state.first_name)
-      this.setState({first_nameValidation: validate("first_name", this)})
-    if(prevState.last_name !== this.state.last_name)
-      this.setState({last_nameValidation: validate("last_name", this)})
-    if(prevState.email !== this.state.email)
-      this.setState({email: validate("email", this)})
-    if(prevState.password !== this.state.password)
-      this.setState({passwordValidation: validate("password", this)})
-    if(prevState.password_confirm !== this.state.password_confirm)
-      this.setState({password_confirmValidation: validate("password_confirm", this)})
-    if(prevState.isFilled !== validateAll(this)) {
-      this.setState({isFilled: !isFilled})
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.first_name !== this.state.first_name)
+      this.setState({ first_nameValidation: validate("first_name", this) })
+    if (prevState.last_name !== this.state.last_name)
+      this.setState({ last_nameValidation: validate("last_name", this) })
+    if (prevState.email !== this.state.email)
+      this.setState({ email: validate("email", this) })
+    if (prevState.password !== this.state.password)
+      this.setState({ passwordValidation: validate("password", this) })
+    if (prevState.password_confirm !== this.state.password_confirm)
+      this.setState({ password_confirmValidation: validate("password_confirm", this) })
+    if (prevState.isFilled !== validateAll(this)) {
+      this.setState({ isFilled: !isFilled })
     }
   }
 
@@ -57,21 +58,21 @@ export default class Register extends Component {
     let visibleConfirmationIcon = this.state.visibleConfirmation ? ('eye-off') : ('eye');
 
     return (
-      <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{flex: 1, padding: 20,}}>
+      <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{ flex: 1, padding: 20, }}>
         <TouchableOpacity style={styles.customBackButton} onPress={() => this.props.navigation.goBack()}>
           <FeatherIcon name='chevron-left' size={25} color='#fff' />
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
+          <ScrollView style={{ width: '100%' }}>
+            <View style={styles.logoContainer}>
+              <Image source={require('../../../assets/images/hurja_shop_logo.png')} style={styles.logo} resizeMode='contain' />
+            </View>
 
-          <View style={styles.logoContainer}>
-            <Image source={require('../../../assets/images/hurja_shop_logo.png')} style={styles.logo} resizeMode='contain' />
-          </View>
+            <View style={styles.formContainer}>
 
-          <View style={styles.formContainer}>
-
-            <Text style={styles.formTitle}>Rekisteröidy</Text>
-          {/*this.state.correctCredentials == false && this.state.displayErrorMessage && invalidCredentials*/}
+              <Text style={styles.formTitle}>Rekisteröidy</Text>
+              {/*this.state.correctCredentials == false && this.state.displayErrorMessage && invalidCredentials*/}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Etunimi</Text>
                 <View style={styles.textInputContainer}>
@@ -79,7 +80,7 @@ export default class Register extends Component {
                     style={styles.textInput}
                     underlineColorAndroid='transparent'
                     selectionColor={'#fff'}
-                    onChangeText={(first_name) => this.setState({first_name: first_name})}
+                    onChangeText={(first_name) => this.setState({ first_name: first_name })}
                     value={this.state.first_name}
                     returnKeyType='next'
                     keyboardType='email-address'
@@ -87,7 +88,7 @@ export default class Register extends Component {
                     onSubmitEditing={() => {
                       this.lastNameTextInput.focus();
                       validate('first_name', this);
-                    }}/>
+                    }} />
                 </View>
               </View>
               <View style={styles.inputContainer}>
@@ -97,16 +98,16 @@ export default class Register extends Component {
                     style={styles.textInput}
                     underlineColorAndroid='transparent'
                     selectionColor={'#fff'}
-                    onChangeText={(last_name) => this.setState({last_name: last_name})}
+                    onChangeText={(last_name) => this.setState({ last_name: last_name })}
                     value={this.state.last_name}
                     returnKeyType='next'
                     keyboardType='email-address'
                     blurOnSubmit={false}
-                    ref={(input) => {this.lastNameTextInput = input;}}
+                    ref={(input) => { this.lastNameTextInput = input; }}
                     onSubmitEditing={() => {
                       this.emailTextInput.focus();
                       validate('last_name', this);
-                    }}/>
+                    }} />
                 </View>
               </View>
               <View style={styles.inputContainer}>
@@ -116,16 +117,16 @@ export default class Register extends Component {
                     style={styles.textInput}
                     underlineColorAndroid='transparent'
                     selectionColor={'#fff'}
-                    onChangeText={(email) => this.setState({email: email})}
+                    onChangeText={(email) => this.setState({ email: email })}
                     value={this.state.email}
                     returnKeyType='next'
                     keyboardType='email-address'
                     blurOnSubmit={false}
-                    ref={(input) => {this.emailTextInput = input;}}
+                    ref={(input) => { this.emailTextInput = input; }}
                     onSubmitEditing={() => {
                       this.passwordTextInput.focus();
                       validate('email', this);
-                    }}/>
+                    }} />
                 </View>
               </View>
 
@@ -140,60 +141,60 @@ export default class Register extends Component {
                     autoCapitalize='none'
                     selectionColor={'#fff'}
                     secureTextEntry={!this.state.visiblePassword}
-                    onChangeText={(password) => this.setState({password: password})}
+                    onChangeText={(password) => this.setState({ password: password })}
                     blurOnSubmit={false}
-                    ref={(input) => {this.passwordTextInput = input;}}
-                    onSubmitEditing={() =>{
+                    ref={(input) => { this.passwordTextInput = input; }}
+                    onSubmitEditing={() => {
                       this.passwordConfirmTextInput.focus();
                       validate('password', this);
                     }}
                   />
-                  <TouchableOpacity style={styles.visibilityButton} onPress={() => this.setState({visiblePassword: !this.state.visiblePassword})}>
+                  <TouchableOpacity style={styles.visibilityButton} onPress={() => this.setState({ visiblePassword: !this.state.visiblePassword })}>
                     <FeatherIcon name={visiblePasswordIcon} size={20} color='#fff' />
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Salasanan varmistus</Text>
-              <View style={styles.textInputContainer}>
-                <TextInput
-                  style={styles.textInput}
-                  underlineColorAndroid='transparent'
-                  autoCorrect={false}
-                  autoCapitalize='none'
-                  selectionColor={'#fff'}
-                  secureTextEntry={!this.state.visibleConfirmation}
-                  onChangeText={(password_confirm) => this.setState({password_confirm: password_confirm})}
-                  blurOnSubmit={false}
-                  ref={(input) => {this.passwordConfirmTextInput = input;}}
-                  onSubmitEditing={() =>{
-                    Keyboard.dismiss();
-                    validate('password_confirm', this);
-                    //this._handleLoginOnSubmitEditing();
-                  }}
-                />
-                <TouchableOpacity style={styles.visibilityButton} onPress={() => this.setState({visibleConfirmation: !this.state.visibleConfirmation})}>
-                  <FeatherIcon name={visibleConfirmationIcon} size={20} color='#fff' />
-              </TouchableOpacity>
-            </View>
-          </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputTitle}>Salasanan varmistus</Text>
+                <View style={styles.textInputContainer}>
+                  <TextInput
+                    style={styles.textInput}
+                    underlineColorAndroid='transparent'
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                    selectionColor={'#fff'}
+                    secureTextEntry={!this.state.visibleConfirmation}
+                    onChangeText={(password_confirm) => this.setState({ password_confirm: password_confirm })}
+                    blurOnSubmit={false}
+                    ref={(input) => { this.passwordConfirmTextInput = input; }}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                      validate('password_confirm', this);
+                      //this._handleLoginOnSubmitEditing();
+                    }}
+                  />
+                  <TouchableOpacity style={styles.visibilityButton} onPress={() => this.setState({ visibleConfirmation: !this.state.visibleConfirmation })}>
+                    <FeatherIcon name={visibleConfirmationIcon} size={20} color='#fff' />
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-          <View style={{width: '100%', marginVertical: 10,}}>
-               <CheckBox
-                  title={<View style={{flex: 1, flexDirection: 'row'}}><Text style={{marginLeft: 5}}>Olen lukenut ja hyväksyn kaikki </Text><Text style={{color: 'blue'}} onPress={() => this.props.navigation.navigate('Terms')}>käyttöehdot</Text><Text>.</Text></View>}
+              <View style={{ width: '100%', marginVertical: 10, }}>
+                <CheckBox
+                  title={<View style={{ flex: 1, flexDirection: 'row' }}><Text style={{ marginLeft: 5 }}>Olen lukenut ja hyväksyn kaikki </Text><Text style={{ color: 'blue' }} onPress={() => this.props.navigation.navigate('Terms')}>käyttöehdot</Text><Text>.</Text></View>}
                   checked={this.state.checked}
-                  onPress={() => { this.state.checked ? ( this.setState({checked: false}) ) : (this.setState({checked: true})); }}
+                  onPress={() => { this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true })); }}
                   containerStyle={styles.checkBox}
-              	/>
-          </View>
+                />
+              </View>
 
-          <View style={styles.submitButtonContainer}>
-            <ButtonWithAnimatedLoader ref='register_button' title='Rekisteröidy' errorHandler={() => {console.log("Error handle")}} onPress={() => {register()}} disabled={!this.state.isFilled}/>
-          </View>
+              <View style={styles.submitButtonContainer}>
+                <ButtonWithAnimatedLoader ref='register_button' title='Rekisteröidy' errorHandler={() => { console.log("Error handle") }} onPress={() => { register() }} disabled={!this.state.isFilled} />
+              </View>
 
-          </View>
-
+            </View>
+          </ScrollView>
         </View>
 
       </ImageBackground>
@@ -217,10 +218,11 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     paddingBottom: 30,
+    alignSelf: "center"
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
   },
   formContainer: {
     alignItems: 'flex-start',
