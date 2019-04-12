@@ -1,22 +1,32 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,} from 'react-native';
+import { View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
 import { bindActionCreators } from 'redux';
-import {btn, theme } from '../../../app/styles/global'
-
-
+import {btn, theme,  } from '../../../app/styles/global'
+import { getProducts } from '../../product/controllers/requests'
+import { setProducts } from '../../product/redux/productActions'
+import Gallery from '../../../app/components/common/images/gallery'
+import Carousel, { Pagination } from 'react-native-snap-carousel'
+import Loader from '../../../app/components/common/loader/loader'
+import cartItem from '../components/cartItem'
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 //import Price from '../utility/Price'
+let { width, height } = Dimensions.get('screen');
 
 
 class Cart extends Component {
 	constructor(props) {
-		super(props);
-	}
+    super(props);
+    this.state = {
+  
+    }
+
+  }
+  
 
 	static navigationOptions = {
 		headerStyle: {
@@ -25,6 +35,16 @@ class Cart extends Component {
     headerTitle: "Ostoskori",
  
   };
+
+  componentDidMount() {
+    this.setState({item: this.props.navigation.getParam('item', null)});
+    
+    /* TODO: Löydä samankaltaiset tuotteet
+    if(!this.props.products.length) {
+			getProducts(this.props);
+    }
+    */
+  }
 
   //Kesken
   _onDelete(item) {
@@ -39,6 +59,16 @@ class Cart extends Component {
       }
     }
   }
+  
+  renderItem(item){
+    return(
+      <View key={item.id} style={{ flex: 1 }}>
+        <Image source={{uri: item.src}} style={{ width: '100%', height: '100%'}} resizeMode='cover'/>
+      </View>
+    );
+  }
+
+  
   
   //Kesken
   _calcTotalPrice(){
@@ -65,6 +95,39 @@ class Cart extends Component {
     
   } 
 
+  priceToString(price) {
+    return parseFloat(price).toFixed(2).toString().replace('.', ',');
+  }
+  
+  renderPrice(item){
+    const priceStyle = {
+      fontFamily: 'BarlowCondensed-Regular',
+      fontSize: 18,
+    }
+
+    if(item.attributes.length > 0){
+
+      let prices = item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
+      for(i in prices){
+        prices[i] = prices[i].replace('&nbsp;&euro;', '');
+      }
+
+      if(prices.length === 2){
+        return(
+          <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+            { this.priceToString(prices[0]) }€ </Text><Text style={ priceStyle }> {this.priceToString(prices[1])}€ </Text></View>
+        );
+      }
+    }
+    if(item.sale_price != ''){
+      return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+        { this.priceToString(item.regular_price) }€ </Text><Text style={ priceStyle }>{this.priceToString(item.sale_price)}€ </Text></View>
+    } else {
+      return <Text style={ priceStyle }>{this.priceToString(item.price)}€</Text>
+    }
+  }
+  
+
 	render() {
 /* //Ostoskorin tarkistus
     if(this.props.cart.length > 0){
@@ -89,12 +152,18 @@ class Cart extends Component {
                 </View>
               </View>
 
+              {/**Tähän ei tule dataa, vittu */}
               <View style={styles.cartContentContainer}>
-              <FlatList keyExtractor={(_ , i) => i.toString()} data={this.props.cart} renderItem={({item}) => <Item data={item} parentFlatList={this} />} />
+              <FlatList 
+              keyExtractor={(_ , i) => i.toString()} 
+              data={this.props.cart} 
+              renderItem={({item}) => <Item data={item} 
+              parentFlatList={this} />} />
             </View>
+      
+           
+           
             
-            
-
           </ScrollView>
             <View
               style={styles.footerContainer}

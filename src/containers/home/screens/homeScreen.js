@@ -196,7 +196,16 @@ class Home extends Component {
 						this.props.navigation.navigate('Category')
 					}
 				/>
-				*/}
+				*/
+				
+				<Button
+					title="Ostoskoriin"
+					onPress={() =>
+						this.props.navigation.navigate('Cart')
+					}
+				/>
+				
+				}
 				
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Kaikki tuotteet</Text>

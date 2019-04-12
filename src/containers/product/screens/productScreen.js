@@ -357,6 +357,7 @@ class Product extends Component {
               </View>
             </View>
             {/* PRODUCT INFO + SHARE */}
+    {}
             <View style={{ width: '100%', backgroundColor: '#eee', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
                 <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>

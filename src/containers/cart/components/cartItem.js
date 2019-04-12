@@ -4,11 +4,11 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Image, Anima
 // Vendor components
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
-import { theme } from '../../../styles/Global'
-import Gallery from '../../../components/common/images/gallery'
-import Price from '../../../utility/Price'
+import { theme } from '../../../app/styles/global'
+import Gallery from '../../../app/components/common/images/gallery'
+//import Price from '../../../utility/Price'
 
-import { removeItemFromCart, increaseCartQuantity, increaseCartQuantityWithVariations, decreaseCartQuantity, decreaseCartQuantityWithVariations } from '../../../redux/actioncreators'
+import { removeItemFromCart, increaseCartQuantity, increaseCartQuantityWithVariations, decreaseCartQuantity, decreaseCartQuantityWithVariations } from '../redux/cartActions'
 
 class cartItem extends Component {
 

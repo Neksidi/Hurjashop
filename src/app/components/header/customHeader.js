@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import { Header } from 'react-navigation';
-import { View, Platform, Text, Image, Button} from 'react-native';
+import { View, Platform, Text, Image, Button, TouchableOpacity} from 'react-native';
 import { styles, theme } from '../../../app/styles/global'
+import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
+
+
+const icon_size = 25;
+const icon_color = theme.color.navigation.main;
+
 class CustomHeader extends Component {
+
+	onPress(){
+		this.props.navigation.navigate('Cart')
+	}
+
+
     render() {
         return (
 		    /*<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -26,15 +38,15 @@ class CustomHeader extends Component {
 				    <Image style={styles.logo} source={require('../../../assets/images/hurja_shop_logo.png')} />
 			    </View>
 				<View > 
-                    <Button
-				        onPress={() => alert('This is a button!')}
-			        	title="Info"
-				        color="green"
-			        />
+					<TouchableOpacity onPress={ () => {this.props.onPress() } } style={styles.headerContainer}>
+       				 	<FAIcon name={ 'shopping-cart' } size={ icon_size } color={ icon_color } style={ styles.icon } ></FAIcon>
+      				</TouchableOpacity>
                 </View>
+			
 		    </View>
         );
-    }
+	}
+	
 };
 
 export default CustomHeader;
