@@ -17,7 +17,7 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 //Styles
 //import { theme } from '../../../app/styles/global'
 import { styles } from '../styles/loginStyles'
-import { validate, handleLogin, fetchUser } from '../controllers/loginController'
+import { validate, handleLogin, fetchUser, registerFb } from '../controllers/loginController'
 import { setLoginStatus, addContact } from '../redux/userActions'
 import { bindActionCreators } from 'redux';
 //Facebook login
@@ -69,6 +69,7 @@ class Login extends Component {
       this.props.navigation.navigate('Home');
   }
 
+  //Creates the facebook login popup
   async handleFacebookLogin() {
     let { isCancelled } = await LoginManager.logInWithReadPermissions(['public_profile','email', ]);
 
@@ -83,26 +84,29 @@ class Login extends Component {
     }
   }
 
+  //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
     const response = await fetch(
-    `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
+    `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,picture.type(large),cover&access_token=${token}`);
     
     let result = await response.json();
+    console.log("profile data")
+    console.log(result)
 
       // use this result as per the requirement
       //this.props.isLogged(true);      // setLoginStatus
       //this.props.social.facebook.logged = true;
       //this.props.social.facebook.profilePictureURL = result.picture.data.url;
       let data = {
-        id: null,
+        id: result.id,
         email: result.email,
         first_name: result.first_name,
         last_name: result.last_name,
-        billing: {},
-        shipping: {},
       }
       //this.props.addInfo(data); // addContact
       console.log(data)
+      console.log("Calling registerFb")
+      registerFb(data);
       this.props.navigation.navigate('Home');
   };
 

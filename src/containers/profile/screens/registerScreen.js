@@ -37,18 +37,32 @@ export default class Register extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.first_name !== this.state.first_name)
-      this.setState({ first_nameValidation: validate("first_name", this) })
-    if (prevState.last_name !== this.state.last_name)
-      this.setState({ last_nameValidation: validate("last_name", this) })
-    if (prevState.email !== this.state.email)
-      this.setState({ email: validate("email", this) })
-    if (prevState.password !== this.state.password)
+    console.log(prevState)
+    console.log(this.state)
+    if (prevState.first_name !== this.state.first_name) {
+      console.log("different first bool")
+      this.setState({ first_nameValidation: validate("firstname", this) })
+    }
+    if (prevState.last_name !== this.state.last_name) {
+      console.log("different last bool") 
+      this.setState({ last_nameValidation: validate("lastname", this) })
+    }
+    if (prevState.email !== this.state.email) {
+      console.log("different email bool")
+      this.setState({ emailValidation: validate("email", this) })
+    }
+    if (prevState.password !== this.state.password) {
+      console.log("different password bool")
       this.setState({ passwordValidation: validate("password", this) })
-    if (prevState.password_confirm !== this.state.password_confirm)
+    }
+    if (prevState.password_confirm !== this.state.password_confirm) {
+      console.log("different confirm bool")
       this.setState({ password_confirmValidation: validate("password_confirm", this) })
-    if (prevState.isFilled !== validateAll(this)) {
-      this.setState({ isFilled: !isFilled })
+    }
+    if (this.state.isFilled != validateAll(this)) {
+      console.log("different filled bool " + this.state.isFilled)
+      console.log("Setting filled to " + !this.state.isFilled)
+      this.setState({ isFilled: !this.state.isFilled })
     }
   }
 
@@ -87,7 +101,7 @@ export default class Register extends Component {
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
                       this.lastNameTextInput.focus();
-                      validate('first_name', this);
+                      validate('firstname', this);
                     }} />
                 </View>
               </View>
@@ -106,7 +120,7 @@ export default class Register extends Component {
                     ref={(input) => { this.lastNameTextInput = input; }}
                     onSubmitEditing={() => {
                       this.emailTextInput.focus();
-                      validate('last_name', this);
+                      validate('lastname', this);
                     }} />
                 </View>
               </View>
@@ -190,7 +204,7 @@ export default class Register extends Component {
               </View>
 
               <View style={styles.submitButtonContainer}>
-                <ButtonWithAnimatedLoader ref='register_button' title='Rekisteröidy' errorHandler={() => { console.log("Error handle") }} onPress={() => { register() }} disabled={!this.state.isFilled} />
+                <ButtonWithAnimatedLoader ref='register_button' title='Rekisteröidy' errorHandler={() => { console.log("Error handle") }} onPress={() => { register(this.state) }} disabled={!this.state.isFilled} />
               </View>
 
             </View>

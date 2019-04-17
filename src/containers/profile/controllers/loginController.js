@@ -2,63 +2,74 @@ import Api from '../../../app/controllers/api'
 import { AUTH_URL, WEB_URL } from '../../../app/config'
 import { setSessionId, setSessionUser, removeSessionId, removeSessionUser } from '../../../app/controllers/secureStorage';
 import { Alert } from 'react-native';
+import {
+  LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 function validate(type, parent) {
     switch (type) {
-      case 'email':
-        console.log('VALIDOI EMAIL');
+      case 'email': {
+        //console.log('VALIDOI EMAIL');
         const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
         if(emailReg.test(parent.state.email) === true){
           parent.setState({emailValidation: true});
-          console.log("true")
-          //return true;
+          //console.log("true email")
+          return true;
         }else {
-          console.log("false")
-          parent.setState({emailValidation: false});
-          //return false;
+          console.log("false email")
+          //parent.setState({emailValidation: false});
+          return false;
         }
-      case 'password':
+      }
+      case 'password': {
         console.log('VALIDOI SALIS');
-        if(parent.state.password.length > 0){
-          parent.setState({passwordValidation: true});
-          console.log("true")
-          //return true;
+        if(parent.state.password.length > 0){                 //TODO: Change this to required minimum length
+          //parent.setState({passwordValidation: true});
+          console.log("true password")
+          return true;
         }else {
-          console.log("false")
-          //return false;
-          parent.setState({passwordValidation: false});
+          console.log("false password")
+          //parent.setState({passwordValidation: false});
+          return false;
         }
-      case 'password_confirm':
+      }
+      case 'password_confirm': {
         console.log('VERTAA SALASANAT');
         if(parent.state.password === parent.state.password_confirm){
-          parent.setState({password_confirmValidation: true});
+          //parent.setState({password_confirmValidation: true});
 
-          console.log("true")
-          //return true;
+          console.log("true compare")
+          return true;
         }else {
-          console.log("false")
-          parent.setState({password_confirmValidation: false});
-          //return false;
+          console.log("false compare")
+          //parent.setState({password_confirmValidation: false});
+          return false;
         }
-      case 'firstname':
+      }
+      case 'firstname': {
         const firstnameReg = /^[a-zA-Z]+$/;
         if (firstnameReg.test(parent.state.firstname) === true){
-          //return true;
-          parent.setState({first_nameValidation: true});
+          console.log("true first")
+          //parent.setState({first_nameValidation: true});
+          return true;
         } else {
-          //return false;
-          parent.setState({first_nameValidation: false});
+          console.log("false first")
+          //parent.setState({first_nameValidation: false});
+          return false;
         }
-      case 'lastname':
+      }
+      case 'lastname': {
         const lastnameReg = /^[a-zA-Z]+$/;
         if (lastnameReg.test(parent.state.lastname) === true){
-          //return true;
-          parent.setState({last_nameValidation: true});
+          console.log("true last")
+          //parent.setState({last_nameValidation: true});
+          return true;
         } else {
-          //return false;
-          parent.setState({last_nameValidation: false});
+          console.log("false first")
+          //parent.setState({last_nameValidation: false});
+          return false;
         }
+      }
       default:
         console.log('Jotain meni pieleen!');
       return false;
@@ -69,12 +80,74 @@ function validateAll(parent) {
   
       console.log('VALIDATE ALL');
       var ps = parent.state;
+      console.log(ps.emailValidation)
+      console.log(ps.first_nameValidation)
+      console.log(ps.last_nameValidation)
+      console.log(ps.passwordValidation)
+      console.log(ps.password_confirmValidation)
+      console.log(ps.checked)
       if(ps.emailValidation && ps.first_nameValidation && ps.last_nameValidation && ps.passwordValidation && ps.password_confirmValidation && ps.checked) {
+        console.log("true all")
         return true;
       } else {
+        console.log("false all")
         return false;
       }
 }
+
+async function register(state) {
+  console.log("REGISTERING")
+  console.log(state)
+  var customer = {
+    "email": state.email,
+    "first_name": state.first_name,
+    "last_name": state.last_name,
+    "username": state.email,
+    "password": state.password,
+  }
+  var response = await Api.post(WEB_URL + "/customers", customer, false);
+
+  console.log(response)
+
+  //Handle database stuff on Node side. Probably not required
+  // TODO:
+  //If register was success call RegisterSuccess Screen
+  //E.g. this.refs.register_button.success();
+  // this.props.navigation.pop();
+  // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
+  //If register failed show custom error modal and return to register screen.
+  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
+}
+
+async function registerFb(user) {
+  console.log("REGISTERING")
+  console.log(user)
+  var customer = {
+    "email": user.email,
+    "first_name": user.first_name,
+    "last_name": user.last_name,
+    "username": user.email,
+    "id": user.id
+  }
+  var response = await Api.post(WEB_URL + "/customers/facebook", customer, false);
+
+  console.log(response)
+
+  // TODO:
+  //If register was success call RegisterSuccess Screen
+  //E.g. this.refs.register_button.success();
+  // this.props.navigation.pop();
+  // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
+  //If register failed show custom error modal and return to register screen.
+  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
+}
+
+async function logInFb() {
+  //FB.login(function(response) {
+    // Original FB.login code
+  //}, { auth_type: 'reauthorize' })
+}
+
 
 async function handleLogin(parent) {
     console.log('Logging in');
@@ -206,10 +279,13 @@ async function afterLoginComplete(token) {
 export {
     validate,
     validateAll,
+    register,
+    registerFb,
     handleLogin,
     fetchUser,
     afterLoginComplete,
     logIn,
+    logInFb,
     logOut,
     logOutPopup
 }
