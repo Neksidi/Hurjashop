@@ -42,7 +42,7 @@ class Index extends Component {
 
     parseHtml(html) {
         let str = html.replace('<p>[vc_row][vc_column][vc_column_text el_class=&#8221;tietosuojaseloste&#8221;]</p>', ' ')
-        str = str.replace('[/vc_column_text][/vc_column][/vc_row]', ' ')
+        str = str.replace(/[\u00e4]/g, '&#228').replace(/[\u00f6]/g, '&#246').replace('[/vc_column_text][/vc_column][/vc_row]', ' ')
         return str
     }
 
