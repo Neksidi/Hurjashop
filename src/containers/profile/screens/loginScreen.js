@@ -34,10 +34,10 @@ class Login extends Component {
     super(props);
     this.state = {
       visible: false, //Password eye
-      email: 'cat@cat.cat',       //Default ''
-      emailValidation: true,      //Default false
-      password: 'cat',//STRING    //Default ''
-      passwordValidation: true,   //Default false
+      email: '',       //Default ''
+      emailValidation: false,      //Default false
+      password: '',//STRING    //Default ''
+      passwordValidation: false,   //Default false
       isLoggingIn: false,
       correctCredentials: null,
       displayErrorMessage: false,
