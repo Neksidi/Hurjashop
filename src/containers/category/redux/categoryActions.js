@@ -7,7 +7,6 @@ const setCategories = categories => (
   }
 );
 
-
 export {
   setCategories,
 }

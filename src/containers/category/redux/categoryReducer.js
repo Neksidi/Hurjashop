@@ -12,6 +12,7 @@ const categoryReducer = (state = INITIAL_STATE, action) => {
       let newState = { all };
       return newState;
     }
+
     default:
       return state;
   }

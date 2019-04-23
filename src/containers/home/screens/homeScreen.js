@@ -13,9 +13,8 @@ import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
 
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
-import { app_style } from '../../../app/styles/global'
 import Header from '../../../app/components/header/header'
-import { theme, grid } from '../../../app/styles/global'
+import { app_style, theme, grid } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 
 let { width, height } = Dimensions.get('screen');
@@ -154,10 +153,6 @@ class Home extends Component {
 			<Loader />
 		);
 
-		
-		  
-		
-
 		let productCategories = 
 		this.props.categories ? (
 				<FlatList 
@@ -177,26 +172,6 @@ class Home extends Component {
 			
 				<ScrollView>
 				<Header />
-				{ /*
-				<Button
-					title="Kaikki tuotteet"
-					onPress={() =>
-						this.props.navigation.navigate('AllProducts')
-					}
-				/>
-				<Button
-					title="Tutoriaaliin"
-					onPress={() =>
-						this.props.navigation.navigate('Tutorial')
-					}
-				/>
-				<Button
-					title="Kategoriaan"
-					onPress={() =>
-						this.props.navigation.navigate('Category')
-					}
-				/>
-				*/}
 				
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Kaikki tuotteet</Text>

@@ -13,9 +13,10 @@ async function getCategories(props) {
         props.setCategories(response);
       }
     } 
-  }
+}
 
   export {
     getCategories,
+
   }
   
