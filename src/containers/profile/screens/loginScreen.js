@@ -76,6 +76,7 @@ class Login extends Component {
     if ( !isCancelled ) {
       let data = await AccessToken.getCurrentAccessToken();
       let token = data.accessToken.toString();
+      console.log("Fb token");
       console.log(token);
       await this.afterFbLoginComplete(token);
     }
