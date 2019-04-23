@@ -60,8 +60,8 @@ class DrawerScreen extends Component {
                   <Categories navigation={this.props.navigation} />
                 </View>
                 <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 5 }}>
-                  <Item title='Tietoa meistä' icon='info-circle' onPress={this.navigateToScreen('Home')} />
-                  <Item title='Käyttöehdot' icon='handshake-o' onPress={this.navigateToScreen('Home')} />
+                  <Item title='Tietoa meistä' icon='info-circle' onPress={this.navigateToScreen('About')} />
+                  <Item title='Käyttöehdot' icon='handshake-o' onPress={this.navigateToScreen('Terms')} />
                   <Item title='Ota yhteyttä' icon='envelope-o' onPress={this.navigateToScreen('Contact')} />
                 </View>
               </View>
