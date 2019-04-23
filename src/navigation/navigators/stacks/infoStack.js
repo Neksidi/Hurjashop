@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native'
 import ContactScreen from '../../../containers/info/contact'
 import TermsScreen from '../../../containers/info/terms'
-
+import aboutusScreen from '../../../containers/info/aboutUs'
 
 const transitionConfig = () => {
     return {
@@ -30,10 +30,11 @@ const transitionConfig = () => {
 
 const MainNavigator = createStackNavigator({
     Contact: { screen: ContactScreen },
-    Terms: { screen: TermsScreen }
+    Terms: { screen: TermsScreen },
+    About: { screen: aboutusScreen }
 }, {
         transitionConfig,
-        initialRouteName: 'Contact',
+        initialRouteName: 'Terms',
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#e94641',
