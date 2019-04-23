@@ -11,8 +11,6 @@ function getSaleProducts(products) {
 
     sortedProducts.sort((a, b) => (a.regular_price - a.sale_price)/a.sale_price > (b.regular_price - b.sale_price)/b.sale_price);
 
-    //props.setSaleProducts(sortedProducts);
-
     return sortedProducts;
 }
 
@@ -21,7 +19,6 @@ function getNewProducts(products) {
     let sortedProducts = products;
     
     sortedProducts.sort((a, b) => (getParsedDate(a.date_created) > getParsedDate(b.date_created)));
-    //props.setSaleProducts(sortedProducts);
 
     return sortedProducts;
 
