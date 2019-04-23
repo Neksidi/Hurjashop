@@ -166,8 +166,16 @@ export default class AnimatedWithLoader extends Component {
       this.animateIn();
     }
 
-    render() {
+    reset(){
+      this.setState({isLoading: false, success: false, width: new Animated.Value(100), borderRadius: new Animated.Value(5), paddingVertical: 15});
+      this.forceUpdate();
+    }
 
+    render() {
+        //console.log("Button load status")
+        //console.log(this.state.isLoading)
+        //console.log(this.state.title)
+        //console.log(this.props.title)
         let buttonTitle = !this.state.isLoading ? (
             <Text
               style={{

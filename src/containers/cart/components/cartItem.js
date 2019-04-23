@@ -4,13 +4,13 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Image, Anima
 // Vendor components
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
-import { theme } from '../../../styles/Global'
-import Gallery from '../../../components/common/images/Gallery'
-import Price from '../../../utility/Price'
+import { theme } from '../../../app/styles/global'
+import Gallery from '../../../app/components/common/images/gallery'
+//import Price from '../../../utility/Price'
 
-import { removeItemFromCart, increaseCartQuantity, increaseCartQuantityWithVariations, decreaseCartQuantity, decreaseCartQuantityWithVariations } from '../../../redux/actioncreators'
+import { removeItemFromCart, increaseCartQuantity, increaseCartQuantityWithVariations, decreaseCartQuantity, decreaseCartQuantityWithVariations } from '../redux/cartActions'
 
-class Item extends Component {
+class cartItem extends Component {
 
   constructor(props){
     super(props);
@@ -127,6 +127,52 @@ class Item extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+  },
+  item: {
+    padding: 20,
+    flexDirection: 'row',
+    width: '100%',
+  },
+  imageContainer: {
+    paddingRight: 10,
+  },
+  image: {
+    width: 90,
+    height: 140,
+  },
+  itemName: {
+    fontFamily: 'BarlowCondensed-Medium',
+    fontSize: 20,
+    color: '#292929'
+  },
+  detailContainer: {
+    flex: 1,
+  },
+  descriptionText: {
+    fontSize: 14,
+
+  },
+  removeButtonContainer: {
+    alignSelf: 'flex-end',
+    height: '100%',
+  },
+  removeButton: {
+    padding: 8,
+  },
+  variationText: {
+    fontSize: 14,
+  },
+  priceText: {
+    fontFamily: 'BarlowCondensed-Medium',
+    fontSize: 20,
+    color: '#292929'
+  }
+})
 
 const map_state_props = (state) => {
   return {
@@ -153,5 +199,4 @@ const map_dispach_props = (dispatch) => ({
 });
 
 
-
-export default connect(map_state_props, map_dispach_props)(Item)
+export default connect(map_state_props, map_dispach_props)(cartItem)

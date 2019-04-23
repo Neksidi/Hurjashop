@@ -1,6 +1,7 @@
 import {createStackNavigator} from 'react-navigation';
 import { Easing, Animated } from 'react-native'
 import LoginScreen from '../../../containers/profile/screens/loginScreen'
+import RegisterScreen from '../../../containers/profile/screens/registerScreen'
 
 
 const transitionConfig = () => {
@@ -28,7 +29,8 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-    Login: { screen: LoginScreen }
+    Login: { screen: LoginScreen },
+    Register: { screen: RegisterScreen }
 }, {
     transitionConfig,
     initialRouteName: 'Login',

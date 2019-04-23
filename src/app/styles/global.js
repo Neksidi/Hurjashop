@@ -388,5 +388,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 15
-  }
+  },
+  icon: {
+    marginLeft:20
+
+  },
+  headerContainer: {
+    paddingRight: 20
+  },
+  
 });

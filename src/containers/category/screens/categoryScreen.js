@@ -25,7 +25,7 @@ class Category extends Component {
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}
-        title="Info"
+        title="info"
 				color="green"
       />
     ),

@@ -172,6 +172,35 @@ class Home extends Component {
 			
 				<ScrollView>
 				<Header />
+				{ /*
+				<Button
+					title="Kaikki tuotteet"
+					onPress={() =>
+						this.props.navigation.navigate('AllProducts')
+					}
+				/>
+				<Button
+					title="Tutoriaaliin"
+					onPress={() =>
+						this.props.navigation.navigate('Tutorial')
+					}
+				/>
+				<Button
+					title="Kategoriaan"
+					onPress={() =>
+						this.props.navigation.navigate('Category')
+					}
+				/>
+				*/
+				
+				<Button
+					title="Ostoskoriin"
+					onPress={() =>
+						this.props.navigation.navigate('Cart')
+					}
+				/>
+				
+				}
 				
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Kaikki tuotteet</Text>
@@ -189,7 +218,7 @@ class Home extends Component {
 						</View>
 
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Tuote kategoriat</Text>
+							<Text style={app_style.front_item_title}>Tuotekategoriat</Text>
 							{productCategories}
 						</View>
 				</ScrollView>

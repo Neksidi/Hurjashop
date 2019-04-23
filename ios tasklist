@@ -1,1 +1,7 @@
 react-native-config
+
+
+react-native-fbsdk:
+Make sure you have the latest Xcode installed. Open the .xcodeproj in Xcode found in the ios subfolder from your project's root directory. 
+Now, follow all the steps except the pod install (Step 2) in the Getting Started Guide (https://developers.facebook.com/docs/ios/getting-started/) for Facebook SDK for iOS. 
+Along with FBSDKCoreKit.framework, don't forget to import FBSDKShareKit.framework and FBSDKLoginKit.framework into your Xcode project.
