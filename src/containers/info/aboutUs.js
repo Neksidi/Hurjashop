@@ -24,7 +24,18 @@ class Index extends Component {
         return (
             <ScrollView>
                 <View>
-                    <Text>Tietoa meistä</Text>
+                    <Text style={{ fontSize: 20, marginLeft: 5 }}>
+{`
+Tietoa meistä
+
+Olemme mutkaton kumppani digitaalisissa kehityshankkeissasi. Teemme verkkopalveluita, räätälöityjä ohjelmistoja ja mobiilikehitystä. Ammattitaitoisella otteella, sopivan rennolla meiningillä ja hyvällä sykkeellä.
+Hurja Solutions Oy:n tehtävänä on tuottaa ohjelmistokehityksen palveluita, jotka antavat etumatkaa asiakkaamme kilpailukyvylle muuttuvassa maailmassa. Kun asiakkaamme menestyvät, menestymme mekin.
+
+Toimipaikkamme on Kuopiossa, asiakkaamme ympäri Suomea. Yrityksessämme työskentelee lähes 20 henkilöä monipuolisella osaamisella ja hyvällä tekemisen meiningillä. Vahvan osaamisen ja jatkuvan kehittymisen myötä voimme tuottaa asiakkaillemme parhaan mahdollisen arvon.
+
+Teemme nättiä koodia!
+`}
+                    </Text>
                 </View>
             </ScrollView>
         );

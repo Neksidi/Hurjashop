@@ -51,7 +51,7 @@ class Index extends Component {
             <WebView source={{ html: this.parseHtml(this.state.data.content.rendered) }} style={{ flex: 1 }} />
         ) : (<ActivityIndicator />);
         return (
-            <View style={{ flex: 1, }}>
+            <View style={{ flex: 1, marginTop: -15 }}>
                 {output}
             </View>
         );
