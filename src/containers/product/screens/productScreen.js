@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image, SlideUp  } from 'react-native';
 import { app_style, theme } from '../../../app/styles/global'
+import { bindActionCreators } from 'redux';
 
 import Badge from '../../../app/components/common/badge/cart'
 import Gallery from '../../../app/components/common/images/gallery'
@@ -11,6 +12,7 @@ import ColorPicker from '../../../app/components/list/attributes/color/container
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
+import { addToCart } from '../../cart/redux/cartActions'
 
 let { width, height } = Dimensions.get('screen');
 
@@ -77,14 +79,6 @@ class Product extends Component {
     return false;
   }
 
-  addItemToCart() {
-    const data = [];
-    data.push(this.state.item);
-    data.push(this.state.count);
-
-    this.props.addItem(data);
-  }
-
   selectSize(item) {
     this.setState({ selectedSize: item });
   }
@@ -132,7 +126,7 @@ class Product extends Component {
   }
 
   handleAddToCart(){
-    if(this.state.item.variations.length > 0){
+   /* if(this.state.item.variations.length > 0){
       //ON VARIAATIOITA!
       const varId = this.getVariationId();
       //TODO: this.props.addItemWithVariations(this.state.item, varId, this.state.count);
@@ -140,11 +134,17 @@ class Product extends Component {
       this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, varId, this.state.count)})
 
     }else{
-      //TODO: this.props.addItem(this.state.item, this.state.count);
+     */ 
+      this.props.addToCart(this.state.item, this.state.count);
+      
       this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, null, this.state.count)})
-    }
+    //}
+
     this.setState({count: 1});
     //this.refs.slideup.show();
+    console.log(this.props.cart);
+    
+    //TODO ILMOITUS TUOTTEEN LISÄÄMISESTÄ
   }
 
   _renderSlideUpContent(item, varId, count){
@@ -357,7 +357,6 @@ class Product extends Component {
               </View>
             </View>
             {/* PRODUCT INFO + SHARE */}
-    {}
             <View style={{ width: '100%', backgroundColor: '#eee', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
                 <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
@@ -426,10 +425,13 @@ class Product extends Component {
 const mapStateToProps = (state) => {
   const product = state.product
   const products = state.products.all
-	return { product, products }
+  const cart = state.cart
+	return { product, products, cart }
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts }, dispatch));
+	bindActionCreators({ setProducts, addToCart }, dispatch));
+	
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
 
-export default ( mapStateToProps, mapDispatchToProps, Product);
+
