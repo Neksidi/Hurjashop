@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
+import { ChildComponent, View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
 import { bindActionCreators } from 'redux';
 import {btn, theme,  } from '../../../app/styles/global'
 import { getProducts } from '../../product/controllers/requests'
@@ -38,54 +38,38 @@ class Cart extends Component {
 
   componentDidMount() {
     this.setState({item: this.props.navigation.getParam('item', null)});
-    
-    /* TODO: Löydä samankaltaiset tuotteet
-    if(!this.props.products.length) {
-			getProducts(this.props);
-    }
-    */
   }
 
   //Kesken
-  _onDelete(item) {
+  _deleteItem(item) {
     this.props.removeItem(item);
-    this.forceUpdate();
   }
-  //Kesken
-  getProductPrice(product_id){
-    for(i in this.props.products){
-      if(this.props.products[i].id == product_id){
-        return this.props.products[i].price;
-      }
-    }
-  }
+
   
   renderItem(item){
     return(
-      <View key={item.id} style={{ flex: 1 }}>
-        <Image source={{uri: item.src}} style={{ width: '100%', height: '100%'}} resizeMode='cover'/>
+      <View key={item.item.id} style={{ flex: 1 }}>
+        <Text>{item.item.name}</Text>
       </View>
     );
+
   }
 
   
-  
-  //Kesken
-  _calcTotalPrice(){
+  //TODO KORJAA HIETTÄÄ NOT A NUMBERIA TÄLLÄ HETKELLÄ
+  calcTotalPrice(){
  
     let total = 0.00;
     let price, quantity;
-    for(i in this.props.cart){
-      quantity = this.props.cart[i].quantity;
-      price = (parseFloat(this.getProductPrice(this.props.cart[i].product_id)));
+    for(i in this.props.cart.cart){
+      quantity = this.props.cart.cart[i].quantity;
+      price = (parseFloat(this.props.cart.cart[i].price));
       total += (price * quantity)
     } 
-    return Price.priceToString(total) + '€';
-  } 
-  //Kesken
-  handleCartEmptyDialog(status){
-    if(status){this.props.emptyCartItems()}
+
+    return parseFloat(total).toFixed(2).toString().replace('.', ',') + '€';
   }
+  
 
   handleContinueButtonPress(){
     //if(this.props.logged){  //If logged in
@@ -127,12 +111,46 @@ class Cart extends Component {
     }
   }
   
-
 	render() {
-/* //Ostoskorin tarkistus
-    if(this.props.cart.length > 0){
-      let productCount = this.props.cart.length === 1 ? ('1 tuote') : (this.props.cart.length + ' tuotetta');
-      */
+    let productCount = this.props.cart.length === 1 ? ('1 tuote') : (this.props.cart.cart.length + ' tuotetta');
+
+     let productsInCart =
+     this.props.cart ? (
+        <Text style={styles.cartHeaderText}>{productCount}</Text>
+        
+     ) : (
+        <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
+     );
+
+
+     //TODO PARANTELUA
+     let cartContainer =
+     this.props.cart ? (
+          this.props.cart.cart.map((item, index) => {
+            return (
+              <TouchableOpacity
+                     key = {item.item.id}
+                     onPress = {() => this.deleteItem(item)}>
+                     <Text>
+                        Nimi: {item.item.name} | 
+                        Määrä: {item.quantity} |
+                        Hinta: {item.item.price * item.quantity} €
+                     </Text>
+                </TouchableOpacity>
+            )
+          })
+      
+     ) : (
+       <Text>Ei tuotteita ostoskorissa</Text>
+     );
+
+     let showPrice = 
+     this.props.cart ? (
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()}</Text>
+     ) : (
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>0€</Text>
+     );
+
 		  return (
 		  	<View style={styles.container}>
         <ScrollView>
@@ -141,8 +159,9 @@ class Cart extends Component {
                   <FeatherIcon name='package' size={30} color='#292929' />
                 </View>
                 <View style={styles.cartHeaderTextContainer}>
-                  <Text style={styles.cartHeaderText}>Product Count</Text>
-                  <Text style={styles.cartHeaderText}>ostoskorissa</Text>
+
+                  {productsInCart}
+
                 </View>
                 <View style={styles.emptyCartContainer}>
                   <TouchableOpacity onPress={() => {this.refs.popup.show()}} style={styles.emptyCartButton}>
@@ -154,16 +173,9 @@ class Cart extends Component {
 
               {/**Tähän ei tule dataa, vittu */}
               <View style={styles.cartContentContainer}>
-              <FlatList 
-              keyExtractor={(_ , i) => i.toString()} 
-              data={this.props.cart} 
-              renderItem={({item}) => <Item data={item} 
-              parentFlatList={this} />} />
-            </View>
-      
-           
-           
-            
+                {cartContainer}
+              </View>
+  
           </ScrollView>
             <View
               style={styles.footerContainer}
@@ -171,7 +183,7 @@ class Cart extends Component {
                 this.setState({footerHeight: e.nativeEvent.layout.height});
               }}>
             <View style={styles.footerSectionLeft}>
-                <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>SUMMA</Text>
+                {showPrice}
                 <Text style={{fontFamily: 'BarlowCondensed-Medium', fontSize: 21, color: '#292929'}}> </Text>
                 <Text style={{fontSize: 10}}>sis. alv</Text>
               </View>
@@ -287,5 +299,15 @@ const map_dispach_props = (dispatch) => ({
   }
 });
 */
-export default (Cart);
+
+const mapStateToProps = (state) => {
+	const cart = state.cart
+	return { cart }
+};
+
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ }, dispatch));
+	
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
 

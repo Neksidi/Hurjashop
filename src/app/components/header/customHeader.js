@@ -38,7 +38,7 @@ class CustomHeader extends Component {
 				    <Image style={styles.logo} source={require('../../../assets/images/hurja_shop_logo.png')} />
 			    </View>
 				<View > 
-					<TouchableOpacity onPress={ () => {this.props.onPress() } } style={styles.headerContainer}>
+					<TouchableOpacity onPress={ () => { this.props.navigation.navigate('Cart') } } style={styles.headerContainer}>
        				 	<FAIcon name={ 'shopping-cart' } size={ icon_size } color={ icon_color } style={ styles.icon } ></FAIcon>
       				</TouchableOpacity>
                 </View>
