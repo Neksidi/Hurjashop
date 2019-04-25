@@ -16,8 +16,8 @@
     "android-production": "ENVFILE=.env.prod react-native run-android"
   },
   "dependencies": {
-    "react": "^16.8.6",
-    "react-native": "^0.59.6",
+    "react": "16.6.3",
+    "react-native": "0.57.8",
     "react-native-config": "^0.11.7",
     "react-native-elements": "^1.1.0",
     "react-native-fbsdk": "^0.8.0",
