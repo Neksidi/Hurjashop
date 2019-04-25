@@ -3,6 +3,7 @@ package com.hurjashopclient;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGoogleSigninPackage(),
             new FBSDKPackage(mCallbackManager),
             new RNSecureStoragePackage(),
             new ReactNativeConfigPackage(),

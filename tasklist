@@ -1,3 +1,10 @@
 Kotisivu: Ekana aletuotteet header kuvan jälkeen. Sitten mahdollisesti muita hehkutettavia tuotteita. Lopuksi napit kategorioihin kuvien kera.
 Drawer: Kategoriat avautuu ScrollViewinä ja collapsena. Muuten sama vanhan kanssa.
 Header: Muuten sama, mutta hamburger drawer menun nappi pois.
+
+
+Release stuff:
+- Update react-native-google-signin google-services.json for correct com.packagename and store keystore password in non-plaintext etc.
+Also remember long enough day cap when generating the keystore.
+
+- Update gradle etc. dependencies if possible
