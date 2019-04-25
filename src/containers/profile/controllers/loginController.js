@@ -142,10 +142,20 @@ async function registerFb(user) {
   //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
 }
 
-async function logInFb() {
+async function logInFb(access_token) {
   //FB.login(function(response) {
     // Original FB.login code
   //}, { auth_type: 'reauthorize' })
+
+  console.log("Connecting to own Fb login");
+
+  var body = {
+    "access_token": access_token,
+  }
+
+  var response = await Api.post(AUTH_URL + "/loginfb", body, false);
+
+  console.log(response)
 }
 
 

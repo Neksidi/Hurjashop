@@ -28,6 +28,8 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 
+import { logInFb } from '../../../containers/profile/controllers/loginController'
+
 class Login extends Component {
 
   constructor(props){
@@ -87,7 +89,10 @@ class Login extends Component {
 
   //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
-    const response = await fetch(
+
+    await logInFb(token);
+
+    /*const response = await fetch(
     `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,picture.type(large),cover&access_token=${token}`);
     
     let result = await response.json();
@@ -108,6 +113,7 @@ class Login extends Component {
       console.log(data)
       console.log("Calling registerFb")
       registerFb(data);
+      */
       this.props.navigation.navigate('Home');
   };
 
