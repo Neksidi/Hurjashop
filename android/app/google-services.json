@@ -8,43 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:264627578878:android:38bb6794a39412d7",
-        "android_client_info": {
-          "package_name": "com.hurjashop"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "264627578878-h3k09f88kklg14dr672a4kt1cv5c9tub.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hurjashop",
-            "certificate_hash": "fb8dd18825a0898736ec71f5a8bc6824652c6e98"
-          }
-        },
-        {
-          "client_id": "264627578878-g6tek0beqeer45074rgeqs21mciv096e.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBohRlSf5a53d39sSrGUoxMtBGK09uXsMk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "264627578878-g6tek0beqeer45074rgeqs21mciv096e.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:264627578878:android:6d1546d8633d0025",
         "android_client_info": {
           "package_name": "com.hurjashopclient"
