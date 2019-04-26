@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image, SlideUp  } from 'react-native';
+import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image } from 'react-native';
 import { app_style, theme } from '../../../app/styles/global'
 import { bindActionCreators } from 'redux';
 
-import Badge from '../../../app/components/common/badge/cart'
 import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
@@ -13,6 +12,9 @@ import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
 import { addToCart } from '../../cart/redux/cartActions'
+import Toast, {DURATION} from 'react-native-easy-toast'
+import Badge from '../../../app/components/common/badge/index'
+
 
 let { width, height } = Dimensions.get('screen');
 
@@ -31,7 +33,6 @@ class Product extends Component {
 
     this.state = {
       item: null,
-      variations: null,
       count: 1,
       TextInputValueHolder: '',
       selectedSize: 'XXL', //DEFAULT
@@ -39,14 +40,17 @@ class Product extends Component {
       isLoading: true,
       preview: true,
       activeSlide: 0,
-      slideUpContent: null,
     }
 
   }
   
   componentDidMount() {
     this.setState({item: this.props.navigation.getParam('item', null)});
-    
+
+    if(this.state.item != null) {
+      this.props.navigation.setParams({headerTitle: item.name});
+    }
+
     /* TODO: Löydä samankaltaiset tuotteet
     if(!this.props.products.length) {
 			getProducts(this.props);
@@ -67,18 +71,6 @@ class Product extends Component {
       }
     }
   }
-
-  itemInVariations(item){
-    for(i in this.props.variations){
-      if(this.props.variations[i].product_id == item.id){
-        let itemVariations = this._getVariationsByProductId(item.id);
-        this.setState({variations: itemVariations, isLoading: false, item: item});
-        return true;
-      }
-    }
-    return false;
-  }
-
   selectSize(item) {
     this.setState({ selectedSize: item });
   }
@@ -86,113 +78,14 @@ class Product extends Component {
     this.setState({ selectedColor: item });
   }
 
-  getVariationId(){
-    if(this.state.item.attributes.length == 2){
-      for(i in this.state.variations){
-        let size = false;
-        let color = false;
-        for(a in this.state.variations[i].attributes){
-          if(this.state.variations[i].attributes[a].name == 'Koko' && this.state.variations[i].attributes[a].option == this.state.selectedSize){
-            size = true;
-          }else if(this.state.variations[i].attributes[a].name == 'Väri' && this.state.variations[i].attributes[a].option == this.state.selectedColor){
-            color = true;
-          }
-        }
-        if(size && color) {
-          return this.state.variations[i].id;
-        }
-      }
-    }else if(this.state.item.attributes.length == 1) {
-      if(this.state.item.attributes[0].name == 'Väri'){
-        for(i in this.state.variations){
-          if(this.state.variations[i].attributes[0].option == this.state.selectedColor){
-            return this.state.variations[i].id;
-          }
-        }
-      }else if(this.state.item.attributes[0].name == 'Koko'){
-        for(i in this.state.variations){
-          if(this.state.variations[i].attributes[0].option == this.state.selectedSize){
-            return this.state.variations[i].id;
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  navigateToPay(){
-    this.refs.slideup.close();
-    this.props.logged ? this.props.navigation.navigate('Shipping') : this.props.navigation.navigate('Authenticate');
-  }
-
   handleAddToCart(){
-   /* if(this.state.item.variations.length > 0){
-      //ON VARIAATIOITA!
-      const varId = this.getVariationId();
-      //TODO: this.props.addItemWithVariations(this.state.item, varId, this.state.count);
-      
-      this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, varId, this.state.count)})
-
-    }else{
-     */ 
-      this.props.addToCart(this.state.item, this.state.count);
-      
-      this.setState({slideUpContent: this._renderSlideUpContent(this.state.item, null, this.state.count)})
-    //}
+    this.props.addToCart(this.state.item, this.state.count);
+    this.refs.toast.show("Lisätty tuote "+this.state.item.name+" ostoskoriin");
 
     this.setState({count: 1});
-    //this.refs.slideup.show();
-    console.log(this.props.cart);
-    
-    //TODO ILMOITUS TUOTTEEN LISÄÄMISESTÄ
+
+
   }
-
-  _renderSlideUpContent(item, varId, count){
-
-    const itemHeight = 50;
-
-    let variation = varId ? (null) : (null);
-    return(
-      <View>
-        <View style={{width: '100%', padding: 10, flexDirection: 'row',}}>
-          <View style={{width: itemHeight, height: itemHeight, backgroundColor: '#0f0'}}>
-            <Image source={{uri: item.images[0].src}} style={{flex: 1}} resizeMode='cover' />
-          </View>
-          <View style={{marginLeft: 10, height: itemHeight, justifyContent: 'center'}}>
-            <Text>{item.name}</Text>
-            {variation}
-          </View>
-          <View style={{justifyContent: 'center', height: itemHeight}}><Text> x{count}</Text></View>
-        </View>
-        <View style={{width: '100%', height: 70,}}>
-
-          <View style={{width: '100%', height: 50, paddingHorizontal: 20, marginVertical: 10, flexDirection: 'row'}}>
-            <View style={{width: '50%', height: '100%', paddingHorizontal: 10, alignItems: 'flex-end', justifyContent: 'center'}}>
-              <TouchableOpacity onPress={() => this.navigateToPay()}>
-                <View style={{width: '100%', height: 40, borderWidth: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: '#125194', flexDirection: 'row', minWidth: 130,}}>
-                  <FAIcon name={'credit-card'} size={20} color={'#fff'}></FAIcon>
-                  <Text style={{color: '#fff', marginLeft: 5}}>JATKA</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style={{width: '50%', height: '100%', paddingHorizontal: 10, alignItems: 'flex-start', justifyContent: 'center'}}>
-              <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cart'); this.refs.slideup.close()}}>
-                <View style={{width: '100%', height: 40, borderWidth: 0, justifyContent: 'center', backgroundColor: '#125194', minWidth: 130,}}>
-                  <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row',}}>
-                    <Text style={{color: '#fff', marginRight: 5}}>OSTOSKORIIN</Text>
-                    <FAIcon name={'shopping-cart'} size={20} color={'#fff'}></FAIcon>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-        </View>
-      </View>
-    );
-  }
-
-
 
   share(){
     //TODO SHARE
@@ -252,41 +145,6 @@ class Product extends Component {
     return parseFloat(price).toFixed(2).toString().replace('.', ',');
   }
 
-  renderRelatedItems(){
-    if(this.props.products) {
-      return this.props.products.map((a, index) => {
-        for(i in this.state.item.related_ids){
-          if(a.id == this.state.item.related_ids[i]){
-            return(
-              <TouchableOpacity
-                key={index}
-                style={{
-                  width: 160,
-                  marginHorizontal: 20,
-                  alignItems: 'center',
-                  marginBottom: 20
-                }}
-                onPress={() => this.props.navigation.navigate({
-                  routeName: 'Product',
-                  params: {
-                    item: a,
-                  },
-                  key: 'Product' + a.id
-                })}>
-                <Image source={{uri: a.images[0].src}} style={{ width: '100%', height: 160, }} resizeMode='cover'/>
-                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16}}>{a.name.toUpperCase()}</Text>
-                <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 18, marginTop: 5}}>{this.renderPrice(a)}</Text>
-              </TouchableOpacity>
-            );
-          }
-        }
-      })
-    } else {
-      return (
-        <Loader /> 
-      )
-    }
-  }
   
   decreaseCartCount(){
     if(this.state.count > 1) this.setState({count: this.state.count - 1})
@@ -298,12 +156,6 @@ class Product extends Component {
   render() {
     let item = this.state.item;			
 
-    let sliceUp = this.props.sliceUp == null ? (
-      <View />
-     ) : ( 
-      <SlideUp ref='slideup' title='Tuote lisätty ostoskoriin!' content={this.state.slideUpContent} style={{}}/>
-    );
-
     if(item == null) {
       return(
         <Loader />
@@ -311,7 +163,7 @@ class Product extends Component {
     } else {
       return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-          {/*<Badge count={this.props.cart.length} />*/}
+          <Badge count={this.props.cart.length} />
           <ScrollView style={{  }}>
             {/* IMAGE CAROUSEL */}
             <View style={{ width: '100%', height: 350, alignItems: 'center', elevation: 2,}}>
@@ -325,22 +177,6 @@ class Product extends Component {
                 inactiveSlideOpacity={1}
                 onSnapToItem={(index) => this.setState({ activeSlide: index }) }
               />
-              {/*
-              <Pagination
-                dotsLength={this.state.item.images.length}
-                activeDotIndex={this.state.activeSlide}
-                containerStyle={{ backgroundColor: 'transparent', position: 'absolute', bottom: -10, }}
-                dotStyle={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 6,
-                  marginHorizontal: 5,
-                  backgroundColor: '#292929',
-                }}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.8}
-              />
-              */}
               <View
                 style={{
                   width: 45,
@@ -362,14 +198,16 @@ class Product extends Component {
                 <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
                 {this.renderPrice(this.state.item)}
               </View>
+              {/*
               <View>
                 <TouchableOpacity onPress={() => this.share()} style={{alignItems: 'center', justifyContent: 'center'}}>
                   <FAIcon name='share-square-o' size={30} />
                   <Text style={{ fontFamily: 'BarlowCondensed-Regular'}}>Jaa tuote</Text>
                 </TouchableOpacity>
               </View>
+              */}
             </View>
-            {/* VARIATIONS */}
+              
 
             {/* ADD TO CART */}
             <View style={{ width: '100%', alignItems: 'center', padding: 20}}>
@@ -398,24 +236,11 @@ class Product extends Component {
                 <Text style={{ fontFamily: 'BarlowCondensed-ExtraBold', fontSize: 20, color: '#fff', marginLeft: 10}}>LISÄÄ OSTOSKORIIN</Text>
               </TouchableOpacity>
             </View>
-            {/* RELATED PRODUCTS, TODO: TARPEELLINEN? */}
-            {/*
-            <View style={{ width: '100%'}}>
-              <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 22, marginBottom: 10, marginLeft: 20}}>Muita Hurjia Tuoteita</Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              >
-                
-                this.renderRelatedItems()
-              </ScrollView>
-            </View>*/
-            }
             {/* IMAGE GALLERY */}
             <Gallery images={this.state.item.images} ref='gallery'/>
           </ScrollView>
-            {sliceUp}
-          </View>
+          <Toast ref="toast"/>
+        </View>
       );
     } 
   }

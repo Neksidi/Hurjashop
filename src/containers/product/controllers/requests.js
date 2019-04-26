@@ -27,15 +27,15 @@ async function getProduct(id) {
   } 
 }
 
-async function getProductsByCategory(props, category) {
-  var response = await Api.get(WEB_URL + '/products/'+category);  
+async function getProductsByCategory(props, id) {
+  var response = await Api.get(WEB_URL + '/products/'+id);  
 
   if(response){
     if(response.error) {
       return;  //TODO: return modal with the custom error msg or don't return the error at all.
     }
     else {
-      props.setCategories(response);
+      props.setCategoryProducts(response);
     }
   } 
 }
@@ -43,4 +43,5 @@ async function getProductsByCategory(props, category) {
 export {
   getProducts,
   getProduct,
+  getProductsByCategory
 }

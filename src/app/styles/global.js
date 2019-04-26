@@ -324,7 +324,7 @@ export const grid = {
     },
     itemText: {
       color: '#fff',
-      fontSize:30,
+      fontSize:20,
       fontWeight:'bold',
     },
 }

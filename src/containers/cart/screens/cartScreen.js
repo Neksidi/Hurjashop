@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { ChildComponent, View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
+import { ListItem } from 'react-native-elements'
 import { bindActionCreators } from 'redux';
 import {btn, theme,  } from '../../../app/styles/global'
 import { getProducts } from '../../product/controllers/requests'
@@ -9,10 +10,12 @@ import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
+import { priceToString } from '../../product/controllers/helper'
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
+
 
 //import Price from '../utility/Price'
 let { width, height } = Dimensions.get('screen');
@@ -78,38 +81,6 @@ class Cart extends Component {
       //this.props.navigation.navigate('Authenticate')
     
   } 
-
-  priceToString(price) {
-    return parseFloat(price).toFixed(2).toString().replace('.', ',');
-  }
-  
-  renderPrice(item){
-    const priceStyle = {
-      fontFamily: 'BarlowCondensed-Regular',
-      fontSize: 18,
-    }
-
-    if(item.attributes.length > 0){
-
-      let prices = item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
-      for(i in prices){
-        prices[i] = prices[i].replace('&nbsp;&euro;', '');
-      }
-
-      if(prices.length === 2){
-        return(
-          <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
-            { this.priceToString(prices[0]) }€ </Text><Text style={ priceStyle }> {this.priceToString(prices[1])}€ </Text></View>
-        );
-      }
-    }
-    if(item.sale_price != ''){
-      return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
-        { this.priceToString(item.regular_price) }€ </Text><Text style={ priceStyle }>{this.priceToString(item.sale_price)}€ </Text></View>
-    } else {
-      return <Text style={ priceStyle }>{this.priceToString(item.price)}€</Text>
-    }
-  }
   
 	render() {
     let productCount = this.props.cart.length === 1 ? ('1 tuote') : (this.props.cart.cart.length + ' tuotetta');
@@ -123,20 +94,39 @@ class Cart extends Component {
      );
 
 
+      
+
      //TODO PARANTELUA
      let cartContainer =
      this.props.cart ? (
-          this.props.cart.cart.map((item, index) => {
+          this.props.cart.cart.map((item, i) => {
             return (
+              /*<ListItem key={item.item.id}>
+                  <Text>
+                    {item.name}
+                  </Text>
+
+                  <Text>{item.price}</Text>
+                  <Text>Color: {item.color}</Text>
+                  <Text>Size: {item.size}</Text>
+                  <Button>X</Button>
+
+              </ListItem>
+              */
+              
+                  
+              
               <TouchableOpacity
-                     key = {item.item.id}
+                   key = {item.item.id}
                      onPress = {() => this.deleteItem(item)}>
                      <Text>
                         Nimi: {item.item.name} | 
                         Määrä: {item.quantity} |
                         Hinta: {item.item.price * item.quantity} €
                      </Text>
+                     
                 </TouchableOpacity>
+               
             )
           })
       
@@ -172,8 +162,10 @@ class Cart extends Component {
               </View>
 
               {/**Tähän ei tule dataa, vittu */}
-              <View style={styles.cartContentContainer}>
-                {cartContainer}
+              <View>
+                
+                  {cartContainer}
+                
               </View>
   
           </ScrollView>

@@ -21,5 +21,5 @@
   
   export {
       contains,
-      getAttributeIndex
+      getAttributeIndex,
   }

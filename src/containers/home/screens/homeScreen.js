@@ -76,7 +76,7 @@ class Home extends Component {
 		  return <View style={[grid.item, grid.itemInvisible]} />;
 		}
 		return (
-		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { item: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
+		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
 				<ImageBackground style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.image.src}}>
 					<Text style={[grid.itemText, {backgroundColor:theme.color.bg.main, color:theme.color.hurja.main}]}>
 						{item.name}
@@ -98,56 +98,92 @@ class Home extends Component {
 		return data;
 	}
 
+	renderPrice(item){
+		const priceStyle = {
+		  fontFamily: 'BarlowCondensed-Regular',
+		  fontSize: 18,
+		}
+	
+		if(item.attributes.length > 0){
+	
+		  let prices = item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
+		  for(i in prices){
+			prices[i] = prices[i].replace('&nbsp;&euro;', '');
+		  }
+	
+		  if(prices.length === 2){
+			return(
+			  <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+				{ this.priceToString(prices[0]) }€ </Text><Text style={ priceStyle }> {this.priceToString(prices[1])}€ </Text></View>
+			);
+		  }
+		}
+		if(item.sale_price != ''){
+		  return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+			{ this.priceToString(item.regular_price) }€ </Text><Text style={ priceStyle }>{this.priceToString(item.sale_price)}€ </Text></View>
+		} else {
+		  return <Text style={ priceStyle }>{this.priceToString(item.price)}€</Text>
+		}
+	  }
+	
+	  priceToString(price) {
+		return parseFloat(price).toFixed(2).toString().replace('.', ',');
+	  }
+
 	render() {
 
 		let all =
 		this.props.products ? (
 			
-			<Carousel
-				data={this.props.products}
-				firstItem={(this.props.products - 1) / 2}
-				keyExtractor={(item, index) => index.toString()}
-				sliderWidth={width}
-				itemWidth={width / 2 - 15}
-				inactiveSlideOpacity={1}
-				renderItem={({ item }) => (
-					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
-				)}
-			/>
+			this.props.products.map((item, i) => {
+				return (
+
+					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+							
+							{this.renderPrice(item)}
+							
+						</View>
+					</TouchableHighlight>
+				)
+			})
 		) : (
 			<Loader />
 		);
 
 		let sales =
 		this.state.saleProducts ? (
-			<Carousel
-				data={this.state.saleProducts}
-				firstItem={(this.state.saleProducts - 1) / 2}
-				keyExtractor={(item, index) => index.toString()}
-				sliderWidth={width}
-				itemWidth={width / 2 - 15}
-				inactiveSlideOpacity={1}
-				renderItem={({ item }) => (
-					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
-				)}
-			/>
+			this.state.saleProducts.map((item, i) => {
+				return (
+
+					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+							{this.renderPrice(item)}
+
+						</View>
+					</TouchableHighlight>
+				)
+			})
 		) : (
 			<Loader />
 		);
 
 		let news =
 		this.state.newProducts ? (
-			<Carousel
-				data={this.state.newProducts}
-				firstItem={(this.state.newProducts - 1) / 2}
-				keyExtractor={(item, index) => index.toString()}
-				sliderWidth={width}
-				itemWidth={width / 2 - 15}
-				inactiveSlideOpacity={1}
-				renderItem={({ item }) => (
-					<Item data={item} onPress={() => this.props.navigation.navigate('Product', { item: item }) }/>
-				)}
-			/>
+			this.state.newProducts.map((item, i) => {
+				return (
+
+					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+							{this.renderPrice(item)}
+
+						</View>
+					</TouchableHighlight>
+				)
+			})
 
 		) : (
 			<Loader />
@@ -203,22 +239,28 @@ class Home extends Component {
 				}
 				
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Kaikki tuotteet</Text>
-							{all}
+							<Text style={app_style.front_item_title}>Kaikki tuotteet:</Text>
+								<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+									{all}
+								</ScrollView>
 						</View>
 
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Alennustuotteet</Text>
-							{sales}
+							<Text style={app_style.front_item_title}>Alennustuotteet:</Text>
+							<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+								{sales}
+							</ScrollView>
 						</View>
 
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Uudet tuotteet</Text>
+							<Text style={app_style.front_item_title}>Uudet tuotteet:</Text>
+							<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
 							{news}
+							</ScrollView>
 						</View>
 
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Tuotekategoriat</Text>
+							<Text style={app_style.front_item_title}>Tuotekategoriat:</Text>
 							{productCategories}
 						</View>
 				</ScrollView>

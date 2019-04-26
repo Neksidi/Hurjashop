@@ -4,7 +4,7 @@ function getSaleProducts(products) {
     let sortedProducts = products;
 
     for(i in sortedProducts){
-        if(!sortedProducts[i].on_sale){
+        if(sortedProducts[i].sale_price == ""){
             sortedProducts.slice(i,1);
         }
     }

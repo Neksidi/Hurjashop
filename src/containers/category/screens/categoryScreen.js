@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, ImageBackground, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, Image, ImageBackground, FlatList, TouchableHighlight , TouchableOpacity} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { getProductsByCategory } from '../../product/controllers/requests'
-import { setProducts } from '../../product/redux/productActions'
+import { setCategoryProducts } from '../../product/redux/productActions'
 import Loader from '../../../app/components/common/loader/loader';
 import { theme, grid, app_style } from '../../../app/styles/global'
 
@@ -13,8 +13,8 @@ class Category extends Component {
 		super(props);
 
     this.state = {
-      item: null,
-    }
+      category_id: null,
+		}	
 	}
 
 	static navigationOptions = {
@@ -22,13 +22,6 @@ class Category extends Component {
       backgroundColor: theme.color.navigation.background,
     },
     headerTitle: "Kategoria", //<CustomHeader/>
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="info"
-				color="green"
-      />
-    ),
   };
 
 	componentWillMount() {
@@ -38,10 +31,17 @@ class Category extends Component {
 	}
 
 	componentDidMount() {
-		if (!this.props.products.length && this.state.item != null) {
-			getProductsByCategory(this.props, this.state.item);		
-		}
 
+		let currentCategory = this.props.navigation.state.params.category
+
+		if(currentCategory != undefined) {
+			this.setState({ category : currentCategory });
+			getProductsByCategory(this.props, currentCategory.id);	
+
+			console.log("productsbycategory");
+			console.log(this.props);
+			console.log("productsbycategory");
+		}
 	}
 
 	renderItem = ({item, index}) => {
@@ -49,15 +49,14 @@ class Category extends Component {
 		  return <View style={[grid.item, grid.itemInvisible]} />;
 		}
 		return (
-		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { item: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
-				<ImageBackground style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.image.src}}>
-					<Text style={[grid.itemText, {backgroundColor:theme.color.bg.main, color:theme.color.hurja.main}]}>
-						{item.name}
-					</Text>
-				</ImageBackground>
-
-				
+			<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+						{this.renderPrice(item)}
+					</View>
 			</TouchableHighlight>
+				
+		
 		);
 	}
 
@@ -71,12 +70,44 @@ class Category extends Component {
 		return data;
 	}
 
+	renderPrice(item){
+		const priceStyle = {
+		  fontFamily: 'BarlowCondensed-Regular',
+		  fontSize: 18,
+		}
+	
+		if(item.attributes.length > 0){
+	
+		  let prices = item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
+		  for(i in prices){
+			prices[i] = prices[i].replace('&nbsp;&euro;', '');
+		  }
+	
+		  if(prices.length === 2){
+			return(
+			  <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+				{ this.priceToString(prices[0]) }€ </Text><Text style={ priceStyle }> {this.priceToString(prices[1])}€ </Text></View>
+			);
+		  }
+		}
+		if(item.sale_price != ''){
+		  return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
+			{ this.priceToString(item.regular_price) }€ </Text><Text style={ priceStyle }>{this.priceToString(item.sale_price)}€ </Text></View>
+		} else {
+		  return <Text style={ priceStyle }>{this.priceToString(item.price)}€</Text>
+		}
+	  }
+	
+	  priceToString(price) {
+		return parseFloat(price).toFixed(2).toString().replace('.', ',');
+	  }
+
 	render() {
 
 		let productByCategory = 
-		this.props.products ? (
+		this.props.categoryProducts ? (
 				<FlatList 
-					data={this.formatRow(this.props.products, 2)}
+					data={this.formatRow(this.props.categoryProducts, 2)}
 					style={grid.container}
 					renderItem={this.renderItem}
 					numColumns={2}
@@ -86,10 +117,17 @@ class Category extends Component {
 			<Loader />
 		);
 
+		let headerCategory =
+		this.state.category != null ? (
+			<Text style={app_style.front_item_title}>{this.state.category.name}:</Text>
+	) : (
+			<View/>
+	);
+
 		return (
 				<ScrollView>
 					<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Tuote kategoriat</Text>
+							{headerCategory}
 							{productByCategory}
 					</View>
 				</ScrollView>
@@ -101,11 +139,12 @@ class Category extends Component {
 
 const mapStateToProps = (state) => {
 	const { category } = state
-	const products = state.products.all
-	return { category , products }
+	const categoryProducts = state.products.categoryProducts
+
+	return { category, categoryProducts }
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts }, dispatch));
+	bindActionCreators({ setCategoryProducts }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Category);
