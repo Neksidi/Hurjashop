@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, WebView, } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
 
 //import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
 // Global styles
@@ -8,7 +9,7 @@ import CustomHeader from '../../app/components/header/customHeader'
 
 class Index extends Component {
 
-    static navigationOptions = {
+    /*static navigationOptions = {
         headerStyle: {
             backgroundColor: theme.color.navigation.background,
             height: theme.navigation.height,
@@ -19,7 +20,18 @@ class Index extends Component {
 
         ),
 
-    };
+    };*/
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerStyle: {
+                backgroundColor: theme.color.navigation.background,
+                height: theme.navigation.height,
+            },
+            headerTitle: <CustomHeader />,
+            headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />)
+        }
+    }
 
     constructor(props) {
         super(props);
