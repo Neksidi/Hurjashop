@@ -4,10 +4,10 @@ import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator
 // Global styles
 import { theme } from '../../app/styles/global'
 import CustomHeader from '../../app/components/header/customHeader'
-
+import { HeaderBackButton } from 'react-navigation';
 class Index extends Component {
 
-    static navigationOptions = {
+    /*static navigationOptions = {
 		headerStyle: {
 			backgroundColor: theme.color.navigation.background,
 			height: theme.navigation.height,
@@ -18,14 +18,24 @@ class Index extends Component {
 		
 		  ),
 		
-	};
+    };*/
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerStyle: {
+                backgroundColor: theme.color.navigation.background,
+                height: theme.navigation.height,
+            },
+            headerTitle: <CustomHeader />,
+            headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />)
+        }
+    }
     render() {
 
         return (
             <ScrollView>
                 <View>
                     <Text style={{ fontSize: 20, marginLeft: 5 }}>
-{`
+                        {`
 Tietoa meistä
 
 Olemme mutkaton kumppani digitaalisissa kehityshankkeissasi. Teemme verkkopalveluita, räätälöityjä ohjelmistoja ja mobiilikehitystä. Ammattitaitoisella otteella, sopivan rennolla meiningillä ja hyvällä sykkeellä.
