@@ -37,10 +37,6 @@ class Category extends Component {
 		if(currentCategory != undefined) {
 			this.setState({ category : currentCategory });
 			getProductsByCategory(this.props, currentCategory.id);	
-
-			console.log("productsbycategory");
-			console.log(this.props);
-			console.log("productsbycategory");
 		}
 	}
 

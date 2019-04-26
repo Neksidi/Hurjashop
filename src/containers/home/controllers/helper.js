@@ -1,26 +1,26 @@
 
 
 function getSaleProducts(products) {
-    let sortedProducts = products;
+    let saleProducts = [];
 
-    for(i in sortedProducts){
-        if(sortedProducts[i].sale_price == ""){
-            sortedProducts.slice(i,1);
+    for(i in products){
+        if(products[i].on_sale == true){
+            saleProducts.push(products[i]);
         }
     }
 
-    sortedProducts.sort((a, b) => (a.regular_price - a.sale_price)/a.sale_price > (b.regular_price - b.sale_price)/b.sale_price);
+    saleProducts.sort((a, b) => (a.regular_price - a.sale_price)/a.sale_price > (b.regular_price - b.sale_price)/b.sale_price);
 
-    return sortedProducts;
+    return saleProducts;
 }
 
 
 function getNewProducts(products) {
-    let sortedProducts = products;
+    let newproducts = products.slice();
     
-    sortedProducts.sort((a, b) => (getParsedDate(a.date_created) > getParsedDate(b.date_created)));
+    newproducts.sort((a, b) => (getParsedDate(a.date_created) > getParsedDate(b.date_created)));
 
-    return sortedProducts;
+    return newproducts;
 
 }
 
@@ -32,6 +32,6 @@ function getParsedDate(date){
 }
 
 export { 
-  getSaleProducts,
-  getNewProducts,
+    getSaleProducts,
+    getNewProducts,
 }

@@ -23,6 +23,7 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			allProducts: [],
 			saleProducts: [],
 			newProducts: [],
 		  }
@@ -134,11 +135,10 @@ class Home extends Component {
 
 		let all =
 		this.props.products ? (
-			
 			this.props.products.map((item, i) => {
 				return (
 
-					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<TouchableHighlight key={i} underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
 							
@@ -157,7 +157,7 @@ class Home extends Component {
 			this.state.saleProducts.map((item, i) => {
 				return (
 
-					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<TouchableHighlight key={i}  underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
 							{this.renderPrice(item)}
@@ -170,12 +170,12 @@ class Home extends Component {
 			<Loader />
 		);
 
-		let news =
+		/*let news =
 		this.state.newProducts ? (
 			this.state.newProducts.map((item, i) => {
 				return (
 
-					<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<TouchableHighlight key={i}  underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
 							{this.renderPrice(item)}
@@ -188,6 +188,7 @@ class Home extends Component {
 		) : (
 			<Loader />
 		);
+		*/
 
 		let productCategories = 
 		this.props.categories ? (
@@ -252,12 +253,14 @@ class Home extends Component {
 							</ScrollView>
 						</View>
 
+						{/*
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Uudet tuotteet:</Text>
 							<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
 							{news}
 							</ScrollView>
 						</View>
+						*/}
 
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Tuotekategoriat:</Text>
@@ -279,6 +282,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts, setCategories }, dispatch));
+	bindActionCreators({ setProducts, setCategories, getCategories }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

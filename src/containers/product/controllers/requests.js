@@ -40,8 +40,24 @@ async function getProductsByCategory(props, id) {
   } 
 }
 
+
+async function searchForProduct(state, id) {
+  //TODO
+
+  if(response){
+    if(response.error) {
+      return;
+    }
+    else {
+      state.setState({searchResult : response});
+
+    }
+  } 
+}
+
 export {
   getProducts,
   getProduct,
-  getProductsByCategory
+  getProductsByCategory,
+  searchForProduct,
 }
