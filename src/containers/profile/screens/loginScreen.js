@@ -202,7 +202,6 @@ class Login extends Component {
       } else {
         console.log("Google silent login error")
         console.log(error);
-        //
       }
     }
   };
