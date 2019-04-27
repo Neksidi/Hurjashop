@@ -29,7 +29,7 @@ class Index extends Component {
                 height: theme.navigation.height,
             },
             headerTitle: <CustomHeader />,
-            headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />)
+            headerLeft: (<HeaderBackButton tintColor='#FFFFFF' onPress={() => { navigation.navigate('Home') }} />)
         }
     }
 
