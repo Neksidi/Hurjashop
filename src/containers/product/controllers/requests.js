@@ -41,7 +41,7 @@ async function getProductsByCategory(props, id) {
 }
 
 
-async function searchForProduct(state, text) {
+async function searchForProduct(text) {
   console.log("Start search");
   console.log(text);
   var body = {
@@ -57,7 +57,7 @@ async function searchForProduct(state, text) {
       return;
     }
     else {
-      state.setState({searchResult : response});
+      return response[0];
 
     }
   } 

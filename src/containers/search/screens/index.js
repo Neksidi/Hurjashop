@@ -12,6 +12,7 @@ class Search extends Component {
 		super(props);
 
 		this.state = {
+			searchText: '',
 			searchResults: [],
 		}
 	}
@@ -30,6 +31,11 @@ class Search extends Component {
 
 	componentDidMount() {
 
+	}
+
+	async search() {
+		var results = await searchForProduct(this.state.searchText)
+		this.setState({searchResults: results})
 	}
 
 	renderItem = ({item, index}) => {
@@ -115,7 +121,10 @@ class Search extends Component {
 				<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>Syötä hakusana:</Text>
 					<TextInput
 						style={{fontSize: 20}}
-						onSubmitEditing={(text) => searchForProduct(this.state, text)} />
+						onChangeText={(text) => this.setState({searchText: text})}
+						onSubmitEditing={() => {
+							this.search()
+						}}/>
 				</View>
 				
 				<ScrollView >
