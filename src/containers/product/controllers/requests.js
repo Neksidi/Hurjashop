@@ -41,9 +41,17 @@ async function getProductsByCategory(props, id) {
 }
 
 
-async function searchForProduct(state, word) {
-  //TODO
+async function searchForProduct(state, text) {
+  console.log("Start search");
+  console.log(text);
+  var body = {
+    "search": text,
+  }
 
+  var response = await Api.post(WEB_URL + "/products/search", body, false);
+
+   console.log(response);
+   
   if(response){
     if(response.error) {
       return;
