@@ -158,6 +158,20 @@ async function logInFb(access_token) {
   console.log(response)
 }
 
+async function logInGoogle(idToken) {
+  console.log("Connecting to own Google login");
+  console.log(idToken);
+
+  var body = {
+    "id_token": idToken,
+  }
+
+  var response = await Api.post(AUTH_URL + "/logingoogle", body, false);
+
+  console.log(response);
+  console.log("own google login success?");
+}
+
 
 async function handleLogin(parent) {
     console.log('Logging in');
@@ -296,6 +310,7 @@ export {
     afterLoginComplete,
     logIn,
     logInFb,
+    logInGoogle,
     logOut,
     logOutPopup
 }
