@@ -37,6 +37,7 @@ class Cart extends Component {
       backgroundColor: theme.color.navigation.background,
     },
     headerTitle: "Ostoskori",
+    headerTintColor: 'white',
  
   };
 

@@ -5,8 +5,8 @@ import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, B
 import { bindActionCreators } from 'redux';
 import { theme } from '../../../app/styles/global'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-//import { CheckBox } from 'react-native-elements'
-//import { POSTI_URL } from '../redux/paymentActions'
+import { CheckBox } from 'react-native-elements'
+import { POSTI_URL } from '../../../app/config'
 import Loader from '../components/loader/loader'
 
 
@@ -37,7 +37,15 @@ class Methods extends Component {
 		};
 		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
-	}
+    }
+    
+    static navigationOptions = {
+		headerStyle: {
+            backgroundColor: theme.color.navigation.background,
+        },
+        headerTitle: "Maksutavat",
+        headerTintColor: 'white',
+    };
 	
     retrieveToken() {
         console.log('retrieve options')
@@ -86,15 +94,6 @@ class Methods extends Component {
         }
 
     }
-	static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: 'Maksutavat ja postitustavat',
-            headerStyle: {
-                backgroundColor: theme.color.navigation.background,
-                height: theme.navigation.height,
-            },
-        }
-	};
 	
     handleSubmit = () => {
         let total = null;
@@ -268,7 +267,7 @@ class Methods extends Component {
                             checked={this.state.home}
                             onPress={() => { this.checkDelivery("home") }}
                         />
-                        <Button disabled={!this.state.isChecked} text="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
+                        <Button disabled={!this.state.isChecked} title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
                     </View>
                 </ScrollView>
             );
@@ -304,7 +303,7 @@ class Methods extends Component {
                             checked={this.state.home}
                             onPress={() => { this.checkDelivery("home") }}
                         />
-                        <Button disabled={!this.state.isChecked} text="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
+                        <Button disabled={!this.state.isChecked} title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
                     </View>
                 </ScrollView>
             );

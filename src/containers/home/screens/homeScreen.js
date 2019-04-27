@@ -26,7 +26,7 @@ class Home extends Component {
 			allProducts: [],
 			saleProducts: [],
 			newProducts: [],
-		  }
+		}
 	}
 
 	static navigationOptions = {

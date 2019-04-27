@@ -6,6 +6,8 @@ import { getProductsByCategory } from '../../product/controllers/requests'
 import { setCategoryProducts } from '../../product/redux/productActions'
 import Loader from '../../../app/components/common/loader/loader';
 import { theme, grid, app_style } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
+import { withTheme } from 'react-native-elements';
 
 
 class Category extends Component {
@@ -19,9 +21,12 @@ class Category extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: theme.color.navigation.background,
-    },
-    headerTitle: "Kategoria", //<CustomHeader/>
+			backgroundColor: theme.color.navigation.background,
+			height: theme.navigation.height,
+		},
+		headerTitle: <CustomHeader small={true}/>,
+		backgroundColor: theme.color.hurja.main,
+		headerTintColor: 'white',
   };
 
 	componentWillMount() {

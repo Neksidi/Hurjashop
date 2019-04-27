@@ -275,26 +275,26 @@ export const app_style = StyleSheet.create({
     marginRight: 30,
   },
 
-    logo: {
-      width: 75,
-      height: 75
-    },
-    
-    sliderContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingTop: 5,
-      paddingBottom: 15,
-      paddingHorizontal: 5
-    },
-    footer: {
-      backgroundColor: '#e94641',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingTop: 20,
-      paddingBottom: 15
-    }
+  logo: {
+    width: 75,
+    height: 75
+  },
+  
+  sliderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 5,
+    paddingBottom: 15,
+    paddingHorizontal: 5
+  },
+  footer: {
+    backgroundColor: '#e94641',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 15
+  }
 });
 
 export const carousel = {
@@ -372,6 +372,14 @@ export const styles = StyleSheet.create({
     zIndex: 4,
     alignSelf: 'center',
     top: -40,
+    //elevation: 99,
+  },
+  logoSmall: {
+    width: 50,
+    height: 48,
+    position: 'absolute',
+    zIndex: 4,
+    alignSelf: 'center',
     //elevation: 99,
   },
   slidercContainer: {

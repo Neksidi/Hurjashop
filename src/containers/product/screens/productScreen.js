@@ -14,6 +14,7 @@ import { setProducts } from '../redux/productActions'
 import { addToCart } from '../../cart/redux/cartActions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Badge from '../../../app/components/common/badge/index'
+import CustomHeader from '../../../app/components/header/customHeader'
 
 
 let { width, height } = Dimensions.get('screen');
@@ -22,10 +23,12 @@ class Product extends Component {
 
 	static navigationOptions = {
 		headerStyle: {
-      		backgroundColor: theme.color.navigation.background,
+          backgroundColor: theme.color.navigation.background,
+          height: theme.navigation.height,
     	},
-      headerTitle: "Tuotesivu",
+      headerTitle: <CustomHeader small={true}/>,
       backgroundColor: theme.color.hurja.main,
+      headerTintColor: 'white',
     };
     
 	constructor(props) {

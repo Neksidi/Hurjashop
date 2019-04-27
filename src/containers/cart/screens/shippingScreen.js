@@ -24,10 +24,11 @@ class Shipping extends Component {
 	static navigationOptions = {
 		headerStyle: {
             backgroundColor: theme.color.navigation.background,
-    },
+        },
     headerTitle: "Lähetystiedot",
-   
-  };
+    headerTintColor: 'white',
+    };
+    
   //Tämä on kesken
   handleSubmit = () => {
     this.state.shipping = {first_name: this.state.firstname, last_name: this.state.lastname, address: this.state.address, zipcode: this.state.zipcode, city: this.state.city, country: this.state.country};

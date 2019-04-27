@@ -7,7 +7,7 @@ import AllProductsScreen from '../../../containers/product/screens/allProductsSc
 import CartScreen from '../../../containers/cart/screens/cartScreen'
 import ShippingScreen from '../../../containers/cart/screens/shippingScreen'
 import MethodsScreen from  '../../../containers/payment/screens/methodsScreen'
-import CustomHeader from '../../../app/components/header/customHeader'
+//import CustomHeader from '../../../app/components/header/customHeader'
 
 
 const transitionConfig = () => {
