@@ -62,8 +62,6 @@ class Cart extends Component {
           },
         ]
       );
-
-    
   }
 
   
@@ -95,7 +93,7 @@ class Cart extends Component {
       }
     }
     
-    return total.toFixed(2).toString().replace('.', ',') + '€';
+    return total.toFixed(2).toString().replace('.', ',') + ' €';
   }
   
 
@@ -144,7 +142,7 @@ class Cart extends Component {
 
      let showPrice = 
      this.props.cart.cart ? (
-        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()} €</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()}</Text>
      ) : (
         <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}> 0€</Text>
      );

@@ -34,12 +34,6 @@ class Product extends Component {
     this.state = {
       item: null,
       count: 1,
-      TextInputValueHolder: '',
-      selectedSize: 'XXL', //DEFAULT
-      selectedColor: 'Valkea',//KOVAKOODATTU PLS FIX
-      isLoading: true,
-      preview: true,
-      activeSlide: 0,
     }
 
   }
@@ -48,14 +42,15 @@ class Product extends Component {
     this.setState({item: this.props.navigation.getParam('item', null)});
 
     if(this.state.item != null) {
-      this.props.navigation.setParams({headerTitle: item.name});
+
+      console.log(this.state.item);
+
+      if(this.state.item.stock_quantity == null || 
+        (this.state.item.stock_quantity != null && this.state.item.stock_quantity == 0)) {
+          this.setState({count: 0});
+      }
     }
 
-    /* TODO: Löydä samankaltaiset tuotteet
-    if(!this.props.products.length) {
-			getProducts(this.props);
-    }
-    */
   }
   
   componentWillMount() {
@@ -83,8 +78,6 @@ class Product extends Component {
     this.refs.toast.show("Lisätty tuote "+this.state.item.name+" ostoskoriin");
 
     this.setState({count: 1});
-
-
   }
 
   share(){
@@ -119,20 +112,6 @@ class Product extends Component {
       fontSize: 18,
     }
 
-    if(item.attributes.length > 0){
-
-      let prices = item.price_html.replace(/<[^>]*>?/gm, '').split(' ');
-      for(i in prices){
-        prices[i] = prices[i].replace('&nbsp;&euro;', '');
-      }
-
-      if(prices.length === 2){
-        return(
-          <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
-            { this.priceToString(prices[0]) }€ </Text><Text style={ priceStyle }> {this.priceToString(prices[1])}€ </Text></View>
-        );
-      }
-    }
     if(item.sale_price != ''){
       return <View style={{ flexDirection: 'row'}}><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid', fontSize: 20}}>
         { this.priceToString(item.regular_price) }€ </Text><Text style={ priceStyle }>{this.priceToString(item.sale_price)}€ </Text></View>
@@ -150,17 +129,30 @@ class Product extends Component {
     if(this.state.count > 1) this.setState({count: this.state.count - 1})
   }
   increaseCartCount(){
-    this.setState({count: this.state.count + 1})
+    if(this.state.item.stock_quantity > this.state.count) {
+      this.setState({count: this.state.count + 1})
+    }
   }
 
   render() {
-    let item = this.state.item;			
+    let item = this.state.item;	
 
+    
     if(item == null) {
       return(
         <Loader />
       )
     } else {
+      let addCartText = item.in_stock == true ? ( ('LISÄÄ OSTOSKORIIN') ) : ( ('EI VARASTOSSA') );
+
+      let productNumber = item.sku != "" ?  (
+        <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Tuotenumero: { item.sku }</Text>
+      ) : (
+        <View/>
+      );
+
+      let stockCount = item.stock_quantity != null ? ((item.stock_quantity+ " kpl")) : (("0 kpl"));
+
       return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
           <Badge count={this.props.cart.length} />
@@ -197,6 +189,10 @@ class Product extends Component {
               <View>
                 <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
                 {this.renderPrice(this.state.item)}
+
+                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Varastossa: { stockCount }</Text>
+                {productNumber}
+
               </View>
               {/*
               <View>
@@ -221,7 +217,8 @@ class Product extends Component {
                 </TouchableOpacity>
               </View>
               {/* ADD TO CART BUTTON */}
-              <TouchableOpacity onPress={() => this.handleAddToCart()}
+              {addToCart}
+              <TouchableOpacity disabled={!item.in_stock} onPress={() => this.handleAddToCart()}
                 style={{
                   width: '100%',
                   maxWidth: 400,
@@ -233,8 +230,9 @@ class Product extends Component {
                   borderRadius: 2,
                 }}>
                 <FAIcon name='cart-plus' size={20} color='#fff' />
-                <Text style={{ fontFamily: 'BarlowCondensed-ExtraBold', fontSize: 20, color: '#fff', marginLeft: 10}}>LISÄÄ OSTOSKORIIN</Text>
+                <Text style={{ fontFamily: 'BarlowCondensed-ExtraBold', fontSize: 20, color: '#fff', marginLeft: 10}}>{addCartText}</Text>
               </TouchableOpacity>
+
             </View>
             {/* IMAGE GALLERY */}
             <Gallery images={this.state.item.images} ref='gallery'/>
