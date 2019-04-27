@@ -111,15 +111,11 @@ class Cart extends Component {
   
 	render() {
     let productCount = 
-    this.props.cart.cart ? (
       this.props.cart.cart.length === 1 ? (
         <Text style={styles.cartHeaderText}>1 tuote</Text>
       ) : ( 
         <Text style={styles.cartHeaderText}>{this.props.cart.cart.length} tuotetta</Text>
-      )
-    ) : ( 
-      <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
-    )      
+      );  
 
      let cartContainer =
      this.props.cart.cart ? (
@@ -130,7 +126,7 @@ class Cart extends Component {
                 title={item.item.name}
                 subtitle={"Määrä: "+item.quantity}
                 leftAvatar={{ source: { uri: item.item.images[0].src } }}
-                onPress={() => this.props.navigation.navigate('Product', { item: item })}
+                onPress={() => this.props.navigation.navigate('Product', { item: item.item })}
                 rightTitle={this.priceToString(item.item.price*item.quantity)+" €"}
               />
             )
@@ -185,6 +181,7 @@ class Cart extends Component {
             
               <View style={styles.footerSectionRight}>
                 <TouchableOpacity
+                  disabled={this.props.cart.cart.length == 0}
                   style={{
                     paddingHorizontal: 25,
                     paddingVertical: 15,
