@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
 import { searchForProduct } from '../../product/controllers/requests'
 import { bindActionCreators } from 'redux';
-
-import { theme, grid, app_style } from '../../../app/styles/global'
+import { theme, grid, app_style, styles } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
+import LinearGradient from 'react-native-linear-gradient';
 
 
 class Search extends Component {
@@ -16,11 +17,19 @@ class Search extends Component {
 			searchResults: [],
 		}
 	}
+
 	static navigationOptions = {
 		headerStyle: {
-      backgroundColor: theme.color.navigation.background,
-    },
-    headerTitle: "Haku",
+			backgroundColor: theme.color.navigation.background,
+			height: theme.navigation.height,
+		},
+		headerTitle: <CustomHeader small={true}/>,
+		backgroundColor: theme.color.hurja.main,
+		headerTintColor: 'white',
+		headerLeft: (
+			<View></View> //needed to justify logo in center
+		
+		),
   };
 
 	componentWillMount() {
@@ -116,6 +125,11 @@ class Search extends Component {
 		);
 
 		return (
+			<LinearGradient 
+				start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
+				locations={[0.1, 0.7]}
+				colors={['#a6c0fe', '#f68084']} 
+				style={styles.linearGradient}>
 			<View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10 }}>
 				<View>
 				<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>Syötä hakusana:</Text>
@@ -133,11 +147,10 @@ class Search extends Component {
 						</View>
 				</ScrollView>
 			</View>
+			</LinearGradient>
 		);
 	}
 }
-
-
 
 const mapStateToProps = (state) => {
 	const { search } = state

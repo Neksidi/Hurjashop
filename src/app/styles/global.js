@@ -404,5 +404,10 @@ export const styles = StyleSheet.create({
   headerContainer: {
     paddingRight: 20
   },
-  
+
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
 });

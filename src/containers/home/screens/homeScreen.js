@@ -14,8 +14,9 @@ import { setProducts } from '../../product/redux/productActions'
 
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import Header from '../../../app/components/header/header'
-import { app_style, theme, grid } from '../../../app/styles/global'
+import { app_style, theme, grid, styles } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
+import LinearGradient from 'react-native-linear-gradient';
 
 let { width, height } = Dimensions.get('screen');
 
@@ -38,7 +39,7 @@ class Home extends Component {
 		headerLeft: (
 			<View></View> //needed to justify logo in center
 		
-		  ),
+		),
 		
 	};
 
@@ -224,15 +225,12 @@ class Home extends Component {
 				/>
 				*/
 				
-				<Button
-					title="Ostoskoriin"
-					onPress={() =>
-						this.props.navigation.navigate('Cart')
-					}
-				/>
-				
 				}
-				
+					<LinearGradient 
+						start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
+						locations={[0.1, 0.7]}
+						colors={['#a6c0fe', '#f68084']} 
+						style={styles.linearGradient}>
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Kaikki tuotteet:</Text>
 								<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
@@ -260,6 +258,7 @@ class Home extends Component {
 							<Text style={app_style.front_item_title}>Tuotekategoriat:</Text>
 							{productCategories}
 						</View>
+					</LinearGradient>
 				</ScrollView>
 
 			</View>	
