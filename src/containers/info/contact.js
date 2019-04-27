@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, Picker, TextInput, Keyboard } from 'react-native';
+import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, Picker, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 
 import ButtonDefault from '../profile/components/defaultLoginButton'
 //import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
@@ -8,7 +8,7 @@ import ButtonDefault from '../profile/components/defaultLoginButton'
 import { theme } from '../../app/styles/global'
 import { MAIL_URL } from '../../app/config/index'
 import Validator from './validator'
-
+import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -107,6 +107,11 @@ class Index extends Component {
 
         return (
             <View style={styles.container}>
+                <View style={styles.leftContainer}>
+                    <TouchableOpacity style={styles.customBackButton} onPress={() => this.props.navigation.navigate("Home")}>
+                        <FeatherIcon name='chevron-left' size={25} color='#fff' />
+                    </TouchableOpacity>
+                </View>
                 <View>
                     <Text style={styles.title}>Ota yhteyttä</Text>
                 </View>
@@ -151,6 +156,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: theme.color.hurja.main,
         padding: 20,
+    },
+    leftContainer: {
+        flex: 1,
+        alignSelf: 'flex-start'
+
     },
     inputContainer: {
         width: '100%',
@@ -211,10 +221,10 @@ const styles = StyleSheet.create({
 });
 
 const map_state_props = (state) => {
-    return {
-        logged: state.contact_reducer.isLogged,
-        contact: state.contact_reducer.contact,
-    }
+    /* return {
+         logged: state.contact_reducer.isLogged,
+         contact: state.contact_reducer.contact,
+     }*/
 }
 
 export default connect(map_state_props)(Index);
