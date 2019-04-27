@@ -48,6 +48,7 @@ class Category extends Component {
 			<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+						<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
 						{this.renderPrice(item)}
 					</View>
 			</TouchableHighlight>

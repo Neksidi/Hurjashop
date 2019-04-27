@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { ChildComponent, View, Text, Button, ScrollView, StyleSheet, FlatList, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
+import { Alert, ChildComponent, View, Text, Button, ScrollView, StyleSheet, List, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
 import { ListItem } from 'react-native-elements'
 import { bindActionCreators } from 'redux';
 import {btn, theme,  } from '../../../app/styles/global'
@@ -11,6 +11,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
 import { priceToString } from '../../product/controllers/helper'
+import { emptyCart } from '../redux/cartActions'
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
@@ -48,6 +49,24 @@ class Cart extends Component {
     this.props.removeItem(item);
   }
 
+  clearCart() {
+      Alert.alert(
+        'Tyhjennä roskakori',
+        'Oletko varma, että haluat tyhjentää ostoskorin?',
+        [
+          {text: 'Peruuta', style: 'cancel'},
+          {text: 'Tyhjennä ostoskori', onPress: () => {
+              emptyCart();
+              this.forceUpdate();
+              console.log(this.props.cart);
+            }
+          },
+        ]
+      );
+
+    
+  }
+
   
   renderItem(item){
     return(
@@ -66,9 +85,23 @@ class Cart extends Component {
     let price, quantity;
     for(i in this.props.cart.cart){
       quantity = this.props.cart.cart[i].quantity;
-      price = (parseFloat(this.props.cart.cart[i].price));
+      price = (parseFloat(this.props.cart.cart[i].item.price));
       total += (price * quantity)
     } 
+
+    console.log("this.props.cart");
+    console.log(this.props.cart);
+    
+    console.log("this.props.cart.cart[i].quantity")
+    console.log(this.props.cart.cart[i].quantity);
+
+    console.log("this.props.cart.cart[i].price");
+    console.log(this.props.cart.cart[i].price);
+
+    console.log("this.props.cart.cart[i].quantity");
+    console.log(this.props.cart.cart[i].quantity);
+    
+
 
     return parseFloat(total).toFixed(2).toString().replace('.', ',') + '€';
   }
@@ -81,52 +114,35 @@ class Cart extends Component {
       //this.props.navigation.navigate('Authenticate')
     
   } 
+
+  priceToString(price) {
+    return parseFloat(price).toFixed(2).toString().replace('.', ',');
+  }
   
 	render() {
-    let productCount = this.props.cart.length === 1 ? ('1 tuote') : (this.props.cart.cart.length + ' tuotetta');
+    let productCount = 
+    this.props.cart.cart ? (
+      this.props.cart.cart.length === 1 ? (
+        <Text style={styles.cartHeaderText}>1 tuote</Text>
+      ) : ( 
+        <Text style={styles.cartHeaderText}>{this.props.cart.cart.length} tuotetta</Text>
+      )
+    ) : ( 
+      <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
+    )      
 
-     let productsInCart =
-     this.props.cart ? (
-        <Text style={styles.cartHeaderText}>{productCount}</Text>
-        
-     ) : (
-        <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
-     );
-
-
-      
-
-     //TODO PARANTELUA
      let cartContainer =
      this.props.cart ? (
           this.props.cart.cart.map((item, i) => {
             return (
-              /*<ListItem key={item.item.id}>
-                  <Text>
-                    {item.name}
-                  </Text>
-
-                  <Text>{item.price}</Text>
-                  <Text>Color: {item.color}</Text>
-                  <Text>Size: {item.size}</Text>
-                  <Button>X</Button>
-
-              </ListItem>
-              */
-              
-                  
-              
-              <TouchableOpacity
-                   key = {item.item.id}
-                     onPress = {() => this.deleteItem(item)}>
-                     <Text>
-                        Nimi: {item.item.name} | 
-                        Määrä: {item.quantity} |
-                        Hinta: {item.item.price * item.quantity} €
-                     </Text>
-                     
-                </TouchableOpacity>
-               
+              <ListItem key={item.item.id}
+                key={item.item.id}
+                title={item.item.name}
+                subtitle={"Määrä: "+item.quantity}
+                leftAvatar={{ source: { uri: item.item.images[0].src } }}
+                onPress={() => this.props.navigation.navigate('Product', { item: item })}
+                rightTitle={this.priceToString(item.item.price*item.quantity)}
+              />
             )
           })
       
@@ -149,23 +165,20 @@ class Cart extends Component {
                   <FeatherIcon name='package' size={30} color='#292929' />
                 </View>
                 <View style={styles.cartHeaderTextContainer}>
-
-                  {productsInCart}
-
+                  <ScrollView>
+                    {productCount}
+                  </ScrollView>
                 </View>
                 <View style={styles.emptyCartContainer}>
-                  <TouchableOpacity onPress={() => {this.refs.popup.show()}} style={styles.emptyCartButton}>
+                  <TouchableOpacity onPress={() => {this.clearCart()}} style={styles.emptyCartButton}>
                     <Text style={styles.emptyCartButtonText}>Tyhjennä</Text>
                     <FeatherIcon name='trash-2' size={25} color='#292929' />
                   </TouchableOpacity>
                 </View>
               </View>
 
-              {/**Tähän ei tule dataa, vittu */}
               <View>
-                
                   {cartContainer}
-                
               </View>
   
           </ScrollView>
