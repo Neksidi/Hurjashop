@@ -115,7 +115,7 @@ class Search extends Component {
 				<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>Syötä hakusana:</Text>
 					<TextInput
 						style={{fontSize: 20}}
-						onSubmitEditing={(text) => searchForProduct(this.state.searchResults, text)} />
+						onSubmitEditing={(text) => searchForProduct(this.state, text)} />
 				</View>
 				
 				<ScrollView >
