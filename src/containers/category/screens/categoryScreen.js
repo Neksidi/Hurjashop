@@ -113,18 +113,10 @@ class Category extends Component {
 		) : (
 			<Loader />
 		);
-
-		let headerCategory =
-		this.state.category != null ? (
-			<Text style={app_style.front_item_title}>{this.state.category.name}:</Text>
-	) : (
-			<View/>
-	);
-
+		
 		return (
 				<ScrollView>
 					<View style={app_style.sliderContainer}>
-							{headerCategory}
 							{productByCategory}
 					</View>
 				</ScrollView>

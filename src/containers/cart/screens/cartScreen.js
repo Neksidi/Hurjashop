@@ -78,32 +78,25 @@ class Cart extends Component {
   }
 
   
-  //TODO KORJAA HIETTÄÄ NOT A NUMBERIA TÄLLÄ HETKELLÄ
   calcTotalPrice(){
- 
     let total = 0.00;
     let price, quantity;
-    for(i in this.props.cart.cart){
-      quantity = this.props.cart.cart[i].quantity;
-      price = (parseFloat(this.props.cart.cart[i].item.price));
-      total += (price * quantity)
-    } 
 
-    console.log("this.props.cart");
-    console.log(this.props.cart);
+    if(this.props.cart.cart) {
+      for(i in this.props.cart.cart){
+        quantity = this.props.cart.cart[i].quantity;
+        price = (parseFloat(this.props.cart.cart[i].item.price));
+        total += (price * quantity)
+      } 
+
+      total = parseFloat(total);
+
+      if(isNaN(total)) {
+        total = 0;
+      }
+    }
     
-    console.log("this.props.cart.cart[i].quantity")
-    console.log(this.props.cart.cart[i].quantity);
-
-    console.log("this.props.cart.cart[i].price");
-    console.log(this.props.cart.cart[i].price);
-
-    console.log("this.props.cart.cart[i].quantity");
-    console.log(this.props.cart.cart[i].quantity);
-    
-
-
-    return parseFloat(total).toFixed(2).toString().replace('.', ',') + '€';
+    return total.toFixed(2).toString().replace('.', ',') + '€';
   }
   
 
@@ -132,7 +125,7 @@ class Cart extends Component {
     )      
 
      let cartContainer =
-     this.props.cart ? (
+     this.props.cart.cart ? (
           this.props.cart.cart.map((item, i) => {
             return (
               <ListItem key={item.item.id}
@@ -141,20 +134,20 @@ class Cart extends Component {
                 subtitle={"Määrä: "+item.quantity}
                 leftAvatar={{ source: { uri: item.item.images[0].src } }}
                 onPress={() => this.props.navigation.navigate('Product', { item: item })}
-                rightTitle={this.priceToString(item.item.price*item.quantity)}
+                rightTitle={this.priceToString(item.item.price*item.quantity)+" €"}
               />
             )
           })
       
      ) : (
-       <Text>Ei tuotteita ostoskorissasa</Text>
+       <View/>
      );
 
      let showPrice = 
-     this.props.cart ? (
-        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()}</Text>
+     this.props.cart.cart ? (
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()} €</Text>
      ) : (
-        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>0€</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}> 0€</Text>
      );
 
 		  return (
@@ -311,7 +304,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ }, dispatch));
+	bindActionCreators({ emptyCart }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 
