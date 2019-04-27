@@ -41,7 +41,7 @@ async function getProductsByCategory(props, id) {
 }
 
 
-async function searchForProduct(state, id) {
+async function searchForProduct(state, word) {
   //TODO
 
   if(response){

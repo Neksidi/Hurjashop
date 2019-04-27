@@ -56,9 +56,8 @@ class Cart extends Component {
         [
           {text: 'Peruuta', style: 'cancel'},
           {text: 'Tyhjennä ostoskori', onPress: () => {
-              emptyCart();
-              this.forceUpdate();
-              console.log(this.props.cart);
+              this.props.emptyCart();
+             
             }
           },
         ]

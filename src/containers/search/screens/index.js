@@ -90,10 +90,6 @@ class Search extends Component {
 	priceToString(price) {
 		return parseFloat(price).toFixed(2).toString().replace('.', ',');
 	}
-
-	searchProduct(text) {
-		searchForProduct(text);
-	}
 		
 	render() {
 
@@ -114,15 +110,15 @@ class Search extends Component {
 		);
 
 		return (
-			<View>
+			<View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10 }}>
 				<View>
+				<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>Syötä hakusana:</Text>
 					<TextInput
-						style={{height: 40}}
-						onSubmitEditing={this.searchProduct} />
-					<Button onPress={this.searchProduct}>Hae</Button>
+						style={{fontSize: 20}}
+						onSubmitEditing={(text) => searchForProduct(this.state.searchResults, text)} />
 				</View>
-
-				<ScrollView>
+				
+				<ScrollView >
 						<View style={app_style.sliderContainer}>
 								{searchResults}
 						</View>
@@ -135,9 +131,9 @@ class Search extends Component {
 
 
 const mapStateToProps = (state) => {
-	const { category } = state
+	const { search } = state
 
-	return { category }
+	return { search }
 };
 
 const mapDispatchToProps = dispatch => (
