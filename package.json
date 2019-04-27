@@ -15,6 +15,11 @@
     "android-staging": "ENVFILE=.env.staging react-native run-android",
     "android-production": "ENVFILE=.env.prod react-native run-android"
   },
+  "rnpm": {
+    "assets": [
+      "android/app/src/main/assets/fonts"
+    ]
+  },
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.57.8",
