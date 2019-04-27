@@ -28,7 +28,7 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 
-import { logInFb } from '../../../containers/profile/controllers/loginController'
+import { logInFb, logInGoogle } from '../../../containers/profile/controllers/loginController'
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
 GoogleSignin.configure({
@@ -146,6 +146,8 @@ class Login extends Component {
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo);
       console.log("Google login success!");
+      logInGoogle(userInfo.serverAuthCode);
+
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -188,7 +190,26 @@ class Login extends Component {
     console.log(currentUser);
   };
 
+  googleSilentLogin = async () => {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      console.log("UserInfo");
+      console.log(userInfo)
+      return userInfo;
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        console.log("Google User not yet logged in");
+      } else {
+        console.log("Google silent login error")
+        console.log(error);
+      }
+    }
+  };
+
   async componentDidMount() {
+    var login = await this.googleSilentLogin();
+    console.log("Google silent login");
+    console.log(login);
     var logged = await this.googleIsSignedIn();
     console.log("google login status");
     console.log(logged);
