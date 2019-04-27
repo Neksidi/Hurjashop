@@ -147,7 +147,7 @@ class Cart extends Component {
           })
       
      ) : (
-       <Text>Ei tuotteita ostoskorissa</Text>
+       <Text>Ei tuotteita ostoskorissasa</Text>
      );
 
      let showPrice = 
