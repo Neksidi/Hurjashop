@@ -158,12 +158,13 @@ async function logInFb(access_token) {
   console.log(response)
 }
 
-async function logInGoogle(idToken) {
+async function logInGoogle(code, user) {
   console.log("Connecting to own Google login");
-  console.log(idToken);
+  console.log(code);
 
   var body = {
-    "id_token": idToken,
+    "auth_code": code,
+    "user": user,
   }
 
   var response = await Api.post(AUTH_URL + "/logingoogle", body, false);

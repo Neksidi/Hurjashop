@@ -129,13 +129,6 @@ class Login extends Component {
       this.props.navigation.navigate('Home');
   };
 
-  async googleLogin(){
-    const response = await fetch('https://hurjashop.qs.fi/?wc-api=auth&done=google');
-    //let result = await response.json();
-    console.log("Google login:")
-    console.log(response)
-  }
-
   googleIsSignedIn = async () => {
     return await GoogleSignin.isSignedIn();
   };
@@ -146,7 +139,7 @@ class Login extends Component {
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo);
       console.log("Google login success!");
-      logInGoogle(userInfo.serverAuthCode);
+      logInGoogle(userInfo.serverAuthCode, userInfo.user);
 
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
