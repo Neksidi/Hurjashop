@@ -178,7 +178,12 @@ class Cart extends Component {
       this.props.cart.length === 1 ? (
         <Text style={styles.cartHeaderText}>1 tuote ostoskorissa</Text>
       ) : ( 
-        <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta ostoskorissa</Text>
+        (this.props.cart.length == 0) ? (
+          <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
+        ) : (
+          <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta ostoskorissa</Text>
+        )
+        
       );  
 
     
@@ -223,9 +228,7 @@ class Cart extends Component {
                   <FeatherIcon name='package' size={30} color='#292929' />
                 </View>
                 <View style={styles.cartHeaderTextContainer}>
-                  <ScrollView>
-                    {productCount}
-                  </ScrollView>
+                  {productCount}
                 </View>
                 <View style={styles.emptyCartContainer}>
                   <TouchableOpacity disabled={this.props.cart.length == 0} onPress={() => {this.clearCart()}} style={styles.emptyCartButton}>
