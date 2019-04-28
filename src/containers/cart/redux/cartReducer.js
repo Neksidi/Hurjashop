@@ -5,7 +5,7 @@ import {
   NEW_ORDER,
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
-  PREPARE_ORDER_CART
+  PREPARE_ORDER_CART,
 } from './cartActions';
 
 
@@ -36,7 +36,6 @@ import {
         return { ...state }
 
       case REMOVE_FROM_CART:
-        //Check if deleted item is in cart -> remove it
 
         for (i in state.cart) {
           if (state.cart[i].id == action.item.id) {
@@ -75,6 +74,7 @@ import {
           }
         }
         return { ...state }
+
       default:
         return {
           ...state,

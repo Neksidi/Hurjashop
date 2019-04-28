@@ -14,7 +14,7 @@ import { setProducts } from '../../product/redux/productActions'
 
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import Header from '../../../app/components/header/header'
-import { app_style, theme, grid, styles } from '../../../app/styles/global'
+import { app_style, theme, grid, styles, primaryGradientColors } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -74,11 +74,11 @@ class Home extends Component {
 
 	renderItem = ({item, index}) => {
 		if (item.empty === true) {
-		  return <View style={[grid.item, grid.itemInvisible]} />;
+		  return <View style={[grid.item, grid.itemInvisible, {height: Dimensions.get('window').width / 2 - grid.item.margin * 4, width: Dimensions.get('window').width / 2 - grid.item.margin * 4}]} />;
 		}
 		return (
-		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2}]}>
-				<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.image.src}}/>
+		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2 - grid.item.margin * 4, width: Dimensions.get('window').width / 2 - grid.item.margin * 4}]}>
+				<Image style={{width: Dimensions.get('window').width / 2 - grid.item.margin * 4, height: Dimensions.get('window').width / 2 - grid.item.margin * 4}} source={{uri: item.image.src}}/>
 			</TouchableHighlight>
 		);
 	}
@@ -223,7 +223,7 @@ class Home extends Component {
 					<LinearGradient 
 						start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
 						locations={[0.1, 0.7]}
-						colors={['#a6c0fe', '#f68084']} 
+						colors={primaryGradientColors} 
 						style={styles.linearGradient}>
 						<View style={app_style.sliderContainer}>
 							<Text style={app_style.front_item_title}>Kaikki tuotteet:</Text>

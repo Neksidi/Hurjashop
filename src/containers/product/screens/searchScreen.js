@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
-import { searchForProduct } from '../../product/controllers/requests'
+import { searchForProduct } from '../controllers/requests'
 import { bindActionCreators } from 'redux';
 import { theme, grid, app_style, styles } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
@@ -105,6 +105,11 @@ class Search extends Component {
 	priceToString(price) {
 		return parseFloat(price).toFixed(2).toString().replace('.', ',');
 	}
+
+	_handleSubmit() {
+		console.log(this.state.username);
+		console.log(this.state.password);
+ }
 		
 	render() {
 
@@ -132,15 +137,21 @@ class Search extends Component {
 				style={styles.linearGradient}>
 			<View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10 }}>
 				<View>
-				<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>Syötä hakusana:</Text>
+
 					<TextInput
+						placeholder={"Syötä hakusana"}
 						style={{fontSize: 20}}
 						onChangeText={(text) => this.setState({searchText: text})}
 						onSubmitEditing={() => {
-							this.search()
+							searchForProduct(this.state.searchText);
 						}}/>
+
+				<Button 
+          onPress={() => searchForProduct(this.state.searchText)}
+          style={styles.buttonStyle}
+					title ="Hae"/>
 				</View>
-				
+
 				<ScrollView >
 						<View style={app_style.sliderContainer}>
 								{searchResults}

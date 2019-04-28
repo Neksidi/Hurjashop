@@ -411,3 +411,5 @@ export const styles = StyleSheet.create({
     paddingRight: 15,
   },
 });
+
+export const  primaryGradientColors = ['#a6c0fe', '#f68084'];

@@ -1,6 +1,6 @@
 
 
-function findInCart(props, id) {
+function getQuantity(props, id) {
     
     if(props.cart.length) {
         for(i in props.cart){
@@ -15,5 +15,5 @@ function findInCart(props, id) {
 
 
 export { 
-    findInCart,
+    getQuantity,
 }

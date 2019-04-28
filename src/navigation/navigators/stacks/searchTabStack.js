@@ -1,6 +1,6 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { View, Text, Easing, Animated, ScrollView } from 'react-native'
-import SearchScreen from '../../../containers/search/screens'
+import SearchScreen from '../../../containers/product/screens/searchScreen'
 
 const transitionConfig = () => {
     return {

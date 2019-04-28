@@ -11,7 +11,7 @@ import ColorPicker from '../../../app/components/list/attributes/color/container
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
-import { findInCart } from '../../cart/controllers/helper'
+import { getQuantity } from '../../cart/controllers/helper'
 import { addToCart } from '../../cart/redux/cartActions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Badge from '../../../app/components/common/badge/index'
@@ -37,7 +37,7 @@ class Product extends Component {
 
     this.state = {
       item: null,
-      count: null,
+      count: 1,
     }
 
   }
@@ -64,13 +64,23 @@ class Product extends Component {
     this.props.addToCart(this.state.item, this.state.count);
     this.refs.toast.show("Lisätty tuote "+this.state.item.name+" ostoskoriin");
 
-    if(findInCart(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity) {
-      this.setState({count: 1});
+    if(getQuantity(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity ||
+      (this.state.item.in_stock == false && this.state.item.stock_quantity == null)) {
+        this.setState({count: 1});
     } else {
       this.setState({count: 0});
     }
 
-    
+    /*
+    if(this.state.count == null) {
+      if(this.state.item.stock_quantity == null || 
+        this.state.item.stock_quantity == 0) {
+          this.setState({count: 0});  //TODO: Move this out of render logic!!!!
+      } else {
+        this.setState({count: 1});  //TODO: Move this out of render logic!!!!
+      }
+    }
+    */
   }
 
   renderItem(item){
@@ -104,7 +114,8 @@ class Product extends Component {
     if(this.state.count > 1) this.setState({count: this.state.count - 1})
   }
   increaseCartCount(){
-    if(this.state.item.stock_quantity >= this.state.count + findInCart(this.props, this.state.item.id) + 1) {
+    if((this.state.item.stock_quantity >= this.state.count + getQuantity(this.props, this.state.item.id)) + 1 ||
+      this.state.item.in_stock == false && this.state.item.stock_quantity == null) {
       this.setState({count: this.state.count + 1})
     }
   }
@@ -118,18 +129,8 @@ class Product extends Component {
       )
     } else {
 
-      if(this.state.count == null) {
-        if(this.state.item.stock_quantity == null || 
-          this.state.item.stock_quantity == 0) {
-            this.setState({count: 0});  //TODO: Move this out of render logic!!!!
-        } else {
-          this.setState({count: 1});  //TODO: Move this out of render logic!!!!
-        }
-      }
-
-      
-      let productsInCart = findInCart(this.props, item.id);
-      let addCartText = item.in_stock == true && productsInCart < item.stock_quantity ? ( ('LISÄÄ OSTOSKORIIN') ) : ( ('EI VARASTOSSA') );
+      let productsInCart = getQuantity(this.props, item.id);
+      let addCartText = (item.in_stock == true && productsInCart < item.stock_quantity) || (item.in_stock == false && item.stock_quantity == null) ? ( ('LISÄÄ OSTOSKORIIN') ) : ( ('EI VARASTOSSA') );
 
       let productNumber = item.sku != "" ?  (
         <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Tuotenumero: { item.sku }</Text>
@@ -137,15 +138,32 @@ class Product extends Component {
         <View/>
       );
 
-      let stockCountText = item.stock_quantity != null ? ((item.stock_quantity+ " kpl")) : (("0 kpl"));
-
-      let disableAddToCart = (item.stock_quantity - productsInCart > 0) ? (false) : (true);
-
-      let inCart = productsInCart > 0 ? (
-        (" (Ostoskorissa: "+productsInCart +" kpl)")
+      let disableAddToCart = item.stock_quantity != null ? (
+          (item.stock_quantity - productsInCart > 0) ? (
+            false
+          ) : (
+            true
+          )
         ) : (
-          ''
+          false
         );
+
+      let stockText = item.stock_quantity != null ? (
+          ('Varastossa: '+item.stock_quantity)
+        ) : (
+          ('')
+        );
+
+        let inCartText = productsInCart > 0 ? (
+          (item.stock_quantity == null) ? (
+            ("Ostoskorissa: "+productsInCart +" kpl")
+          ) : (
+            (" (Ostoskorissa: "+productsInCart +" kpl)")
+          )
+        ) : (
+          ('')
+        );
+
 
       return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -184,21 +202,12 @@ class Product extends Component {
                 <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
                 {this.renderPrice(this.state.item)}
 
-                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Varastossa: { stockCountText }{inCart}</Text>
+                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>{stockText}{inCartText}</Text>
                 {productNumber}
 
               </View>
-              {/*
-              <View>
-                <TouchableOpacity onPress={() => this.share()} style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <FAIcon name='share-square-o' size={30} />
-                  <Text style={{ fontFamily: 'BarlowCondensed-Regular'}}>Jaa tuote</Text>
-                </TouchableOpacity>
-              </View>
-              */}
             </View>
               
-
             {/* ADD TO CART */}
             <View style={{ width: '100%', alignItems: 'center', padding: 20}}>
               <View style={{ flexDirection: 'row', alignItems: 'center'}}>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Alert, ChildComponent, View, Text, Button, ScrollView, StyleSheet, List, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
+import {TextInput, Alert, ChildComponent, View, Text, Button, ScrollView, StyleSheet, List, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
 import { ListItem } from 'react-native-elements'
 import { bindActionCreators } from 'redux';
 import {btn, theme,  } from '../../../app/styles/global'
@@ -10,8 +10,8 @@ import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
-import { priceToString } from '../../product/controllers/helper'
-import { emptyCart, parseCart } from '../redux/cartActions'
+import { getQuantity } from '../controllers/helper'
+import { emptyCart, parseCart, increaseCartQuantity, decreaseCartQuantity, removeFromCart } from '../redux/cartActions'
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
@@ -99,38 +99,107 @@ class Cart extends Component {
   
 
   handleContinueButtonPress(){
-    //if(this.props.logged){  //If logged in
-    console.log("To Shipping")
     this.props.parseCart();
-    this.props.navigation.navigate('Shipping')
-    //}else {
-      //this.props.navigation.navigate('Authenticate')
-    
+    this.props.navigation.navigate('Shipping');
   } 
 
   priceToString(price) {
     return parseFloat(price).toFixed(2).toString().replace('.', ',');
   }
+
+
+
+  renderRightElement(item) {
+
+    let decreaseDisabled = true;
+    if(getQuantity(this.props, item.id) > 1) {
+      decreaseDisabled = false;
+    }
+
+    let increaseDisabled = true;
+    if((item.stock_quantity > getQuantity(this.props, item.id)) ||
+      (item.in_stock == false && item.stock_quantity == null)) {
+      increaseDisabled = false;
+    }
+
+    return (
+      <View style ={{flex: 1,flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+
+        <TouchableOpacity
+          disabled={decreaseDisabled}
+          style={[btn.default, {height:20, width:20, justifyContent: 'center', alignItems: 'center'}]}
+          onPress={() => {
+            this.props.decreaseCartQuantity(item);
+            this.forceUpdate();
+          }}
+          >
+          <FeatherIcon name='minus' size={15} color='#292929' />
+        </TouchableOpacity>
+
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{getQuantity(this.props, item.id)}</Text>
+
+        <TouchableOpacity
+          disabled={increaseDisabled}
+          style={[btn.default, {height:20, width:20, justifyContent: 'center', alignItems: 'center'}]}
+          onPress={() => {
+            this.props.increaseCartQuantity(item);
+            this.forceUpdate();
+          }}
+          >
+          <FeatherIcon name='plus' size={15} color='#292929' />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[btn.default, {height:20, width:20, justifyContent: 'center', alignItems: 'center'}]}
+          onPress={() => {
+            Alert.alert(
+              'Poista tuote ostoskorista',
+              'Oletko varma, että haluat poistaa tuotteen '+ item.name+ ' ostoskorista?',
+              [
+                {text: 'Peruuta', style: 'cancel'},
+                {text: 'Poista tuote', onPress: () => {
+                    this.props.removeFromCart(item);
+                    this.forceUpdate();
+                  }
+                },
+              ]
+            );
+            }}
+          >
+          <FeatherIcon name='trash-2' size={15} color='#292929' />
+        </TouchableOpacity>
+        
+      </View>
+    );
+  }
   
 	render() {
     let productCount = 
       this.props.cart.length === 1 ? (
-        <Text style={styles.cartHeaderText}>1 tuote</Text>
+        <Text style={styles.cartHeaderText}>1 tuote ostoskorissa</Text>
       ) : ( 
-        <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta</Text>
+        <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta ostoskorissa</Text>
       );  
+
+    
 
      let cartContainer =
      this.props.cart ? (
           this.props.cart.map((item, i) => {
+
+            let priceText = item.quantity > 1 ? (
+              this.priceToString(item.price*item.quantity) + " € ("+this.priceToString(item.price)+" €/kpl)"
+            ) : (
+              this.priceToString(item.price*item.quantity) + " €"
+            );
+
             return (
               <ListItem
                 key={item.id}
                 title={item.name}
-                subtitle={"Määrä: "+item.quantity}
+                subtitle={priceText}
                 leftAvatar={{ source: { uri: item.images[0].src } }}
-                onPress={() => this.props.navigation.navigate('Product', { item: item })}
-                rightTitle={this.priceToString(item.price*item.quantity)+" €"}
+                rightElement={this.renderRightElement(item)}
               />
             )
           })
@@ -301,7 +370,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ emptyCart, parseCart }, dispatch));
+	bindActionCreators({ emptyCart, parseCart, increaseCartQuantity, decreaseCartQuantity, removeFromCart }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 

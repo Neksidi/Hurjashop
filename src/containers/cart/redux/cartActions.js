@@ -7,6 +7,7 @@ export const PREPARE_ORDER_CART = 'PREPARE_ORDER_CART'
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 
+
 const parseCart = () => {
   return {
     type: PREPARE_ORDER_CART,
@@ -27,16 +28,17 @@ const addToCart = (item, quantity) => {
   }
 }
 
+const removeFromCart = (item) => {
+  return {
+    type: REMOVE_FROM_CART,
+    item: item,
+  }
+}
+
+
 const increaseCartQuantity = (item) => {
     return {
       type: INCREASE_QUANTITY,
-      item: item,
-    }
-  }
-
-  const increaseCartQuantityWithVariations = (item) => {
-    return {
-      type: INCREASE_QUANTITY_WITH_VARIATIONS,
       item: item,
     }
   }
@@ -47,19 +49,12 @@ const increaseCartQuantity = (item) => {
       item: item,
     }
   }
-  const decreaseCartQuantityWithVariations = (item) => {
-    return {
-      type: DECREASE_QUANTITY_WITH_VARIATIONS,
-      item: item,
-    }
-  }
 
 export {
     emptyCart,
     addToCart,
+    removeFromCart,
     parseCart,
     increaseCartQuantity,
-    increaseCartQuantityWithVariations,
     decreaseCartQuantity,
-    decreaseCartQuantityWithVariations
 }
