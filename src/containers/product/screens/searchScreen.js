@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
+import { Keyboard, TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
 import { searchForProduct } from '../controllers/requests'
 import { bindActionCreators } from 'redux';
-import { theme, grid, app_style, styles } from '../../../app/styles/global'
+import { theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -51,23 +51,6 @@ class Search extends Component {
 		console.log(this.state.searchResults)
 	}
 
-	renderItem = ({item, index}) => {
-		if (item.empty === true) {
-		  return <View style={[grid.item, grid.itemInvisible]} />;
-		}
-		return (
-			<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
-					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
-						<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
-						{this.renderPrice(item)}
-					</View>
-			</TouchableHighlight>
-				
-		
-		);
-	}
-
 	formatRow = (data, numColumns) => {
 		const numberOfFullRows = Math.floor(data.length / numColumns);
 		let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
@@ -77,6 +60,29 @@ class Search extends Component {
 		}
 		return data;
 	}
+
+
+	renderItem = ({item, index}) => {
+		if (item.empty === true) {
+		  return <View style={[grid.item, grid.itemInvisible]} />;
+		}
+		return (
+			<TouchableHighlight underlayColor="#ffffff00" key={index} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height : boxHeight + textBoxHeight}]}>
+						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+							<View style={{height : boxHeight}}>
+								<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.images[0].src}} />
+							</View>
+							<View style={{height:textBoxHeight}}>
+								<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
+								{this.renderPrice(item)}
+							</View>
+						</View>
+					</TouchableHighlight>
+		);
+
+
+	}
+
 
 	renderPrice(item){
 		const priceStyle = {
@@ -116,12 +122,10 @@ class Search extends Component {
  }
 		
 	render() {
-		console.log("Search renderiino");
-		console.log(this.state.searchResults.length);
+
 		let searchResults = 
 		this.state.searchResults.length ? (
 				<View>
-					<Text style={app_style.front_item_title}>Haun tulokset:</Text>
 					<FlatList 
 						data={this.formatRow(this.state.searchResults, 2)}
 						style={grid.container}
@@ -134,14 +138,19 @@ class Search extends Component {
 			<View/>
 		);
 
+		let headerResults = this.state.searchResults.length ? (
+			<Text style={app_style.front_item_title}>Haun tulokset:</Text>
+		) : (
+			<View/>
+		);
+
 		return (
 			<LinearGradient 
 				start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
 				locations={[0.1, 0.7]}
 				colors={['#a6c0fe', '#f68084']} 
 				style={styles.linearGradient}>
-			<View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10 }}>
-				<View>
+				<View style={app_style.sliderContainer}>
 
 					<TextInput
 						placeholder={"Syötä hakusana"}
@@ -151,18 +160,24 @@ class Search extends Component {
 							this.search();
 						}}/>
 
-				<Button 
-          onPress={() => this.search()}
-          style={styles.buttonStyle}
-					title ="Hae"/>
-				</View>
+					<Button 
+						onPress={() => {
+							this.search();
+							Keyboard.dismiss();
+						}}
+						style={styles.buttonStyle}
+						title ="Hae"/>
 
-				<ScrollView >
-						<View style={app_style.sliderContainer}>
-								{searchResults}
-						</View>
-				</ScrollView>
-			</View>
+						{headerResults}
+				
+
+					<ScrollView >
+							<View>
+									{searchResults}
+							</View>
+					</ScrollView>
+				</View>
+		
 			</LinearGradient>
 		);
 	}

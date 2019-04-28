@@ -228,7 +228,7 @@ class Cart extends Component {
                   </ScrollView>
                 </View>
                 <View style={styles.emptyCartContainer}>
-                  <TouchableOpacity onPress={() => {this.clearCart()}} style={styles.emptyCartButton}>
+                  <TouchableOpacity disabled={this.props.cart.length == 0} onPress={() => {this.clearCart()}} style={styles.emptyCartButton}>
                     <Text style={styles.emptyCartButtonText}>Tyhjennä</Text>
                     <FeatherIcon name='trash-2' size={25} color='#292929' />
                   </TouchableOpacity>

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { getProductsByCategory } from '../../product/controllers/requests'
 import { setCategoryProducts } from '../../product/redux/productActions'
 import Loader from '../../../app/components/common/loader/loader';
-import { theme, grid, app_style } from '../../../app/styles/global'
+import { theme, grid, app_style, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import { withTheme } from 'react-native-elements';
 
@@ -17,6 +17,8 @@ class Category extends Component {
     this.state = {
       category_id: null,
 		}	
+
+		
 	}
 
 	static navigationOptions = {
@@ -46,19 +48,23 @@ class Category extends Component {
 	}
 
 	renderItem = ({item, index}) => {
+	
+
 		if (item.empty === true) {
 		  return <View style={[grid.item, grid.itemInvisible]} />;
 		}
 		return (
-			<TouchableHighlight underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
-					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
-						<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
-						{this.renderPrice(item)}
-					</View>
-			</TouchableHighlight>
-				
-		
+			<TouchableHighlight underlayColor="#ffffff00" key={index} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height : boxHeight + textBoxHeight}]}>
+						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+							<View style={{height : boxHeight}}>
+								<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.images[0].src}} />
+							</View>
+							<View style={{height:textBoxHeight, flex:1}}>
+								<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
+								{this.renderPrice(item)}
+							</View>
+						</View>
+					</TouchableHighlight>
 		);
 	}
 

@@ -407,9 +407,11 @@ export const styles = StyleSheet.create({
 
   linearGradient: {
     flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
   },
 });
 
 export const  primaryGradientColors = ['#a6c0fe', '#f68084'];
+
+export const boxHeight =  Dimensions.get('window').width / 2
+export const boxWidth = Dimensions.get('window').width / 2 - grid.item.margin * 2
+export const textBoxHeight = boxHeight / 3;

@@ -14,11 +14,12 @@ import { setProducts } from '../../product/redux/productActions'
 
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import Header from '../../../app/components/header/header'
-import { app_style, theme, grid, styles, primaryGradientColors } from '../../../app/styles/global'
+import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxWidth } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
-let { width, height } = Dimensions.get('screen');
+
+
 
 class Home extends Component {
 	constructor(props) {
@@ -73,14 +74,17 @@ class Home extends Component {
 	}
 
 	renderItem = ({item, index}) => {
+
 		if (item.empty === true) {
-		  return <View style={[grid.item, grid.itemInvisible, {height: Dimensions.get('window').width / 2 - grid.item.margin * 4, width: Dimensions.get('window').width / 2 - grid.item.margin * 4}]} />;
-		}
-		return (
-		  	<TouchableHighlight underlayColor = {theme.color.hurja.dark} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {backgroundColor:theme.color.hurja.main, height: Dimensions.get('window').width / 2 - grid.item.margin * 4, width: Dimensions.get('window').width / 2 - grid.item.margin * 4}]}>
-				<Image style={{width: Dimensions.get('window').width / 2 - grid.item.margin * 4, height: Dimensions.get('window').width / 2 - grid.item.margin * 4}} source={{uri: item.image.src}}/>
-			</TouchableHighlight>
-		);
+			return <View style={[grid.item, grid.itemInvisible]} />;
+		  }
+		  return (
+			  <TouchableHighlight underlayColor="#ffffff00" key={index} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {height : boxHeight, backgroundColor: theme.color.bg.main}]}>
+				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height : boxHeight}}>
+						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.image.src}} />
+				</View>
+				</TouchableHighlight>
+		  );	
 	}
 
 	formatRow = (data, numColumns) => {
@@ -132,7 +136,7 @@ class Home extends Component {
 			this.props.products.map((item, i) => {
 				return (
 
-					<TouchableHighlight key={i} underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
 							<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
@@ -151,7 +155,7 @@ class Home extends Component {
 			this.state.saleProducts.map((item, i) => {
 				return (
 
-					<TouchableHighlight key={i}  underlayColor={'#fff'} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
+					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
 						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
 							<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
