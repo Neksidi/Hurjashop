@@ -22,11 +22,12 @@ class Review extends Component {
 		headerStyle: {
             backgroundColor: theme.color.navigation.background,
         },
-        headerTitle: "Maksutavat",
+        headerTitle: "Tarkista tilauksesi",
         headerTintColor: 'white',
     };
 
     componentDidMount(){
+        console.log("Review screen")
     }
 
     /*removeOrder = () => {
@@ -103,6 +104,7 @@ class Review extends Component {
     };
     getSum = (products) => {
         let sum = 0;
+        console.log(products);
         for (let i = 0; i < products.length; i++) {
             let product_price = products[i].price * products[i].quantity;
             sum += product_price;
@@ -111,13 +113,15 @@ class Review extends Component {
     }
 
     render() {
+        console.log("Review render");
+        console.log(this.props.order);
         return (
             <ScrollView>
                 <View>
                     <View style={reviewStyles.item}>
                         <Text>Valitut tuotteet</Text>
-                        <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => <Item data={item} onPress={() => this._onPress(item)} parentFlatList={this} />}></FlatList>
-                        <Text>Yhteensä: {this.getSum(this.props.order.line_items)}€</Text>
+                        <FlatList style={reviewStyles.list} data={this.props.order.line_items[0]} renderItem={({ item }) => <Item data={item} onPress={() => this._onPress(item)} parentFlatList={this} />}></FlatList>
+                        <Text>Yhteensä: {this.getSum(this.props.order.line_items[0])}€</Text>
                     </View>
                     <View style={reviewStyles.item}>
                         <Text>Laskutustiedot</Text>
@@ -160,14 +164,14 @@ class Review extends Component {
     }
 }
 
-let map_state_props = (state) => {
+let mapStateToProps = (state) => {
     return {
         shipping: state.user.shipping,
         methods: state.user.methods,
         cart: state.cart.cart,
         contact: state.user.contact,
-        order: state.order,
+        order: state.orders.new,
     }
 }
 
-export default connect(map_state_props, null)(Review);
+export default connect(mapStateToProps, null)(Review);

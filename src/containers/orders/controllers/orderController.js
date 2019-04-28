@@ -17,7 +17,7 @@ async function createOrder(order) {
   const response = await Api.post(WEB_URL + '/orders', order, false);
   if(!response.error) {
       console.log(response);
-      return response;
+      return response.body;
   } else {
       //TODO: Show error modal?
   }

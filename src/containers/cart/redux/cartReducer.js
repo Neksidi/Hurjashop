@@ -52,7 +52,7 @@ import {
         for (i in state.cart) {
             state.orderCart.push( 
               {
-                'id': state.cart[i].id,
+                'product_id': state.cart[i].id,
                 'quantity': state.cart[i].quantity
               } 
             );
