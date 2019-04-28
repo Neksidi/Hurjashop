@@ -5,17 +5,23 @@ import { addOrder } from '../redux/orderActions'
 import { theme } from '../../../app/styles/global'
 import { createOrder } from '../controllers/orderController'
 import { bindActionCreators } from 'redux';
+import CustomHeader from '../../../app/components/header/customHeader'
 
 class Order extends Component {
     constructor(props) {
         super(props);
     }
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            header: null,
-        };
-    }
+    static navigationOptions = {
+		headerStyle: {
+			backgroundColor: theme.color.navigation.background,
+			height: theme.navigation.height,
+		},
+		headerTitle: <CustomHeader/>,
+		headerLeft: (
+			<View></View> //needed to justify logo in center		
+		),
+	};
 
 /*
     authenticate() {
@@ -153,7 +159,7 @@ class Order extends Component {
         let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
 
         return (
-            <View>
+            <View style={{marginTop: 40}}>
                 {output}
             </View>
         );

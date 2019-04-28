@@ -20,6 +20,10 @@ export const reviewStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
     },
+    text: {
+        textAlign: 'right',
+        marginRight: 20,
+    },
     textInput: {
         width: '100%',
         height: 40,

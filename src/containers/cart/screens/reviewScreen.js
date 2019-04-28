@@ -3,18 +3,11 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import ButtonDefault from '../components/defaultButton'
 import { theme } from '../../../app/styles/global'
-//import Item from '../components/list/review/Item'
+import ReviewItem from '../components/reviewItem'
 //import { Logo, Drawer, Cart, } from '../navigation/options/Items'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 //import { WEB_URL, DB_URL } from '../redux/actiontypes'
 import { reviewStyles } from '../styles/reviewStyles'
-
-
-const icon_size = 25;
-const icon_color = theme.color.navigation.main;
-
-// Global styles
-// HUOM. Takaisin paluu tekee vieläkin 2 tilausta yhdellä painalluksella!
 
 class Review extends Component {
     
@@ -22,7 +15,7 @@ class Review extends Component {
 		headerStyle: {
             backgroundColor: theme.color.navigation.background,
         },
-        headerTitle: "Tarkista tilauksesi",
+        headerTitle: "Yhteenveto",
         headerTintColor: 'white',
     };
 
@@ -102,13 +95,12 @@ class Review extends Component {
     //TODO
     //Tilauksen statuksen muuttaminen
     };
-    getSum = (products) => {
+    getSum(products) {
         let sum = 0;
-        console.log(products);
-        for (let i = 0; i < products.length; i++) {
-            let product_price = products[i].price * products[i].quantity;
-            sum += product_price;
-        }
+        products.map((item, i) => {
+            sum += parseFloat(item.total);
+            sum += parseFloat(item.total_tax);
+        })
         return sum;
     }
 
@@ -128,9 +120,14 @@ class Review extends Component {
                 <View>
                     <View style={reviewStyles.item}>
                         <Text>Valitut tuotteet</Text>
-                        <FlatList style={reviewStyles.list} data={this.props.order.line_items[0]} renderItem={({ item }) => <Item data={item} onPress={() => this._onPress(item)} parentFlatList={this} />}></FlatList>
-                        <Text>Yhteensä: {this.getSum(this.props.order.line_items[0])}{currency}</Text>
-                        <Text>Yhteensä suoraan: {this.props.order.line_items[0].total}{currency}</Text>
+                        <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => 
+                            <ReviewItem 
+                                data={item} 
+                                currency={currency} 
+                                onPress={() => this._onPress(item)} 
+                                parentFlatList={this} />}>
+                        </FlatList>
+                        <Text style={reviewStyles.text}>Tuotteet yhteensä: {this.getSum(this.props.order.line_items)}{currency}</Text>
                     </View>
                     <View style={reviewStyles.item}>
                         <Text>Laskutustiedot</Text>
@@ -140,10 +137,9 @@ class Review extends Component {
                         <Text>{this.props.order.billing.first_name}</Text>
                         <Text>{this.props.order.billing.last_name}</Text>
                         <Text>{this.props.order.billing.postcode}</Text>
-                        <Text>{this.props.order.currency}</Text>
-                        <Text>{this.props.order.id}</Text>
+                        {/*<Text>{this.props.order.id}</Text>*/}
                         <Text>Tilausnumero: {this.props.order.order_key}</Text>
-                        <Text>{this.props.order.payment_method}</Text>
+                        {/*<Text>{this.props.order.payment_method}</Text>*/}
                         <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
                     </View>
                     <View style={reviewStyles.item}>
@@ -154,10 +150,12 @@ class Review extends Component {
                         <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
                         <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
                         {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
-                        <Text>Toimitus: {this.props.order.shipping_lines.method_title}</Text>
-                        <Text>Toimituksen hinta: {this.props.order.shipping_lines.total}{currency}</Text>
+                        <Text>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
+                        <Text>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
                         {/*<Text>{this.props.order.status}</Text>*/}
-                        <Text>Kaikki Yhteensä {this.props.order.total}{currency}</Text>
+                    </View>
+                    <View style={reviewStyles.item}>
+                        <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
                     </View>
 
                     <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('PaymentHighway'); }} style={reviewStyles.signupButton} />
