@@ -14,7 +14,7 @@ import { setProducts } from '../../product/redux/productActions'
 
 import { getSaleProducts, getNewProducts } from '../controllers/helper'
 import Header from '../../../app/components/header/header'
-import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxWidth } from '../../../app/styles/global'
+import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -135,15 +135,17 @@ class Home extends Component {
 		this.props.products ? (
 			this.props.products.map((item, i) => {
 				return (
-
-					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
-						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height : boxHeight + textBoxHeight}]}>
+					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+						<View style={{height : boxHeight}}>
+							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.images[0].src}} />
+						</View>
+						<View style={{height:textBoxHeight, flex:1}}>
 							<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
 							{this.renderPrice(item)}
-							
 						</View>
-					</TouchableHighlight>
+					</View>
+				</TouchableHighlight>
 				)
 			})
 		) : (
@@ -154,15 +156,17 @@ class Home extends Component {
 		this.state.saleProducts ? (
 			this.state.saleProducts.map((item, i) => {
 				return (
-
-					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height: Dimensions.get('window').width / 2}]}>
-						<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2}} source={{uri: item.images[0].src}} />
+					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height : boxHeight + textBoxHeight}]}>
+					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+						<View style={{height : boxHeight}}>
+							<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.images[0].src}} />
+						</View>
+						<View style={{height:textBoxHeight, flex:1}}>
 							<Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
 							{this.renderPrice(item)}
-
 						</View>
-					</TouchableHighlight>
+					</View>
+				</TouchableHighlight>
 				)
 			})
 		) : (
