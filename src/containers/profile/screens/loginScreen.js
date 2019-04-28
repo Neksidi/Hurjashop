@@ -139,7 +139,10 @@ class Login extends Component {
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo);
       console.log("Google login success!");
-      logInGoogle(userInfo.serverAuthCode, userInfo.user);
+      var user = await logInGoogle(userInfo.serverAuthCode, userInfo.user);
+      this.props.setLoginStatus(true);
+      this.props.addContact(user);
+      this.props.navigation.navigate('Home');
 
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

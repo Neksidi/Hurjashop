@@ -170,6 +170,21 @@ async function logInGoogle(code, user) {
   var response = await Api.post(AUTH_URL + "/logingoogle", body, false);
 
   console.log(response);
+  if(!response.error) {
+    //Add contact & save session
+    var id = response.session.sessionId;
+    var username = response.session.username;
+    console.log("Saving " + id + " and " + username)
+    
+    //Save session
+    
+    setSessionId(id);
+    setSessionUser(username);
+    return response.user;
+  }
+  else {
+    //TODO: Show error modal.
+  }
   console.log("own google login success?");
 }
 
