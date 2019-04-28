@@ -9,12 +9,12 @@ const INITIAL_STATE = {
     switch (action.type) {
       case ADD_ORDER: {
         state.new = action.payload;
-        console.log("Order added");
-        console.log("Wtf");
+        console.log("wtf")
         return {...state};
       }
       case SET_ORDERS: {
         state.all = action.payload;
+        console.log("why you?")
         return {...state};
       }
       default:

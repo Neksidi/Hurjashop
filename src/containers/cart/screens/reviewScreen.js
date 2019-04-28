@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, FlatList } from 'react-native';
-//import ButtonDefault from '../components/common/buttons/Default'
+import ButtonDefault from '../components/defaultButton'
 import { theme } from '../../../app/styles/global'
 //import Item from '../components/list/review/Item'
 //import { Logo, Drawer, Cart, } from '../navigation/options/Items'
@@ -115,22 +115,31 @@ class Review extends Component {
     render() {
         console.log("Review render");
         console.log(this.props.order);
+        var currency = "";
+        switch (this.props.order.currency) {
+            case "EUR": {
+                currency = "€";
+            }
+            default: 
+                break;
+        }
         return (
             <ScrollView>
                 <View>
                     <View style={reviewStyles.item}>
                         <Text>Valitut tuotteet</Text>
                         <FlatList style={reviewStyles.list} data={this.props.order.line_items[0]} renderItem={({ item }) => <Item data={item} onPress={() => this._onPress(item)} parentFlatList={this} />}></FlatList>
-                        <Text>Yhteensä: {this.getSum(this.props.order.line_items[0])}€</Text>
+                        <Text>Yhteensä: {this.getSum(this.props.order.line_items[0])}{currency}</Text>
+                        <Text>Yhteensä suoraan: {this.props.order.line_items[0].total}{currency}</Text>
                     </View>
                     <View style={reviewStyles.item}>
                         <Text>Laskutustiedot</Text>
-                        <Text>{this.props.order.billing_address}</Text>
-                        <Text>{this.props.order.billing_city}</Text>
-                        <Text>{this.props.order.billing_email}</Text>
-                        <Text>{this.props.order.billing_first_name}</Text>
-                        <Text>{this.props.order.billing_last_name}</Text>
-                        <Text>{this.props.order.billing_postcode}</Text>
+                        <Text>{this.props.order.billing.address_1}</Text>
+                        <Text>{this.props.order.billing.city}</Text>
+                        <Text>{this.props.order.billing.email}</Text>
+                        <Text>{this.props.order.billing.first_name}</Text>
+                        <Text>{this.props.order.billing.last_name}</Text>
+                        <Text>{this.props.order.billing.postcode}</Text>
                         <Text>{this.props.order.currency}</Text>
                         <Text>{this.props.order.id}</Text>
                         <Text>Tilausnumero: {this.props.order.order_key}</Text>
@@ -139,22 +148,16 @@ class Review extends Component {
                     </View>
                     <View style={reviewStyles.item}>
                         <Text>Toimitustiedot</Text>
-                        <Text>Osoite: {this.props.order.shipping_address}</Text>
-                        <Text>Postitoimipaikka: {this.props.order.shipping_city}</Text>
-                        <Text>Etunimi: {this.props.order.shipping_first_name}</Text>
-                        <Text>Sukunimi: {this.props.order.shipping_last_name}</Text>
-                        <Text>Postinumero: {this.props.order.shipping_postcode}</Text>
-                        <Text>{this.props.order.shipping_lines.shipping_method_id}</Text>
-                        <Text>Toimitustapa: {this.props.order.shipping_lines.shipping_method_title}</Text>
-                        <Text>Toimitustavan hinta: {this.props.order.shipping_lines.shipping_total}</Text>
-                        <Text>{this.props.order.status}</Text>
-                        <Text>Kaikki Yhteensä {this.props.order.total}€</Text>
-
-                        <Text>Maksu -ja postitustapa</Text>
-                        <Text>Maksutapa:{this.props.methods.payment_method}</Text>
-                        <Text>Selitys:{this.props.methods.payment_method_title}</Text>
-                        <Text>Postitustapa:{this.props.methods.shipping_method}</Text>
-                        <Text>Selitys:{this.props.methods.payment_method_title}</Text>
+                        <Text>Osoite: {this.props.order.shipping.address_1}</Text>
+                        <Text>Postitoimipaikka: {this.props.order.shipping.city}</Text>
+                        <Text>Etunimi: {this.props.order.shipping.first_name}</Text>
+                        <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
+                        <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
+                        {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
+                        <Text>Toimitus: {this.props.order.shipping_lines.method_title}</Text>
+                        <Text>Toimituksen hinta: {this.props.order.shipping_lines.total}{currency}</Text>
+                        {/*<Text>{this.props.order.status}</Text>*/}
+                        <Text>Kaikki Yhteensä {this.props.order.total}{currency}</Text>
                     </View>
 
                     <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('PaymentHighway'); }} style={reviewStyles.signupButton} />
