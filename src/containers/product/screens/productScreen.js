@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image } from 'react-native';
-import { app_style, theme } from '../../../app/styles/global'
+import { app_style, theme, styles, primaryGradientColors} from '../../../app/styles/global'
 import { bindActionCreators } from 'redux';
 
 import Gallery from '../../../app/components/common/images/gallery'
@@ -16,7 +16,7 @@ import { addToCart } from '../../cart/redux/cartActions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Badge from '../../../app/components/common/badge/index'
 import CustomHeader from '../../../app/components/header/customHeader'
-
+import LinearGradient from 'react-native-linear-gradient';
 
 let { width, height } = Dimensions.get('screen');
 
@@ -166,81 +166,87 @@ class Product extends Component {
 
 
       return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
-          <Badge count={this.props.cart.length} />
-          <ScrollView style={{  }}>
-            {/* IMAGE CAROUSEL */}
-            <View style={{ width: '100%', height: 350, alignItems: 'center', elevation: 2,}}>
-              <Carousel
-                data={item.images}
-                keyExtractor={(item, index) => index.toString()}
-                sliderWidth={width}
-                itemWidth={width}
-                renderItem={({item}) => this.renderItem(item)}
-                inactiveSlideScale={1}
-                inactiveSlideOpacity={1}
-                onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-              />
-              <View
-                style={{
-                  width: 45,
-                  height: 45,
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: theme.color.hurja.main,
-                  borderTopLeftRadius: 45,
-                }}>
-                <TouchableOpacity style={{flex: 1}} onPress={() => {this.refs.gallery.show(this.state.activeSlide)}}>
-                  <FAIcon name='search-plus' size={20} color='#fff' style={{position:'absolute', bottom: 10, right: 9}}/>
-                </TouchableOpacity>
+        <LinearGradient 
+				  start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+          colors={primaryGradientColors} 
+          style={styles.linearGradient}>
+	
+          <View style={{ flex: 1}}>
+            <Badge count={this.props.cart.length} />
+            <ScrollView style={{  }}>
+              {/* IMAGE CAROUSEL */}
+              <View style={{ width: '100%', height: 350, alignItems: 'center', elevation: 2,}}>
+                <Carousel
+                  data={item.images}
+                  keyExtractor={(item, index) => index.toString()}
+                  sliderWidth={width}
+                  itemWidth={width}
+                  renderItem={({item}) => this.renderItem(item)}
+                  inactiveSlideScale={1}
+                  inactiveSlideOpacity={1}
+                  onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+                />
+                <View
+                  style={{
+                    width: 45,
+                    height: 45,
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: theme.color.hurja.main,
+                    borderTopLeftRadius: 45,
+                  }}>
+                  <TouchableOpacity style={{flex: 1}} onPress={() => {this.refs.gallery.show(this.state.activeSlide)}}>
+                    <FAIcon name='search-plus' size={20} color='#fff' style={{position:'absolute', bottom: 10, right: 9}}/>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            {/* PRODUCT INFO + SHARE */}
-            <View style={{ width: '100%', backgroundColor: '#eee', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View>
-                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
-                {this.renderPrice(this.state.item)}
+              {/* PRODUCT INFO + SHARE */}
+              <View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                  <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
+                  {this.renderPrice(this.state.item)}
 
-                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>{stockText}{inCartText}</Text>
-                {productNumber}
+                  <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>{stockText}{inCartText}</Text>
+                  {productNumber}
+
+                </View>
+              </View>
+                
+              {/* ADD TO CART */}
+              <View style={{ width: '100%', alignItems: 'center', padding: 20}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                  <TouchableOpacity disabled={disableAddToCart} onPress={() => {this.decreaseCartCount()}} style={{ marginRight: 20, padding: 10}}>
+                    <FAIcon name='minus' size={25} />
+                  </TouchableOpacity>
+                  <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 28}}>{this.state.count}</Text>
+                  <TouchableOpacity disabled={disableAddToCart} onPress={() => {this.increaseCartCount()}} style={{ marginLeft: 20, padding: 10}}>
+                    <FAIcon name='plus' size={25} />
+                  </TouchableOpacity>
+                </View>
+                {/* ADD TO CART BUTTON */}
+                <TouchableOpacity disabled={disableAddToCart} onPress={() => this.handleAddToCart()}
+                  style={{
+                    width: '100%',
+                    maxWidth: 400,
+                    paddingVertical: 15,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    backgroundColor: '#125194',
+                    borderRadius: 2,
+                  }}>
+                  <FAIcon name='cart-plus' size={20} color='#fff' />
+                  <Text style={{ fontFamily: 'BarlowCondensed-ExtraBold', fontSize: 20, color: '#fff', marginLeft: 10}}>{addCartText}</Text>
+                </TouchableOpacity>
 
               </View>
-            </View>
-              
-            {/* ADD TO CART */}
-            <View style={{ width: '100%', alignItems: 'center', padding: 20}}>
-              <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity disabled={disableAddToCart} onPress={() => {this.decreaseCartCount()}} style={{ marginRight: 20, padding: 10}}>
-                  <FAIcon name='minus' size={25} />
-                </TouchableOpacity>
-                <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 28}}>{this.state.count}</Text>
-                <TouchableOpacity disabled={disableAddToCart} onPress={() => {this.increaseCartCount()}} style={{ marginLeft: 20, padding: 10}}>
-                  <FAIcon name='plus' size={25} />
-                </TouchableOpacity>
-              </View>
-              {/* ADD TO CART BUTTON */}
-              <TouchableOpacity disabled={disableAddToCart} onPress={() => this.handleAddToCart()}
-                style={{
-                  width: '100%',
-                  maxWidth: 400,
-                  paddingVertical: 15,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  backgroundColor: '#125194',
-                  borderRadius: 2,
-                }}>
-                <FAIcon name='cart-plus' size={20} color='#fff' />
-                <Text style={{ fontFamily: 'BarlowCondensed-ExtraBold', fontSize: 20, color: '#fff', marginLeft: 10}}>{addCartText}</Text>
-              </TouchableOpacity>
-
-            </View>
-            {/* IMAGE GALLERY */}
-            <Gallery images={this.state.item.images} ref='gallery'/>
-          </ScrollView>
-          <Toast ref="toast"/>
-        </View>
+              {/* IMAGE GALLERY */}
+              <Gallery images={this.state.item.images} ref='gallery'/>
+            </ScrollView>
+            <Toast ref="toast"/>
+          </View>
+        </LinearGradient>
       );
     } 
   }

@@ -2,12 +2,13 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import ButtonDefault from '../components/defaultButton'
-import { theme } from '../../../app/styles/global'
+import { theme , primaryGradientColors, styles} from '../../../app/styles/global'
 import ReviewItem from '../components/reviewItem'
 //import { Logo, Drawer, Cart, } from '../navigation/options/Items'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 //import { WEB_URL, DB_URL } from '../redux/actiontypes'
 import { reviewStyles } from '../styles/reviewStyles'
+import LinearGradient from 'react-native-linear-gradient';
 
 class Review extends Component {
     
@@ -116,51 +117,56 @@ class Review extends Component {
                 break;
         }
         return (
-            <ScrollView>
-                <View>
-                    <View style={reviewStyles.item}>
-                        <Text>Valitut tuotteet</Text>
-                        <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => 
-                            <ReviewItem 
-                                data={item} 
-                                currency={currency} 
-                                onPress={() => this._onPress(item)} 
-                                parentFlatList={this} />}>
-                        </FlatList>
-                        <Text style={reviewStyles.text}>Tuotteet yhteensä: {this.getSum(this.props.order.line_items)}{currency}</Text>
-                    </View>
-                    <View style={reviewStyles.item}>
-                        <Text>Laskutustiedot</Text>
-                        <Text>{this.props.order.billing.address_1}</Text>
-                        <Text>{this.props.order.billing.city}</Text>
-                        <Text>{this.props.order.billing.email}</Text>
-                        <Text>{this.props.order.billing.first_name}</Text>
-                        <Text>{this.props.order.billing.last_name}</Text>
-                        <Text>{this.props.order.billing.postcode}</Text>
-                        {/*<Text>{this.props.order.id}</Text>*/}
-                        <Text>Tilausnumero: {this.props.order.order_key}</Text>
-                        {/*<Text>{this.props.order.payment_method}</Text>*/}
-                        <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
-                    </View>
-                    <View style={reviewStyles.item}>
-                        <Text>Toimitustiedot</Text>
-                        <Text>Osoite: {this.props.order.shipping.address_1}</Text>
-                        <Text>Postitoimipaikka: {this.props.order.shipping.city}</Text>
-                        <Text>Etunimi: {this.props.order.shipping.first_name}</Text>
-                        <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
-                        <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
-                        {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
-                        <Text>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
-                        <Text>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
-                        {/*<Text>{this.props.order.status}</Text>*/}
-                    </View>
-                    <View style={reviewStyles.item}>
-                        <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
-                    </View>
+                <LinearGradient 
+                    start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+                    colors={primaryGradientColors} 
+                    style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+                <ScrollView>
+                    <View>
+                        <View style={reviewStyles.item}>
+                            <Text>Valitut tuotteet</Text>
+                            <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => 
+                                <ReviewItem 
+                                    data={item} 
+                                    currency={currency} 
+                                    onPress={() => this._onPress(item)} 
+                                    parentFlatList={this} />}>
+                            </FlatList>
+                            <Text style={reviewStyles.text}>Tuotteet yhteensä: {this.getSum(this.props.order.line_items)}{currency}</Text>
+                        </View>
+                        <View style={reviewStyles.item}>
+                            <Text>Laskutustiedot</Text>
+                            <Text>{this.props.order.billing.address_1}</Text>
+                            <Text>{this.props.order.billing.city}</Text>
+                            <Text>{this.props.order.billing.email}</Text>
+                            <Text>{this.props.order.billing.first_name}</Text>
+                            <Text>{this.props.order.billing.last_name}</Text>
+                            <Text>{this.props.order.billing.postcode}</Text>
+                            {/*<Text>{this.props.order.id}</Text>*/}
+                            <Text>Tilausnumero: {this.props.order.order_key}</Text>
+                            {/*<Text>{this.props.order.payment_method}</Text>*/}
+                            <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
+                        </View>
+                        <View style={reviewStyles.item}>
+                            <Text>Toimitustiedot</Text>
+                            <Text>Osoite: {this.props.order.shipping.address_1}</Text>
+                            <Text>Postitoimipaikka: {this.props.order.shipping.city}</Text>
+                            <Text>Etunimi: {this.props.order.shipping.first_name}</Text>
+                            <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
+                            <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
+                            {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
+                            <Text>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
+                            <Text>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
+                            {/*<Text>{this.props.order.status}</Text>*/}
+                        </View>
+                        <View style={reviewStyles.item}>
+                            <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
+                        </View>
 
-                    <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('PaymentHighway'); }} style={reviewStyles.signupButton} />
-                </View>
-            </ScrollView>
+                        <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('PaymentHighway'); }} style={reviewStyles.signupButton} />
+                    </View>
+                </ScrollView>
+            </LinearGradient>
         );
     }
 }

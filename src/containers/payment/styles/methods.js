@@ -4,7 +4,7 @@ export const methodsStyles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         marginTop: 0,
-        padding: 20,
+        padding: 10,
     },
     postBar: {
         flexDirection: 'row',
@@ -48,28 +48,5 @@ export const methodsStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'skyblue'
-    },
-    continueButton: {
-        fontSize: 18,
-        textAlign: 'center',
-        margin: 10,
-        color: '#000000',
-        backgroundColor: 'transparent',
-    },
-    continueButtonDisabled: {
-        fontSize: 18,
-        textAlign: 'center',
-        margin: 10,
-        color: '#FFFFFF',
-        backgroundColor: 'transparent',
-    },
-    linearGradient: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: 15,
-        borderRadius: 4,
-        borderWidth: 1.5,
-        borderColor: '#F0F0F0'
     },
   });

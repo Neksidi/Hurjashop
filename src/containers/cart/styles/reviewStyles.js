@@ -4,7 +4,7 @@ export const reviewStyles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         marginTop: 0,
-        padding: 20,
+        padding: 10,
     },
     item: {
         height: 'auto',

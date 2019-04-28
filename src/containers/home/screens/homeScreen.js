@@ -229,8 +229,7 @@ class Home extends Component {
 				
 				}
 					<LinearGradient 
-						start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
-						locations={[0.1, 0.7]}
+						start={{x: 0, y: 0}} end={{x: 1, y: 1}}
 						colors={primaryGradientColors} 
 						style={styles.linearGradient}>
 						<View style={app_style.sliderContainer}>

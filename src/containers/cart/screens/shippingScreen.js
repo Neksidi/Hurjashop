@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { theme } from '../../../app/styles/global'
+import { btn, theme, primaryGradientColors } from '../../../app/styles/global'
 import { addShipping } from '../../profile/redux/userActions'
+import LinearGradient from 'react-native-linear-gradient';
 
 
 class Shipping extends Component {
@@ -44,36 +45,51 @@ class Shipping extends Component {
 	render() {
        
 		return (
-            <ScrollView style={{ backgroundColor: '#fff' }}>
-                <View style={styles.container}>
 
-                <View style={styles.inputContainer}> 
-                        <Text style={styles.label}>Etunimi</Text>
-                        <TextInput style={styles.textInput} onChangeText={(first_name) => this.setState({ first_name })} value={this.state.first_name} underlineColorAndroid='transparent' />
-                    </View>
+            <LinearGradient 
+						start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+						colors={primaryGradientColors} 
+						style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+                       
+                <ScrollView>
+                    <View style={theme.container}>
+                        <View style={theme.inputContainer}> 
+                            <Text style={theme.label}>Etunimi</Text>
+                            <TextInput style={theme.textInput} onChangeText={(first_name) => this.setState({ first_name })} value={this.state.first_name} underlineColorAndroid='transparent' />
+                        </View>
 
-                    <View >
-                    <Text style={styles.label}>Sukunimi</Text>
-                        <TextInput style={styles.textInput} onChangeText={(last_name) => this.setState({ last_name })} value={this.state.last_name} underlineColorAndroid='transparent' />
-                    </View>
+                        <View style={theme.inputContainer}>
+                            <Text style={theme.label}>Sukunimi</Text>
+                            <TextInput style={theme.textInput} onChangeText={(last_name) => this.setState({ last_name })} value={this.state.last_name} underlineColorAndroid='transparent' />
+                        </View>
 
-                    <View >
-                        <Text style={styles.label}>Osoite</Text>
-                        <TextInput style={styles.textInput} onChangeText={(address) => this.setState({ address })} value={this.state.address} underlineColorAndroid='transparent' />
-                    </View>
+                        <View style={theme.inputContainer}>
+                            <Text style={theme.label}>Osoite</Text>
+                            <TextInput style={theme.textInput} onChangeText={(address) => this.setState({ address })} value={this.state.address} underlineColorAndroid='transparent' />
+                        </View>
 
-                    <View >
-                        <Text style={styles.label}>Postitoimipaikka</Text>
-                        <TextInput style={styles.textInput} onChangeText={(city) => this.setState({ city })} value={this.state.city} />
-                    </View>
+                        <View style={theme.inputContainer}>
+                            <Text style={theme.label}>Postitoimipaikka</Text>
+                            <TextInput style={theme.textInput} onChangeText={(city) => this.setState({ city })} value={this.state.city} />
+                        </View>
 
-                    <View >
-                        <Text style={styles.label}>Postinumero</Text>
-                        <TextInput style={styles.textInput} onChangeText={(zipcode) => this.setState({ zipcode })} value={this.state.zipcode} keyboardType='numeric' maxLength={5} />
+                        <View style={theme.inputContainer}>
+                            <Text style={theme.label}>Postinumero</Text>
+                            <TextInput style={theme.textInput} onChangeText={(zipcode) => this.setState({ zipcode })} value={this.state.zipcode} keyboardType='numeric' maxLength={5} />
+                        </View>
+
+                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={theme.linearGradient}>
+                            <Text 
+                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Methods'); }} 
+                                style={theme.continueButton}
+                            >
+                            Jatka
+                            </Text>
+                        </LinearGradient>
+
                     </View>
-                    <Button title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Methods'); }} style={styles.signupButton} />
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </LinearGradient>
 		);
 	}
 }
@@ -81,7 +97,7 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         marginTop: 0,
-        padding: 20,
+        padding: 5,
     },
     textInput: {
         width: '100%',

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, Button, TouchableOpacity, TextInput } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { theme, styles } from '../../../app/styles/global'
+import { theme, styles, primaryGradientColors } from '../../../app/styles/global'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { CheckBox } from 'react-native-elements'
 import { POSTI_URL } from '../../../app/config'
@@ -211,7 +211,7 @@ class Methods extends Component {
 
 	render() {
         let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
-        let continueButtonStyle = this.state.isChecked ? methodsStyles.continueButtonDisabled : methodsStyles.continueButton;
+        let continueButtonStyle = this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
         
 		if (this.state.isLoading) {
             return (
@@ -224,110 +224,122 @@ class Methods extends Component {
 			let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : <Loader/>;
 			
             return (
-                <ScrollView>
-                    <View style={methodsStyles.container}>
-                        <Text>Maksutavat</Text>
-                        <CheckBox
-                            checkedColor='green'
-                            title='Korttimaksu uudella maksukortilla'
-                            checked={this.state.newcard}
-                            checkedIcon='check-square-o'
-                            uncheckedIcon='square-o'
-                            onPress={() => { this.checkPay("newcard") }}
-                        />
-                        <CheckBox
-                            checkedColor='green'
-                            title='Korttimaksu viimeksi käytetyllä maksukortilla'
-                            checked={this.state.oldcard}
-                            onPress={() => { this.checkPay("oldcard") }}
-                            disabled={this.state.cardNotFound}
-                        />
-                        <Text>Lähetysvaihdoehdot</Text>
-                        <CheckBox
-                            checkedColor='green'
-                            title='Nouto Postista'
-                            checked={this.state.postDelivery}
-                            checkedIcon='check-square-o'
-                            uncheckedIcon='square-o'
-                            onPress={() => { this.checkDelivery("post") }}
-                        />
-                        <View style={methodsStyles.postBar}>
-                            <Text>Noutopisteiden haku postinumerolla: </Text>
-                            <TextInput 
-                            style={methodsStyles.postcodeInput} 
-                            maxLength={5}
-                            keyboardType='numeric'
-                            placeholder='00000' 
-                            onChangeText={(text) => this.setState({ postcode: text })} 
-                            onSubmitEditing={(event) => this.postcodeHandler()} />
-                        </View>
-                        
-                        {postiPoints}
+                <LinearGradient 
+                    start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+                    colors={primaryGradientColors} 
+                    style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
 
-                        <CheckBox
-                            title='Kotiin'
-                            checked={this.state.homeDelivery}
-                            onPress={() => { this.checkDelivery("home") }}
-                        />
-                        <LinearGradient colors={gradientStyle} style={methodsStyles.linearGradient}>
-                            <Text 
-                                disabled={!this.state.isChecked}
-                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
-                                style={continueButtonStyle}
-                            >
-                                Jatka
-                            </Text>
-                        </LinearGradient>
-                    </View>
-                </ScrollView>
+                    <ScrollView>
+                        <View style={methodsStyles.container}>
+                            <Text>Maksutavat</Text>
+                            <CheckBox
+                                checkedColor='green'
+                                title='Korttimaksu uudella maksukortilla'
+                                checked={this.state.newcard}
+                                checkedIcon='check-square-o'
+                                uncheckedIcon='square-o'
+                                onPress={() => { this.checkPay("newcard") }}
+                            />
+                            <CheckBox
+                                checkedColor='green'
+                                title='Korttimaksu viimeksi käytetyllä maksukortilla'
+                                checked={this.state.oldcard}
+                                onPress={() => { this.checkPay("oldcard") }}
+                                disabled={this.state.cardNotFound}
+                            />
+                            <Text>Lähetysvaihdoehdot</Text>
+                            <CheckBox
+                                checkedColor='green'
+                                title='Nouto Postista'
+                                checked={this.state.postDelivery}
+                                checkedIcon='check-square-o'
+                                uncheckedIcon='square-o'
+                                onPress={() => { this.checkDelivery("post") }}
+                            />
+                            <View style={methodsStyles.postBar}>
+                                <Text>Noutopisteiden haku postinumerolla: </Text>
+                                <TextInput 
+                                style={methodsStyles.postcodeInput} 
+                                maxLength={5}
+                                keyboardType='numeric'
+                                placeholder='00000' 
+                                onChangeText={(text) => this.setState({ postcode: text })} 
+                                onSubmitEditing={(event) => this.postcodeHandler()} />
+                            </View>
+                            
+                            {postiPoints}
+
+                            <CheckBox
+                                title='Kotiin'
+                                checked={this.state.homeDelivery}
+                                onPress={() => { this.checkDelivery("home") }}
+                            />
+                            <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
+                                <Text 
+                                    disabled={!this.state.isChecked}
+                                    onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
+                                    style={continueButtonStyle}
+                                >
+                                    Jatka
+                                </Text>
+                            </LinearGradient>
+                        </View>
+                    </ScrollView>
+                </LinearGradient>
             );
         }
         else {
             return (
-                <ScrollView>
-                    <View style={methodsStyles.container}>
-                        <Text>Maksutavat</Text>
-                        <CheckBox
-                            checkedColor='green'
-                            title='Korttimaksu uudella maksukortilla'
-                            checked={this.state.newcard}
-                            checkedIcon='check-square-o'
-                            uncheckedIcon='square-o'
-                            onPress={() => { this.checkPay("newcard") }}
-                        />
-                        <CheckBox
-                            checkedColor='green'
-                            title='Korttimaksu viimeksi käytetyllä maksukortilla'
-                            checked={this.state.oldcard}
-                            onPress={() => { this.checkPay("oldcard") }}
-                            disabled={this.state.cardNotFound}
-                        />
-                        <Text>Lähetysvaihdoehdot</Text>
-                        <CheckBox
-                            checkedColor='green'
-                            title='Nouto Postista'
-                            checked={this.state.post}
-                            checkedIcon='check-square-o'
-                            uncheckedIcon='square-o'
-                            onPress={() => { this.checkDelivery("post") }}
-                        />
-                        <CheckBox
-                            checkedColor='green'
-                            title='Kotiin'
-                            checked={this.state.homeDelivery}
-                            onPress={() => { this.checkDelivery("home") }}
-                        />
-                        <LinearGradient colors={gradientStyle} style={methodsStyles.linearGradient}>
-                            <Text 
-                                disabled={!this.state.isChecked}
-                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
-                                style={continueButtonStyle}
-                            >
-                                Jatka
-                            </Text>
-                        </LinearGradient>
-                    </View>
-                </ScrollView>
+                <LinearGradient 
+                    start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+                    colors={primaryGradientColors} 
+                    style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+
+                    <ScrollView>
+                        <View style={methodsStyles.container}>
+                            <Text>Maksutavat</Text>
+                            <CheckBox
+                                checkedColor='green'
+                                title='Korttimaksu uudella maksukortilla'
+                                checked={this.state.newcard}
+                                checkedIcon='check-square-o'
+                                uncheckedIcon='square-o'
+                                onPress={() => { this.checkPay("newcard") }}
+                            />
+                            <CheckBox
+                                checkedColor='green'
+                                title='Korttimaksu viimeksi käytetyllä maksukortilla'
+                                checked={this.state.oldcard}
+                                onPress={() => { this.checkPay("oldcard") }}
+                                disabled={this.state.cardNotFound}
+                            />
+                            <Text>Lähetysvaihdoehdot</Text>
+                            <CheckBox
+                                checkedColor='green'
+                                title='Nouto Postista'
+                                checked={this.state.post}
+                                checkedIcon='check-square-o'
+                                uncheckedIcon='square-o'
+                                onPress={() => { this.checkDelivery("post") }}
+                            />
+                            <CheckBox
+                                checkedColor='green'
+                                title='Kotiin'
+                                checked={this.state.homeDelivery}
+                                onPress={() => { this.checkDelivery("home") }}
+                            />
+                            <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
+                                <Text 
+                                    disabled={!this.state.isChecked}
+                                    onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
+                                    style={continueButtonStyle}
+                                >
+                                    Jatka
+                                </Text>
+                            </LinearGradient>
+                        </View>
+                    </ScrollView>
+                </LinearGradient>
             );
         }
     }

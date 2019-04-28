@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 import { getProductsByCategory } from '../../product/controllers/requests'
 import { setCategoryProducts } from '../../product/redux/productActions'
 import Loader from '../../../app/components/common/loader/loader';
-import { theme, grid, app_style, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
+import { theme, grid, app_style, styles, primaryGradientColors,  boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import { withTheme } from 'react-native-elements';
-
+import LinearGradient from 'react-native-linear-gradient';
 
 class Category extends Component {
 	constructor(props) {
@@ -133,12 +133,19 @@ class Category extends Component {
 	);
 
 		return (
-				<ScrollView>
-					<View style={app_style.sliderContainer}>
-							{headerCategory}
-							{productByCategory}
-					</View>
-				</ScrollView>
+				<LinearGradient 
+					start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+					colors={primaryGradientColors} 
+					style={styles.linearGradient}>
+						<View style={app_style.sliderContainer}>
+						<ScrollView>
+							<View style={app_style.sliderContainer}>
+									{headerCategory}
+									{productByCategory}
+							</View>
+						</ScrollView>
+						</View>
+				</LinearGradient>
 		);
 	}
 }

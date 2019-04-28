@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {TextInput, Alert, ChildComponent, View, Text, Button, ScrollView, StyleSheet, List, TouchableOpacity,Dimensions, Image, SlideUp} from 'react-native';
 import { ListItem } from 'react-native-elements'
 import { bindActionCreators } from 'redux';
-import {btn, theme,  } from '../../../app/styles/global'
+import {btn, theme, styles, primaryGradientColors, primaryGradientColorsButton } from '../../../app/styles/global'
 import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
 import Gallery from '../../../app/components/common/images/gallery'
@@ -12,6 +12,7 @@ import Loader from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
 import { getQuantity } from '../controllers/helper'
 import { emptyCart, parseCart, increaseCartQuantity, decreaseCartQuantity, removeFromCart } from '../redux/cartActions'
+import LinearGradient from 'react-native-linear-gradient';
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
@@ -176,12 +177,12 @@ class Cart extends Component {
 	render() {
     let productCount = 
       this.props.cart.length === 1 ? (
-        <Text style={styles.cartHeaderText}>1 tuote ostoskorissa</Text>
+        <Text style={cartStyle.cartHeaderText}>1 tuote ostoskorissa</Text>
       ) : ( 
         (this.props.cart.length == 0) ? (
-          <Text style={styles.cartHeaderText}>Ostoskori on tyhjä</Text>
+          <Text style={cartStyle.cartHeaderText}>Ostoskori on tyhjä</Text>
         ) : (
-          <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta ostoskorissa</Text>
+          <Text style={cartStyle.cartHeaderText}>{this.props.cart.length} tuotetta ostoskorissa</Text>
         )
         
       );  
@@ -200,6 +201,7 @@ class Cart extends Component {
 
             return (
               <ListItem
+                style={{backgroundColor: "transparent"}}
                 key={item.id}
                 title={item.name}
                 subtitle={priceText}
@@ -221,77 +223,73 @@ class Cart extends Component {
      );
 
 		  return (
-		  	<View style={styles.container}>
-        <ScrollView>
-              <View style={styles.cartHeaderContainer}>
-                <View style={styles.cartHeaderIconContainer}>
-                  <FeatherIcon name='package' size={30} color='#292929' />
+        
+        <LinearGradient 
+            start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+            colors={primaryGradientColors} 
+            style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+
+          <View style={cartStyle.container}>
+          <ScrollView>
+                <View style={cartStyle.cartHeaderContainer}>
+                  <View style={cartStyle.cartHeaderIconContainer}>
+                    <FeatherIcon name='package' size={30} color='#292929' />
+                  </View>
+                  <View style={cartStyle.cartHeaderTextContainer}>
+                    {productCount}
+                  </View >
+                  <View style={cartStyle.emptyCartContainer}>
+                    <TouchableOpacity disabled={this.props.cart.length == 0} onPress={() => {this.clearCart()}} style={cartStyle.emptyCartButton}>
+                      <Text style={cartStyle.emptyCartButtonText}>Tyhjennä</Text>
+                      <FeatherIcon name='trash-2' size={25} color='#292929' />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={styles.cartHeaderTextContainer}>
-                  {productCount}
+                <View style={{backgroundColor: "transparent"}}>
+                    {cartContainer}
                 </View>
-                <View style={styles.emptyCartContainer}>
-                  <TouchableOpacity disabled={this.props.cart.length == 0} onPress={() => {this.clearCart()}} style={styles.emptyCartButton}>
-                    <Text style={styles.emptyCartButtonText}>Tyhjennä</Text>
-                    <FeatherIcon name='trash-2' size={25} color='#292929' />
+    
+            </ScrollView>
+              <View
+                style={cartStyle.footerContainer}
+                on Layout={(e) => {
+                  this.setState({footerHeight: e.nativeEvent.layout.height});
+                }}>
+              <View style={cartStyle.footerSectionLeft}>
+                  {showPrice}
+                  <Text style={{fontFamily: 'BarlowCondensed-Medium', fontSize: 21, color: '#292929'}}> </Text>
+                  <Text style={{fontSize: 10}}>sis. alv</Text>
+                </View>
+              
+                <View style={cartStyle.footerSectionRight}>
+                  <TouchableOpacity
+                    //disabled={this.props.cart.length == 0}    //DEBUG!
+                    onPress={() =>{this.handleContinueButtonPress()}}>
+                    <LinearGradient colors={primaryGradientColorsButton} style={[
+                      theme.linearGradient, {
+                      paddingHorizontal: 25,
+                      paddingVertical: 15,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 2}]}>
+                            
+                      <FAIcon name='credit-card' size={20} color='#fff' />
+                      <Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>KASSALLE</Text>
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
               </View>
-
-              <View>
-                  {cartContainer}
-              </View>
-  
-          </ScrollView>
-            <View
-              style={styles.footerContainer}
-              on Layout={(e) => {
-                this.setState({footerHeight: e.nativeEvent.layout.height});
-              }}>
-            <View style={styles.footerSectionLeft}>
-                {showPrice}
-                <Text style={{fontFamily: 'BarlowCondensed-Medium', fontSize: 21, color: '#292929'}}> </Text>
-                <Text style={{fontSize: 10}}>sis. alv</Text>
-              </View>
-            
-              <View style={styles.footerSectionRight}>
-                <TouchableOpacity
-                  disabled={this.props.cart.length == 0}
-                  style={{
-                    paddingHorizontal: 25,
-                    paddingVertical: 15,
-                    backgroundColor: btn.login.backgroundColor,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 2,
-                  }}
-                  onPress={() =>{this.handleContinueButtonPress()}}>
-                  <FAIcon name='credit-card' size={20} color='#fff' />
-                  <Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>KASSALLE</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-			  </View>
-      );
-
-  }/*else {
-      //Tyhjä kori ilmoitus
-      return(
-        <ScrollView style={{backgroundColor:'#fff'}}>
-          <View style={{flex: 1, alignItems: 'center', marginTop: 200, }}>
-            <FAIcon name={ 'shopping-cart' } size={ 75 } color='#e94641'></FAIcon>
-            <Text>Ostoskorisi on tyhjä</Text>
           </View>
-        </ScrollView>
+        </LinearGradient>
       );
+
+
     }
-	  } */ 
   }
-const styles = StyleSheet.create({
+const cartStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   cartHeaderContainer: {
     width: '100%',
@@ -333,7 +331,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    backgroundColor: '#fafafa',
     flexDirection: 'row',
     padding: 15,
     zIndex: 4,

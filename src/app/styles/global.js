@@ -61,7 +61,60 @@ export const theme = {
   
   },
 
+  
+  inputScreenContainer : {
+    marginTop: 0,
+    padding: 20,
+  },
+
+  label : {
+    margin: 5,
+  },
+
+  inputContainer: {
+    flex:1,
+    height:45,
+    marginBottom:5,
+    flexDirection: 'row',
+    alignItems:'center',
+    marginVertical: 5,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 4,
+
+    },
+    inputs:{
+      width: '100%',
+      height: 40,
+      borderRadius: 3,
+      borderWidth: 1,
+
+    },
+
+    linearGradient: {
+      flex: 1,
+      paddingLeft: 15,
+      paddingRight: 15,
+      marginTop: 5,
+      borderRadius: 4,
+  },
+
+    continueButton: {
+      fontSize: 18,
+      textAlign: 'center',
+      margin: 5,
+      color: '#FFFFFF',
+      backgroundColor: 'transparent',
+  },
+
+  continueButtonDisabled: {
+    fontSize: 18,
+    textAlign: 'center',
+    margin: 10,
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+  },
 };
+
 export const btn = {
 
   default: {
@@ -280,13 +333,14 @@ export const app_style = StyleSheet.create({
     height: 75
   },
   
-  sliderContainer: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     paddingTop: 5,
-    paddingBottom: 15,
+    paddingBottom: 5,
     paddingHorizontal: 5
   },
+
   footer: {
     backgroundColor: '#e94641',
     flexDirection: 'row',
@@ -360,6 +414,9 @@ export const product_item_list = {
 }
 
 export const styles = StyleSheet.create({
+
+
+  
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -382,7 +439,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     //elevation: 99,
   },
-  slidercContainer: {
+  sliderContainer: {
     flex: 1,
     justifyContent: 'center',
     paddingTop: 10,
@@ -410,7 +467,8 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const  primaryGradientColors = ['#a6c0fe', '#f68084'];
+export const primaryGradientColors = ['#FFFFFF', '#eaeaea'];
+export const primaryGradientColorsButton = ['#4c669f', '#3b5998', '#192f6a'];
 
 export const boxHeight =  Dimensions.get('window').width / 2
 export const boxWidth = Dimensions.get('window').width / 2 - grid.item.margin * 2

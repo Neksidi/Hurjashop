@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Keyboard, TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
 import { searchForProduct } from '../controllers/requests'
 import { bindActionCreators } from 'redux';
-import { theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
+import { primaryGradientColors, theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -146,9 +146,8 @@ class Search extends Component {
 
 		return (
 			<LinearGradient 
-				start={{x: 0.5, y: 0}} end={{x: 1, y: 1}}
-				locations={[0.1, 0.7]}
-				colors={['#a6c0fe', '#f68084']} 
+				start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+				colors={primaryGradientColors} 
 				style={styles.linearGradient}>
 				<View style={app_style.sliderContainer}>
 
