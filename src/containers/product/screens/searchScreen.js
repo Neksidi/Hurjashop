@@ -44,7 +44,11 @@ class Search extends Component {
 
 	async search() {
 		var results = await searchForProduct(this.state.searchText)
+		console.log("Results in searchScreen");
+		console.log(results);
 		this.setState({searchResults: results})
+		console.log("Search state");
+		console.log(this.state.searchResults)
 	}
 
 	renderItem = ({item, index}) => {
@@ -112,13 +116,14 @@ class Search extends Component {
  }
 		
 	render() {
-
+		console.log("Search renderiino");
+		console.log(this.state.searchResults.length);
 		let searchResults = 
 		this.state.searchResults.length ? (
 				<View>
 					<Text style={app_style.front_item_title}>Haun tulokset:</Text>
 					<FlatList 
-						data={this.formatRow(this.props.categoryProducts, 2)}
+						data={this.formatRow(this.state.searchResults, 2)}
 						style={grid.container}
 						renderItem={this.renderItem}
 						numColumns={2}
@@ -143,11 +148,11 @@ class Search extends Component {
 						style={{fontSize: 20}}
 						onChangeText={(text) => this.setState({searchText: text})}
 						onSubmitEditing={() => {
-							searchForProduct(this.state.searchText);
+							this.search();
 						}}/>
 
 				<Button 
-          onPress={() => searchForProduct(this.state.searchText)}
+          onPress={() => this.search()}
           style={styles.buttonStyle}
 					title ="Hae"/>
 				</View>

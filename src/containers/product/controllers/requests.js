@@ -54,11 +54,12 @@ async function searchForProduct(text) {
    
   if(response){
     if(response.error) {
+      console.log("Search response error");
       return;
     }
     else {
-      return response[0];
-
+      console.log("Return search response");
+      return response;
     }
   } 
 }
