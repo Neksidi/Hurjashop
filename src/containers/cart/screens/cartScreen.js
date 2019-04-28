@@ -11,7 +11,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Loader from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
 import { priceToString } from '../../product/controllers/helper'
-import { emptyCart } from '../redux/cartActions'
+import { emptyCart, parseCart } from '../redux/cartActions'
 
 //VECTOR icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
@@ -68,8 +68,8 @@ class Cart extends Component {
   
   renderItem(item){
     return(
-      <View key={item.item.id} style={{ flex: 1 }}>
-        <Text>{item.item.name}</Text>
+      <View key={item.id} style={{ flex: 1 }}>
+        <Text>{item.name}</Text>
       </View>
     );
 
@@ -80,10 +80,10 @@ class Cart extends Component {
     let total = 0.00;
     let price, quantity;
 
-    if(this.props.cart.cart) {
-      for(i in this.props.cart.cart){
-        quantity = this.props.cart.cart[i].quantity;
-        price = (parseFloat(this.props.cart.cart[i].item.price));
+    if(this.props.cart) {
+      for(i in this.props.cart){
+        quantity = this.props.cart[i].quantity;
+        price = (parseFloat(this.props.cart[i].price));
         total += (price * quantity)
       } 
 
@@ -100,7 +100,9 @@ class Cart extends Component {
 
   handleContinueButtonPress(){
     //if(this.props.logged){  //If logged in
-      this.props.navigation.navigate('Shipping')
+    console.log("To Shipping")
+    this.props.parseCart();
+    this.props.navigation.navigate('Shipping')
     //}else {
       //this.props.navigation.navigate('Authenticate')
     
@@ -112,23 +114,23 @@ class Cart extends Component {
   
 	render() {
     let productCount = 
-      this.props.cart.cart.length === 1 ? (
+      this.props.cart.length === 1 ? (
         <Text style={styles.cartHeaderText}>1 tuote</Text>
       ) : ( 
-        <Text style={styles.cartHeaderText}>{this.props.cart.cart.length} tuotetta</Text>
+        <Text style={styles.cartHeaderText}>{this.props.cart.length} tuotetta</Text>
       );  
 
      let cartContainer =
-     this.props.cart.cart ? (
-          this.props.cart.cart.map((item, i) => {
+     this.props.cart ? (
+          this.props.cart.map((item, i) => {
             return (
-              <ListItem key={item.item.id}
-                key={item.item.id}
-                title={item.item.name}
+              <ListItem
+                key={item.id}
+                title={item.name}
                 subtitle={"Määrä: "+item.quantity}
-                leftAvatar={{ source: { uri: item.item.images[0].src } }}
-                onPress={() => this.props.navigation.navigate('Product', { item: item.item })}
-                rightTitle={this.priceToString(item.item.price*item.quantity)+" €"}
+                leftAvatar={{ source: { uri: item.images[0].src } }}
+                onPress={() => this.props.navigation.navigate('Product', { item: item })}
+                rightTitle={this.priceToString(item.price*item.quantity)+" €"}
               />
             )
           })
@@ -138,7 +140,7 @@ class Cart extends Component {
      );
 
      let showPrice = 
-     this.props.cart.cart ? (
+     this.props.cart ? (
         <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{this.calcTotalPrice()}</Text>
      ) : (
         <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}> 0€</Text>
@@ -182,7 +184,7 @@ class Cart extends Component {
             
               <View style={styles.footerSectionRight}>
                 <TouchableOpacity
-                  disabled={this.props.cart.cart.length == 0}
+                  disabled={this.props.cart.length == 0}
                   style={{
                     paddingHorizontal: 25,
                     paddingVertical: 15,
@@ -294,12 +296,12 @@ const map_dispach_props = (dispatch) => ({
 */
 
 const mapStateToProps = (state) => {
-	const cart = state.cart
+	const cart = state.cart.cart
 	return { cart }
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ emptyCart }, dispatch));
+	bindActionCreators({ emptyCart, parseCart }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 

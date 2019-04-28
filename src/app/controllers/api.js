@@ -12,9 +12,9 @@ class Api {
       }
         //Check if session exists in phone storage
         //Then set values if found
-        console.log("header start")
-        console.log(user)
-        console.log(id)
+        //console.log("header start")
+        //console.log(user)
+        //console.log(id)
       
       if(requiresAuth && id && user) {
         return {

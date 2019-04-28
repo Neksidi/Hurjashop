@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, Button, TouchableOpacity, TextInput } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { theme } from '../../../app/styles/global'
+import { theme, styles } from '../../../app/styles/global'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { CheckBox } from 'react-native-elements'
 import { POSTI_URL } from '../../../app/config'
 import Loader from '../components/loader/loader'
-
-
+import { getPickUps } from '../controllers/postiController'
+import { methodsStyles } from '../styles/methods' 
+import LinearGradient from 'react-native-linear-gradient';
+import { addMethods } from '../../profile/redux/userActions'
 
 class Methods extends Component {
 	constructor(props) {
@@ -17,8 +19,8 @@ class Methods extends Component {
 		this.state = {
             //Postitustavat
             isLoading: true,
-            post: false,
-            home: false,
+            postDelivery: false,
+            homeDelivery: false,
             //Maksutavat
             newcard: false,
             oldcard: false,
@@ -33,7 +35,6 @@ class Methods extends Component {
             isLoadingPoints: false,
             postiBools: [],
             postcode: null,
-
 		};
 		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
@@ -80,17 +81,15 @@ class Methods extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.isChecked && this.state.post && !this.postIsSelected()) {
+        if (this.state.isChecked && this.state.postDelivery && !this.postIsSelected()) {
             this.setState({ isChecked: false })
         }
-        if (!this.state.isChecked && ((this.state.post && this.postIsSelected()) || this.state.home) && (this.state.newcard || this.state.oldcard)) {
+        if (!this.state.isChecked && ((this.state.postDelivery && this.postIsSelected()) || this.state.homeDelivery) && (this.state.newcard || this.state.oldcard)) {
             console.log("Nice")
             this.setState({ isChecked: true });
         }
-        if (prevState.post === false && this.state.post === true) {
+        if (prevState.postDelivery === false && this.state.postDelivery === true) {
             console.log("WHY")
-            this.setState({ isLoadingPoints: true })
-            this.getPickUps(70600);
         }
 
     }
@@ -102,7 +101,7 @@ class Methods extends Component {
                 total = '10'
                 break;
             case "home":
-                console.log("home")
+                console.log("homeDelivery")
                 total = '5'
                 console.log(total);
                 break;
@@ -123,39 +122,27 @@ class Methods extends Component {
 
 	};
 	
-    postcodeHandler() {
+    async postcodeHandler() {
         //TODO syötteen validointi
 
         this.setState({ isLoadingPoints: true })
-        this.getPickUps(this.state.postcode.text);
+        console.log("Haetaan: " + this.state.postcode)
+        await this.getPickUps(this.state.postcode);
 
     }
 
-    getPickUps(postcode) {
-        console.log("postcode:", postcode)
-        return fetch(POSTI_URL + '/' + postcode + '/closest', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                //auth: this.state.auth
-            },
+    async getPickUps(postcode) {
+        console.log("Getting pickups, code: " + postcode);
+        this.state.postiBools = [];
+        var result = await getPickUps(postcode)
+        console.log(result);
 
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(POSTI_URL);
-                console.log("Pisteet noudettu")
-                this.setState({
-                    points: responseJson,
-                    isLoadingPoints: false,
-                },
-                );
+        this.setState({
+            points: result,
+            isLoadingPoints: false,
+        });
 
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+
     }
 
     renderPoints() {
@@ -175,6 +162,7 @@ class Methods extends Component {
                         }
                         return (<View key={i}>
                             <CheckBox
+                                checkedColor='green'
                                 title={<Text>{item.postinumero}  {item.osoite}  {item.nimi}</Text>}
                                 checked={this.state.postiBools[i]}
                                 checkedIcon='check-square-o'
@@ -207,9 +195,9 @@ class Methods extends Component {
     }
 	checkDelivery = (box) => {
         if (box === "post") {
-            this.state.post ? (this.setState({ post: false, home: false, isChecked: false })) : (this.setState({ post: true, home: false, shipping_method: "post", shipping_method_title: "Nouto Postista" }));
+            this.state.postDelivery ? (this.setState({ postDelivery: false, homeDelivery: false, isChecked: false })) : (this.setState({ postDelivery: true, homeDelivery: false, shipping_method: "post", shipping_method_title: "Nouto Postista" }));
         } else if (box === "home") {
-            this.state.home ? (this.setState({ home: false, post: false, isChecked: false })) : (this.setState({ home: true, post: false, shipping_method: "home", shipping_method_title: "Kotiinkuljetus" }));
+            this.state.homeDelivery ? (this.setState({ homeDelivery: false, postDelivery: false, isChecked: false })) : (this.setState({ homeDelivery: true, postDelivery: false, shipping_method: "home", shipping_method_title: "Kotiinkuljetus" }));
         }
 	}
 	checkPay = (card) => {
@@ -222,20 +210,25 @@ class Methods extends Component {
 
 
 	render() {
-		
+        let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
+        let continueButtonStyle = this.state.isChecked ? methodsStyles.continueButtonDisabled : methodsStyles.continueButton;
+        
 		if (this.state.isLoading) {
             return (
-                <Loader />
+                <Loader/>
             )
         }
-        else if (this.state.post) {
-			let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : (<Loader />);
+        else if (this.state.postDelivery) {
+            console.log("Points loading:")
+            console.log(this.state.isLoadingPoints);
+			let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : <Loader/>;
 			
             return (
                 <ScrollView>
-                    <View style={styles.container}>
+                    <View style={methodsStyles.container}>
                         <Text>Maksutavat</Text>
                         <CheckBox
+                            checkedColor='green'
                             title='Korttimaksu uudella maksukortilla'
                             checked={this.state.newcard}
                             checkedIcon='check-square-o'
@@ -243,31 +236,48 @@ class Methods extends Component {
                             onPress={() => { this.checkPay("newcard") }}
                         />
                         <CheckBox
+                            checkedColor='green'
                             title='Korttimaksu viimeksi käytetyllä maksukortilla'
                             checked={this.state.oldcard}
                             onPress={() => { this.checkPay("oldcard") }}
                             disabled={this.state.cardNotFound}
                         />
                         <Text>Lähetysvaihdoehdot</Text>
-                        <View style={styles.postBar}>
-                            <Text>Noutopisteiden haku postinumerolla: </Text>
-                            <TextInput style={styles.postcodeInput} placeholder='12345' onChangeText={(text) => this.setState({ postcode: { text } })} onSubmitEditing={(event) => this.postcodeHandler()} />
-                        </View>
                         <CheckBox
+                            checkedColor='green'
                             title='Nouto Postista'
-                            checked={this.state.post}
+                            checked={this.state.postDelivery}
                             checkedIcon='check-square-o'
                             uncheckedIcon='square-o'
                             onPress={() => { this.checkDelivery("post") }}
                         />
+                        <View style={methodsStyles.postBar}>
+                            <Text>Noutopisteiden haku postinumerolla: </Text>
+                            <TextInput 
+                            style={methodsStyles.postcodeInput} 
+                            maxLength={5}
+                            keyboardType='numeric'
+                            placeholder='00000' 
+                            onChangeText={(text) => this.setState({ postcode: text })} 
+                            onSubmitEditing={(event) => this.postcodeHandler()} />
+                        </View>
+                        
                         {postiPoints}
 
                         <CheckBox
                             title='Kotiin'
-                            checked={this.state.home}
+                            checked={this.state.homeDelivery}
                             onPress={() => { this.checkDelivery("home") }}
                         />
-                        <Button disabled={!this.state.isChecked} title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
+                        <LinearGradient colors={gradientStyle} style={methodsStyles.linearGradient}>
+                            <Text 
+                                disabled={!this.state.isChecked}
+                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
+                                style={continueButtonStyle}
+                            >
+                                Jatka
+                            </Text>
+                        </LinearGradient>
                     </View>
                 </ScrollView>
             );
@@ -275,9 +285,10 @@ class Methods extends Component {
         else {
             return (
                 <ScrollView>
-                    <View style={styles.container}>
+                    <View style={methodsStyles.container}>
                         <Text>Maksutavat</Text>
                         <CheckBox
+                            checkedColor='green'
                             title='Korttimaksu uudella maksukortilla'
                             checked={this.state.newcard}
                             checkedIcon='check-square-o'
@@ -285,6 +296,7 @@ class Methods extends Component {
                             onPress={() => { this.checkPay("newcard") }}
                         />
                         <CheckBox
+                            checkedColor='green'
                             title='Korttimaksu viimeksi käytetyllä maksukortilla'
                             checked={this.state.oldcard}
                             onPress={() => { this.checkPay("oldcard") }}
@@ -292,6 +304,7 @@ class Methods extends Component {
                         />
                         <Text>Lähetysvaihdoehdot</Text>
                         <CheckBox
+                            checkedColor='green'
                             title='Nouto Postista'
                             checked={this.state.post}
                             checkedIcon='check-square-o'
@@ -299,11 +312,20 @@ class Methods extends Component {
                             onPress={() => { this.checkDelivery("post") }}
                         />
                         <CheckBox
+                            checkedColor='green'
                             title='Kotiin'
-                            checked={this.state.home}
+                            checked={this.state.homeDelivery}
                             onPress={() => { this.checkDelivery("home") }}
                         />
-                        <Button disabled={!this.state.isChecked} title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Order'); }} style={styles.signupButton} />
+                        <LinearGradient colors={gradientStyle} style={methodsStyles.linearGradient}>
+                            <Text 
+                                disabled={!this.state.isChecked}
+                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
+                                style={continueButtonStyle}
+                            >
+                                Jatka
+                            </Text>
+                        </LinearGradient>
                     </View>
                 </ScrollView>
             );
@@ -311,52 +333,7 @@ class Methods extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        marginTop: 0,
-        padding: 20,
-    },
-    postBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    postcodeInput: {
-        width: 50,
-        backgroundColor: 'white'
-    },
-    textInput: {
-        width: '100%',
-        height: 40,
-        borderRadius: 3,
-        borderWidth: 1,
-    },
-    inputContainer: {
-        marginVertical: 10,
-    },
-    label: {
-        marginBottom: 5,
-    },
-    checkBoxContainer: {
-        justifyContent: 'center',
-    },
-    cardButton: {
-        height: 50,
-        width: '100%',
-        elevation: 2,
-        borderRadius: 5,
-        marginBottom: 10,
-        paddingVertical: 1,
-        paddingLeft: 8,
-        position: 'relative',
-        shadowColor: '#000000',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'skyblue'
-    },
-});
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ addMethods }, dispatch));
 
-
-export default (Methods);
+export default connect(null, mapDispatchToProps)(Methods);

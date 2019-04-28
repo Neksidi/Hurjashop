@@ -7,6 +7,8 @@ import AllProductsScreen from '../../../containers/product/screens/allProductsSc
 import CartScreen from '../../../containers/cart/screens/cartScreen'
 import ShippingScreen from '../../../containers/cart/screens/shippingScreen'
 import MethodsScreen from  '../../../containers/payment/screens/methodsScreen'
+import OrderCreationScreen from '../../../containers/orders/screens/createOrderScreen'
+import OrderReviewScreen from  '../../../containers/cart/screens/reviewScreen'
 //import CustomHeader from '../../../app/components/header/customHeader'
 
 
@@ -42,6 +44,8 @@ const MainNavigator = createStackNavigator({
   Cart: {screen: CartScreen},
   Shipping: {screen: ShippingScreen},
   Methods: {screen: MethodsScreen},
+  OrderCreation: {screen: OrderCreationScreen},
+  OrderReview: {screen: OrderReviewScreen}
 
 }, {
     transitionConfig,

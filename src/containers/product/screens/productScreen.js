@@ -121,9 +121,9 @@ class Product extends Component {
       if(this.state.count == null) {
         if(this.state.item.stock_quantity == null || 
           this.state.item.stock_quantity == 0) {
-            this.setState({count: 0});
+            this.setState({count: 0});  //TODO: Move this out of render logic!!!!
         } else {
-          this.setState({count: 1});
+          this.setState({count: 1});  //TODO: Move this out of render logic!!!!
         }
       }
 
@@ -241,7 +241,7 @@ class Product extends Component {
 const mapStateToProps = (state) => {
   const product = state.product
   const products = state.products.all
-  const cart = state.cart
+  const cart = state.cart.cart
 	return { product, products, cart }
 };
 

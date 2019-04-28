@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { theme } from '../../../app/styles/global'
+import { addShipping } from '../../profile/redux/userActions'
 
 
 class Shipping extends Component {
@@ -11,12 +12,11 @@ class Shipping extends Component {
         this.state = {
             isLoading: true,
             data: null,
-            firstname: 'Severi',
-            lastname: 'Serveri',
+            first_name: 'Severi',
+            last_name: 'Serveri',
             address: 'Kauppakatu 20',
             zipcode: '70100',
             city: 'Mualiman napa',
-            country: 'FI',
             shipping: null,
         };
 	}
@@ -29,12 +29,17 @@ class Shipping extends Component {
     headerTintColor: 'white',
     };
     
-  //Tämä on kesken
-  handleSubmit = () => {
-    this.state.shipping = {first_name: this.state.firstname, last_name: this.state.lastname, address: this.state.address, zipcode: this.state.zipcode, city: this.state.city, country: this.state.country};
-    //this.props.addShipping(this.state.shipping);
+    handleSubmit = () => {
+        this.state.shipping = {
+            first_name: this.state.first_name, 
+            last_name: this.state.last_name, 
+            address: this.state.address, 
+            zipcode: this.state.zipcode, 
+            city: this.state.city,
+        };
+        this.props.addShipping(this.state.shipping);
 
-};
+    };
 
 	render() {
        
@@ -44,12 +49,12 @@ class Shipping extends Component {
 
                 <View style={styles.inputContainer}> 
                         <Text style={styles.label}>Etunimi</Text>
-                        <TextInput style={styles.textInput} onChangeText={(firstname) => this.setState({ firstname })} value={this.state.firstname} underlineColorAndroid='transparent' />
+                        <TextInput style={styles.textInput} onChangeText={(first_name) => this.setState({ first_name })} value={this.state.first_name} underlineColorAndroid='transparent' />
                     </View>
 
                     <View >
                     <Text style={styles.label}>Sukunimi</Text>
-                        <TextInput style={styles.textInput} onChangeText={(lastname) => this.setState({ lastname })} value={this.state.lastname} underlineColorAndroid='transparent' />
+                        <TextInput style={styles.textInput} onChangeText={(last_name) => this.setState({ last_name })} value={this.state.last_name} underlineColorAndroid='transparent' />
                     </View>
 
                     <View >
@@ -65,10 +70,6 @@ class Shipping extends Component {
                     <View >
                         <Text style={styles.label}>Postinumero</Text>
                         <TextInput style={styles.textInput} onChangeText={(zipcode) => this.setState({ zipcode })} value={this.state.zipcode} keyboardType='numeric' maxLength={5} />
-                    </View>
-                    <View >
-                        <Text style={styles.label}>Maa</Text>
-                        <TextInput style={styles.textInput} onChangeText={(country) => this.setState({ country })} value={this.state.country} keyboardType='numeric' maxLength={5} />
                     </View>
                     <Button title="Jatka" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Methods'); }} style={styles.signupButton} />
                 </View>
@@ -99,5 +100,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default (Shipping);
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ addShipping }, dispatch));
+
+export default connect(null, mapDispatchToProps)(Shipping);
 

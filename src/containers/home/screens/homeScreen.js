@@ -212,12 +212,6 @@ class Home extends Component {
 					}
 				/>
 				<Button
-					title="Tutoriaaliin"
-					onPress={() =>
-						this.props.navigation.navigate('Tutorial')
-					}
-				/>
-				<Button
 					title="Kategoriaan"
 					onPress={() =>
 						this.props.navigation.navigate('Category')
@@ -268,10 +262,9 @@ class Home extends Component {
 
 
 const mapStateToProps = (state) => {
-	const { home } = state
 	const products = state.products.all
 	const categories = state.categories.all;
-	return { home, products , categories }
+	return { products , categories }
 };
 
 const mapDispatchToProps = dispatch => (

@@ -1,5 +1,7 @@
 export const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS'
 export const ADD_CONTACT = 'ADD_CONTACT'
+export const ADD_SHIPPING = 'ADD_SHIPPING'
+export const ADD_METHODS = 'ADD_METHODS'
 
 const setLoginStatus = status => (
   {
@@ -15,10 +17,25 @@ const addContact = contact => (
   }
 );
 
+const addShipping = shipping => (
+  {
+    type: ADD_SHIPPING,
+    payload: shipping,
+  }
+);
+
+const addMethods = methods => (
+  {
+    type: ADD_METHODS,
+    payload: methods,
+  }
+);
 
 
 
 export {
   setLoginStatus,
-  addContact
+  addContact,
+  addShipping,
+  addMethods
 }

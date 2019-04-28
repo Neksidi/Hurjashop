@@ -18,8 +18,6 @@ class CustomHeader extends Component {
     render() {
 		let logoSize = this.props.small == true ? (styles.logoSmall) : (styles.logo);
 		let logoTop = this.props.small == true ? (0) : (30);
-		console.log(styles.logoSmall);
-		console.log(styles.logo);
 
         return (
 		    /*<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>

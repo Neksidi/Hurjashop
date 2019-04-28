@@ -2,10 +2,10 @@
 
 function findInCart(props, id) {
     
-    if(props.cart.cart.length) {
-        for(i in props.cart.cart){
-            if(props.cart.cart[i].item.id == id){
-                return props.cart.cart[i].quantity;
+    if(props.cart.length) {
+        for(i in props.cart){
+            if(props.cart[i].id == id){
+                return props.cart[i].quantity;
             }
         }
     }
