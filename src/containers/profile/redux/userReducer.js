@@ -11,7 +11,6 @@ const INITIAL_STATE = {
     switch (action.type) {
       case SET_LOGIN_STATUS: {
         state.loggedIn = action.payload;
-        console.log("LoggedIn: " + loggedIn)
         return {...state};
       }
       case ADD_CONTACT: {
