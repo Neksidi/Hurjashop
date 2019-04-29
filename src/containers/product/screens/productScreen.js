@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image } from 'react-native';
-import { app_style, theme, styles, primaryGradientColors} from '../../../app/styles/global'
+import { app_style, app_theme, theme, styles, primaryGradientColors} from '../../../app/styles/global'
 import { bindActionCreators } from 'redux';
 
 import Gallery from '../../../app/components/common/images/gallery'
@@ -201,7 +201,7 @@ class Product extends Component {
               {/* PRODUCT INFO + SHARE */}
               <View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View>
-                  <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
+                  <Text style={app_style.large_title}>{ item.name }</Text>
                   {this.renderPrice(this.state.item)}
 
                   <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>{stockText}{inCartText}</Text>

@@ -265,15 +265,26 @@ export const app_style = StyleSheet.create({
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 28,
     alignSelf: 'center',
+    color: '#e94641',
+    fontWeight:'bold',
   },
   front_slider_title: {
     fontFamily: 'BarlowCondensed-Light',
     fontSize: 26,
     alignSelf: 'center',
   },
+
+  large_title: {
+    fontFamily: 'BarlowCondensed-Medium',
+    fontSize: 28,
+    color: '#e94641',
+    fontWeight:'bold',
+  },
+
   medium_title: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 25,
+    color: '#e94641',
   },
   product_list_item_title: {
     fontFamily: 'BarlowCondensed-Medium',
