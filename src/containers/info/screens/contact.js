@@ -141,7 +141,7 @@ class Index extends Component {
                     {send}
                 </View>
 
-                <Text style={{ color: '#fff' }}>HUOM EI LÄHETÄ VIELÄ MINNEKÄÄN!</Text>
+                <Text style={{ color: '#fff' }}>HUOM Tarkista kaikki kentät!</Text>
 
 
             </View>
