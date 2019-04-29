@@ -265,7 +265,7 @@ export const app_style = StyleSheet.create({
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 28,
     alignSelf: 'center',
-    color: '#e94641',
+    color: '#fff',
     fontWeight:'bold',
   },
   front_slider_title: {
@@ -277,14 +277,14 @@ export const app_style = StyleSheet.create({
   large_title: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 28,
-    color: '#e94641',
+    color: '#fff',
     fontWeight:'bold',
   },
 
   medium_title: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 25,
-    color: '#e94641',
+    color: '#fff',
   },
   product_list_item_title: {
     fontFamily: 'BarlowCondensed-Medium',
@@ -347,6 +347,7 @@ export const app_style = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#8a8a8a',
     alignItems: 'center',
+  
   },
   productDescription: {
     justifyContent: 'center',

@@ -18,9 +18,6 @@ import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxW
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 
-
-
-
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -261,8 +258,8 @@ class Home extends Component {
 						</View>
 					</LinearGradient>
 				</ScrollView>
-
 			</View>	
+			
 		);
 	}
 }

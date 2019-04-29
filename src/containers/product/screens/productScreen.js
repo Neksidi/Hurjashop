@@ -13,10 +13,11 @@ import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
 import { getQuantity } from '../../cart/controllers/helper'
 import { addToCart } from '../../cart/redux/cartActions'
-import Toast, {DURATION} from 'react-native-easy-toast'
 import Badge from '../../../app/components/common/badge/index'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
+
+import Modal from '../../../app/components/common/modal'
 
 let { width, height } = Dimensions.get('screen');
 
@@ -39,7 +40,6 @@ class Product extends Component {
       item: null,
       count: 1,
     }
-
   }
   
   componentDidMount() {
@@ -62,7 +62,6 @@ class Product extends Component {
 
   handleAddToCart(){
     this.props.addToCart(this.state.item, this.state.count);
-    this.refs.toast.show("Lisätty tuote "+this.state.item.name+" ostoskoriin");
 
     if(getQuantity(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity ||
       (this.state.item.in_stock == false && this.state.item.stock_quantity == null)) {
@@ -222,7 +221,13 @@ class Product extends Component {
                   </TouchableOpacity>
                 </View>
                 {/* ADD TO CART BUTTON */}
-                <TouchableOpacity disabled={disableAddToCart} onPress={() => this.handleAddToCart()}
+                <TouchableOpacity disabled={disableAddToCart} onPress={() => {
+                  this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
+                  this.refs.modal.setContent("Lisätty "+this.state.count+" kpl, tuotetta "+item.name+ " ostoskoriin.");
+                  this.refs.modal.show();
+
+                  this.handleAddToCart();
+                }}
                   style={{
                     width: '100%',
                     maxWidth: 400,
@@ -241,8 +246,9 @@ class Product extends Component {
               {/* IMAGE GALLERY */}
               <Gallery images={this.state.item.images} ref='gallery'/>
             </ScrollView>
-            <Toast ref="toast"/>
           </View>
+          <Modal ref='modal'/>
+
         </LinearGradient>
       );
     } 
