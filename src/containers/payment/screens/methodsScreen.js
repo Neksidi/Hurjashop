@@ -211,7 +211,7 @@ class Methods extends Component {
 
 	render() {
         let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
-        let continueButtonStyle = this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
+        let continueButtonStyle = !this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
         
 		if (this.state.isLoading) {
             return (

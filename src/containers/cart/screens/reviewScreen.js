@@ -171,7 +171,7 @@ class Review extends Component {
     }
 }
 
-let mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         shipping: state.user.shipping,
         methods: state.user.methods,

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator } from 'react-native';
 //import { Logo, Drawer, Cart, } from '../../navigation/options/Items'
 // Global styles
-import { theme } from '../../app/styles/global'
-import CustomHeader from '../../app/components/header/customHeader'
+import { theme } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
 import { HeaderBackButton } from 'react-navigation';
 class Index extends Component {
 

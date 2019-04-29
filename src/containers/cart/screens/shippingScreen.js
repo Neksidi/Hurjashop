@@ -116,8 +116,14 @@ const styles = StyleSheet.create({
     },
 });
 
+const mapStateToProps = (state) => {
+    return {
+        contact: state.user.contact,
+    }
+}
+
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({ addShipping }, dispatch));
 
-export default connect(null, mapDispatchToProps)(Shipping);
+export default connect(mapStateToProps, mapDispatchToProps)(Shipping);
 

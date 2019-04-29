@@ -2,12 +2,12 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, Picker, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 
-import ButtonDefault from '../profile/components/defaultLoginButton'
+import ButtonDefault from '../../profile/components/defaultLoginButton'
 //import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
 // Global styles
-import { theme } from '../../app/styles/global'
-import { MAIL_URL } from '../../app/config/index'
-import Validator from './validator'
+import { theme } from '../../../app/styles/global'
+import { MAIL_URL } from '../../../app/config/index'
+import Validator from '../validator'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 class Index extends Component {
     constructor(props) {
@@ -220,11 +220,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const map_state_props = (state) => {
-    /* return {
-         logged: state.contact_reducer.isLogged,
-         contact: state.contact_reducer.contact,
-     }*/
+const mapStateToProps = (state) => {
+    return {
+         logged: state.user.loggedIn,
+         contact: state.user.contact,
+     }
 }
 
-export default connect(map_state_props)(Index);
+export default connect(mapStateToProps, null)(Index);

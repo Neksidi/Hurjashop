@@ -263,7 +263,7 @@ class Cart extends Component {
               
                 <View style={cartStyle.footerSectionRight}>
                   <TouchableOpacity
-                    //disabled={this.props.cart.length == 0}    //DEBUG!
+                    disabled={this.props.cart.length == 0}
                     onPress={() =>{this.handleContinueButtonPress()}}>
                     <LinearGradient colors={primaryGradientColorsButton} style={[
                       theme.linearGradient, {

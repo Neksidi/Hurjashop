@@ -4,8 +4,8 @@ import { HeaderBackButton } from 'react-navigation';
 
 //import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
 // Global styles
-import { theme } from '../../app/styles/global'
-import CustomHeader from '../../app/components/header/customHeader'
+import { theme } from '../../../app/styles/global'
+import CustomHeader from '../../../app/components/header/customHeader'
 
 class Index extends Component {
 

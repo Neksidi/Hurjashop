@@ -98,19 +98,19 @@ export const theme = {
       borderRadius: 4,
   },
 
-    continueButton: {
-      fontSize: 18,
-      textAlign: 'center',
-      margin: 5,
-      color: '#FFFFFF',
-      backgroundColor: 'transparent',
+  continueButton: {
+    fontSize: 18,
+    textAlign: 'center',
+    margin: 5,
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
   },
 
   continueButtonDisabled: {
     fontSize: 18,
     textAlign: 'center',
-    margin: 10,
-    color: '#FFFFFF',
+    margin: 5,
+    color: '#000000',
     backgroundColor: 'transparent',
   },
 };
@@ -467,7 +467,7 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const primaryGradientColors = ['#FFFFFF', '#eaeaea'];
+export const primaryGradientColors = ['#a6c0fe', '#f68084'];
 export const primaryGradientColorsButton = ['#4c669f', '#3b5998', '#192f6a'];
 
 export const boxHeight =  Dimensions.get('window').width / 2

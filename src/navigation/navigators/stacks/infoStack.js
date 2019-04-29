@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native'
-import ContactScreen from '../../../containers/info/contact'
-import TermsScreen from '../../../containers/info/terms'
-import aboutusScreen from '../../../containers/info/aboutUs'
+import ContactScreen from '../../../containers/info/screens/contact'
+import TermsScreen from '../../../containers/info/screens/terms'
+import aboutusScreen from '../../../containers/info/screens/aboutUs'
 
 const transitionConfig = () => {
     return {
