@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Keyboard, } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Keyboard, ScrollView } from 'react-native';
 
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Register extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      first_name: '',
+      first_name: 'kissa',
       first_nameValidation: false,
-      last_name: '',
+      last_name: 'kissa',
       last_nameValidation: false,
-      email: '',
+      email: 'kissa@hurja.fi',
       emailValidation: false,
-      password: '',//STRING
+      password: 'kissakissa123',//STRING
       passwordValidation: false,
-      password_confirm: '',//STRING
+      password_confirm: 'kissakissa123',//STRING
       password_confirmValidation: false,//BOOL
       checked: false,
-      isFilled: false,
+      isFilled: true, //
       visiblePassword: false,
       visibleConfirmation: false
     }
@@ -204,7 +203,12 @@ export default class Register extends Component {
               </View>
 
               <View style={styles.submitButtonContainer}>
-                <ButtonWithAnimatedLoader ref='register_button' title='Rekisteröidy' errorHandler={() => { console.log("Error handle") }} onPress={() => { register(this.state) }} disabled={!this.state.isFilled} />
+                <ButtonWithAnimatedLoader 
+                  ref='register_button' 
+                  title='Rekisteröidy' 
+                  errorHandler={() => { console.log("Error handle") }} 
+                  onPress={() => { register(this) }} 
+                  disabled={!this.state.isFilled} />
               </View>
 
             </View>
