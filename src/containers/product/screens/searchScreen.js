@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { Keyboard, TextInput, View, Button, StyleSheet, Text, ScrollView, Image, Dimensions, FlatList, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
 import { searchForProduct } from '../controllers/requests'
 import { bindActionCreators } from 'redux';
-import { primaryGradientColors, theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
+import { primaryGradientColors, primaryGradientColorsButton, theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
+import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 
 class Search extends Component {
@@ -148,36 +149,38 @@ class Search extends Component {
 			<LinearGradient 
 				start={{x: 0, y: 0}} end={{x: 1, y: 1}}
 				colors={primaryGradientColors} 
-				style={styles.linearGradient}>
-				<View style={app_style.sliderContainer}>
-
-					<TextInput
-						placeholder={"Syötä hakusana"}
-						style={{fontSize: 20}}
-						onChangeText={(text) => this.setState({searchText: text})}
-						onSubmitEditing={() => {
-							this.search();
-						}}/>
-
-					<Button 
-						onPress={() => {
-							this.search();
-							Keyboard.dismiss();
-						}}
-						style={styles.buttonStyle}
-						title ="Hae"/>
+				style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+				
+				<ScrollView>
+					<View>
+						<View style={theme.inputContainer}> 
+							<Text style={theme.label}>Hae tuotetta</Text>
+							<TextInput
+									style={theme.inputs} 
+									onChangeText={(text) => this.setState({searchText: text})}
+									onSubmitEditing={() => {
+										this.search();
+									}}/>
+						</View>
 
 						{headerResults}
 				
-
-					<ScrollView >
+						<TouchableOpacity
+							disabled={this.state.searchText == ""}
+							onPress={() =>{this.search(); Keyboard.dismiss();}}>
+							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>
+											
+								<FAIcon name='search' size={20} color='#fff' />
+								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Hae</Text>
+							</LinearGradient>
+						</TouchableOpacity>
 							<View>
 									{searchResults}
 							</View>
+						</View>
 					</ScrollView>
-				</View>
-		
 			</LinearGradient>
+
 		);
 	}
 }

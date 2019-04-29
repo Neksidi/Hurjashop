@@ -130,22 +130,21 @@ class Product extends Component {
     } else {
 
       let productsInCart = getQuantity(this.props, item.id);
-      let addCartText = (item.in_stock == true && productsInCart < item.stock_quantity) || (item.in_stock == false && item.stock_quantity == null) ? ( ('LISÄÄ OSTOSKORIIN') ) : ( ('EI VARASTOSSA') );
-
+      
       let productNumber = item.sku != "" ?  (
         <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Tuotenumero: { item.sku }</Text>
       ) : (
         <View/>
       );
 
-      let disableAddToCart = item.stock_quantity != null ? (
+      let disableAddToCart = item.stock_quantity != null || item.in_stock == false ? (
           (item.stock_quantity - productsInCart > 0) ? (
             false
           ) : (
             true
           )
         ) : (
-          false
+          true
         );
 
       let stockText = item.stock_quantity != null ? (
@@ -155,14 +154,12 @@ class Product extends Component {
         );
 
         let inCartText = productsInCart > 0 ? (
-          (item.stock_quantity == null) ? (
-            ("Ostoskorissa: "+productsInCart +" kpl")
-          ) : (
-            (" (Ostoskorissa: "+productsInCart +" kpl)")
-          )
+          (" (Ostoskorissa: "+productsInCart +" kpl)")
         ) : (
           ('')
         );
+
+        let addCartText = (disableAddToCart == true) ? (('EI VARASTOSSA')) : (('LISÄÄ OSTOSKORIIN'));
 
 
       return (
@@ -264,5 +261,3 @@ const mapDispatchToProps = dispatch => (
 	bindActionCreators({ setProducts, addToCart }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
-
-

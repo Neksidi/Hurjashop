@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { btn, theme, primaryGradientColors } from '../../../app/styles/global'
+import { btn, theme, primaryGradientColors, primaryGradientColorsButton } from '../../../app/styles/global'
 import { addShipping } from '../../profile/redux/userActions'
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -55,37 +55,38 @@ class Shipping extends Component {
                     <View style={theme.container}>
                         <View style={theme.inputContainer}> 
                             <Text style={theme.label}>Etunimi</Text>
-                            <TextInput style={theme.textInput} onChangeText={(first_name) => this.setState({ first_name })} value={this.state.first_name} underlineColorAndroid='transparent' />
+                            <TextInput style={theme.inputs} onChangeText={(first_name) => this.setState({ first_name })} value={this.state.first_name} underlineColorAndroid='transparent' />
                         </View>
 
                         <View style={theme.inputContainer}>
                             <Text style={theme.label}>Sukunimi</Text>
-                            <TextInput style={theme.textInput} onChangeText={(last_name) => this.setState({ last_name })} value={this.state.last_name} underlineColorAndroid='transparent' />
+                            <TextInput style={theme.inputs} onChangeText={(last_name) => this.setState({ last_name })} value={this.state.last_name} underlineColorAndroid='transparent' />
                         </View>
 
                         <View style={theme.inputContainer}>
                             <Text style={theme.label}>Osoite</Text>
-                            <TextInput style={theme.textInput} onChangeText={(address) => this.setState({ address })} value={this.state.address} underlineColorAndroid='transparent' />
+                            <TextInput style={theme.inputs} onChangeText={(address) => this.setState({ address })} value={this.state.address} underlineColorAndroid='transparent' />
                         </View>
 
                         <View style={theme.inputContainer}>
                             <Text style={theme.label}>Postitoimipaikka</Text>
-                            <TextInput style={theme.textInput} onChangeText={(city) => this.setState({ city })} value={this.state.city} />
+                            <TextInput style={theme.inputs} onChangeText={(city) => this.setState({ city })} value={this.state.city} />
                         </View>
 
                         <View style={theme.inputContainer}>
                             <Text style={theme.label}>Postinumero</Text>
-                            <TextInput style={theme.textInput} onChangeText={(zipcode) => this.setState({ zipcode })} value={this.state.zipcode} keyboardType='numeric' maxLength={5} />
+                            <TextInput style={theme.inputs} onChangeText={(zipcode) => this.setState({ zipcode })} value={this.state.zipcode} keyboardType='numeric' maxLength={5} />
                         </View>
 
-                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={theme.linearGradient}>
-                            <Text 
-                                onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Methods'); }} 
-                                style={theme.continueButton}
-                            >
-                            Jatka
-                            </Text>
-                        </LinearGradient>
+						<TouchableOpacity
+							onPress={() =>{this.handleSubmit(); this.props.navigation.navigate('Methods');}}>
+							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
+								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
+							</LinearGradient>
+						</TouchableOpacity>
+
+
+                
 
                     </View>
                 </ScrollView>
