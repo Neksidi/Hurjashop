@@ -1,15 +1,20 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Animated, Text } from 'react-native';
 import { addOrder } from '../redux/orderActions'
-import { theme } from '../../../app/styles/global'
+import { theme, primaryGradientColors, styles } from '../../../app/styles/global'
 import { createOrder } from '../controllers/orderController'
 import { bindActionCreators } from 'redux';
 import CustomHeader from '../../../app/components/header/customHeader'
+import LinearGradient from 'react-native-linear-gradient';
 
 class Order extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            fadeAnim: new Animated.Value(0)
+
+        }
     }
 
     static navigationOptions = {
@@ -55,8 +60,20 @@ class Order extends Component {
         }
     }*/
     async componentDidMount() {
+        Animated.timing(
+            this.state.fadeAnim,
+            {
+                toValue:1,
+                duration:1500,
+                delay: 500,
+                useNativeDriver: true,
+            }
+        ).start()
         await this.formOrder();
+
+      
     }
+
 
     async formOrder() {
             var order = {
@@ -156,12 +173,25 @@ class Order extends Component {
     */
 
     render() {
+        
+        let {fadeAnim}=this.state
         let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
 
         return (
-            <View style={{marginTop: 40}}>
-                {output}
-            </View>
+                <LinearGradient 
+                    start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+                    colors={primaryGradientColors} 
+                    style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+                    <View style={styles.container}>
+                        <Animated.View style={{opacity: fadeAnim}}>
+                           
+                             {output}
+                             <Text style={styles.orderText}>Tilausta luodaan</Text> 
+                            
+                        </Animated.View>
+
+                    </View>
+                </LinearGradient>
         );
     }
 }

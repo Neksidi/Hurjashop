@@ -465,6 +465,13 @@ export const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
+  orderText:{
+    fontFamily: "BarlowCondensed-Regular",
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "white"
+  }
+  
 });
 
 export const primaryGradientColors = ['#a6c0fe', '#f68084'];
