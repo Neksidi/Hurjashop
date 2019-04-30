@@ -264,7 +264,7 @@ class Login extends Component {
                     secureTextEntry={!this.state.visible}
                     onChangeText={(password) => this.setState({password: password})}
                     value={this.state.password}
-                    ref={(input) => this.passwordTextInput = input}
+                    ref={(input) => { this.passwordTextInput = input; }}
                     blurOnSubmit={false}
                     onSubmitEditing={() =>{
                       Keyboard.dismiss();
@@ -283,7 +283,13 @@ class Login extends Component {
               </View>
 
               <View style={styles.submitButtonContainer}>
-                <ButtonWithAnimatedLoader ref='login_button' title='Kirjaudu sisään' errorHandler={() => {this._handleLoginErrors()}} onAnimationFinished={() => {this.setState({isLoggingIn: false})}} onPress={() => { handleLogin(this) }} disabled={!(this.state.emailValidation && this.state.password.length > 0)}/>
+                <ButtonWithAnimatedLoader 
+                  ref='login_button' 
+                  title='Kirjaudu sisään' 
+                  errorHandler={() => {this._handleLoginErrors()}} 
+                  onAnimationFinished={() => {this.setState({isLoggingIn: false})}} 
+                  onPress={() => { handleLogin(this) }} 
+                  disabled={!(this.state.emailValidation && this.state.password.length > 0)}/>
               </View>
 
               <Separator text='TAI'/>

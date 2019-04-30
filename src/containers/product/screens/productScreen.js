@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button , TouchableOpacity, ScrollView, AttributeList, Dimensions, Image } from 'react-native';
-import { app_style, theme, styles, primaryGradientColors} from '../../../app/styles/global'
+import { app_style, app_theme, theme, styles, primaryGradientColors} from '../../../app/styles/global'
 import { bindActionCreators } from 'redux';
 
 import Gallery from '../../../app/components/common/images/gallery'
@@ -13,10 +13,11 @@ import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
 import { getQuantity } from '../../cart/controllers/helper'
 import { addToCart } from '../../cart/redux/cartActions'
-import Toast, {DURATION} from 'react-native-easy-toast'
 import Badge from '../../../app/components/common/badge/index'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
+
+import Modal from '../../../app/components/common/modal'
 
 let { width, height } = Dimensions.get('screen');
 
@@ -39,7 +40,6 @@ class Product extends Component {
       item: null,
       count: 1,
     }
-
   }
   
   componentDidMount() {
@@ -62,7 +62,6 @@ class Product extends Component {
 
   handleAddToCart(){
     this.props.addToCart(this.state.item, this.state.count);
-    this.refs.toast.show("Lisätty tuote "+this.state.item.name+" ostoskoriin");
 
     if(getQuantity(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity ||
       (this.state.item.in_stock == false && this.state.item.stock_quantity == null)) {
@@ -130,22 +129,21 @@ class Product extends Component {
     } else {
 
       let productsInCart = getQuantity(this.props, item.id);
-      let addCartText = (item.in_stock == true && productsInCart < item.stock_quantity) || (item.in_stock == false && item.stock_quantity == null) ? ( ('LISÄÄ OSTOSKORIIN') ) : ( ('EI VARASTOSSA') );
-
+      
       let productNumber = item.sku != "" ?  (
         <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>Tuotenumero: { item.sku }</Text>
       ) : (
         <View/>
       );
 
-      let disableAddToCart = item.stock_quantity != null ? (
+      let disableAddToCart = item.stock_quantity != null || item.in_stock == false ? (
           (item.stock_quantity - productsInCart > 0) ? (
             false
           ) : (
             true
           )
         ) : (
-          false
+          true
         );
 
       let stockText = item.stock_quantity != null ? (
@@ -155,14 +153,12 @@ class Product extends Component {
         );
 
         let inCartText = productsInCart > 0 ? (
-          (item.stock_quantity == null) ? (
-            ("Ostoskorissa: "+productsInCart +" kpl")
-          ) : (
-            (" (Ostoskorissa: "+productsInCart +" kpl)")
-          )
+          (" (Ostoskorissa: "+productsInCart +" kpl)")
         ) : (
           ('')
         );
+
+        let addCartText = (disableAddToCart == true) ? (('EI VARASTOSSA')) : (('LISÄÄ OSTOSKORIIN'));
 
 
       return (
@@ -204,7 +200,7 @@ class Product extends Component {
               {/* PRODUCT INFO + SHARE */}
               <View style={{ width: '100%', paddingVertical: 12, paddingHorizontal: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View>
-                  <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 20, }}>{ item.name }</Text>
+                  <Text style={app_style.large_title}>{ item.name }</Text>
                   {this.renderPrice(this.state.item)}
 
                   <Text style={{ fontFamily: 'BarlowCondensed-Bold', fontSize: 16, }}>{stockText}{inCartText}</Text>
@@ -225,7 +221,13 @@ class Product extends Component {
                   </TouchableOpacity>
                 </View>
                 {/* ADD TO CART BUTTON */}
-                <TouchableOpacity disabled={disableAddToCart} onPress={() => this.handleAddToCart()}
+                <TouchableOpacity disabled={disableAddToCart} onPress={() => {
+                  this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
+                  this.refs.modal.setContent("Lisätty "+this.state.count+" kpl, tuotetta "+item.name+ " ostoskoriin.");
+                  this.refs.modal.show();
+
+                  this.handleAddToCart();
+                }}
                   style={{
                     width: '100%',
                     maxWidth: 400,
@@ -244,8 +246,9 @@ class Product extends Component {
               {/* IMAGE GALLERY */}
               <Gallery images={this.state.item.images} ref='gallery'/>
             </ScrollView>
-            <Toast ref="toast"/>
           </View>
+          <Modal ref='modal'/>
+
         </LinearGradient>
       );
     } 
@@ -264,5 +267,3 @@ const mapDispatchToProps = dispatch => (
 	bindActionCreators({ setProducts, addToCart }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
-
-

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, Button, TouchableOpacity, TextInput } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { theme, styles, primaryGradientColors } from '../../../app/styles/global'
+import { theme, styles, primaryGradientColors, primaryGradientColorsButton, app_style } from '../../../app/styles/global'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { CheckBox } from 'react-native-elements'
 import { POSTI_URL } from '../../../app/config'
@@ -230,8 +230,8 @@ class Methods extends Component {
                     style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
 
                     <ScrollView>
-                        <View style={methodsStyles.container}>
-                            <Text>Maksutavat</Text>
+                        <View>
+                            <Text style={app_style.medium_title}>Maksutavat</Text>
                             <CheckBox
                                 checkedColor='green'
                                 title='Korttimaksu uudella maksukortilla'
@@ -247,7 +247,7 @@ class Methods extends Component {
                                 onPress={() => { this.checkPay("oldcard") }}
                                 disabled={this.state.cardNotFound}
                             />
-                            <Text>Lähetysvaihdoehdot</Text>
+                            <Text style={app_style.medium_title}>Lähetysvaihdoehdot</Text>
                             <CheckBox
                                 checkedColor='green'
                                 title='Nouto Postista'
@@ -328,15 +328,16 @@ class Methods extends Component {
                                 checked={this.state.homeDelivery}
                                 onPress={() => { this.checkDelivery("home") }}
                             />
-                            <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
-                                <Text 
-                                    disabled={!this.state.isChecked}
-                                    onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
-                                    style={continueButtonStyle}
-                                >
-                                    Jatka
-                                </Text>
-                            </LinearGradient>
+
+
+                        <TouchableOpacity
+                            disabled={!this.state.isChecked}
+							onPress={() =>{this.handleSubmit(); this.props.navigation.navigate('OrderCreation');}}>
+							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
+								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
+							</LinearGradient>
+						</TouchableOpacity>
+
                         </View>
                     </ScrollView>
                 </LinearGradient>

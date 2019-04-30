@@ -64,30 +64,40 @@ export const theme = {
   
   inputScreenContainer : {
     marginTop: 0,
-    padding: 20,
+    paddingVertical:5,
+    paddingHorizontal: 5
+
   },
 
-  label : {
-    margin: 5,
-  },
+
 
   inputContainer: {
     flex:1,
-    height:45,
+    textAlign: 'center',
     marginBottom:5,
     flexDirection: 'row',
     alignItems:'center',
     marginVertical: 5,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#e94641',
     borderRadius: 4,
+ 
+    padding:5,
 
+  },
+
+    label : {
+      
+      fontWeight: 'bold',
+      color: '#FFF',
+      paddingHorizontal:10,
+      flex:1,
+      
     },
     inputs:{
-      width: '100%',
-      height: 40,
       borderRadius: 3,
-      borderWidth: 1,
-
+      backgroundColor: '#f5f5f5',
+      flex:2,
+      paddingHorizontal:10,
     },
 
     linearGradient: {
@@ -96,6 +106,11 @@ export const theme = {
       paddingRight: 15,
       marginTop: 5,
       borderRadius: 4,
+      paddingHorizontal: 25,
+      paddingVertical: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
   },
 
   continueButton: {
@@ -250,15 +265,26 @@ export const app_style = StyleSheet.create({
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 28,
     alignSelf: 'center',
+    color: '#fff',
+    fontWeight:'bold',
   },
   front_slider_title: {
     fontFamily: 'BarlowCondensed-Light',
     fontSize: 26,
     alignSelf: 'center',
   },
+
+  large_title: {
+    fontFamily: 'BarlowCondensed-Medium',
+    fontSize: 28,
+    color: '#fff',
+    fontWeight:'bold',
+  },
+
   medium_title: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 25,
+    color: '#fff',
   },
   product_list_item_title: {
     fontFamily: 'BarlowCondensed-Medium',
@@ -321,6 +347,7 @@ export const app_style = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#8a8a8a',
     alignItems: 'center',
+  
   },
   productDescription: {
     justifyContent: 'center',
@@ -442,8 +469,7 @@ export const styles = StyleSheet.create({
   sliderContainer: {
     flex: 1,
     justifyContent: 'center',
-    paddingTop: 10,
-    paddingBottom: 15,
+    paddingVertical:10,
     paddingHorizontal: 5
   },
   footer: {

@@ -13,7 +13,7 @@ function validate(type, parent) {
 
         if(emailReg.test(parent.state.email) === true){
           parent.setState({emailValidation: true});
-          //console.log("true email")
+          console.log("true email")
           return true;
         }else {
           console.log("false email")
@@ -95,19 +95,29 @@ function validateAll(parent) {
       }
 }
 
-async function register(state) {
+async function register(parent) {
   console.log("REGISTERING")
-  console.log(state)
   var customer = {
-    "email": state.email,
-    "first_name": state.first_name,
-    "last_name": state.last_name,
-    "username": state.email,
-    "password": state.password,
+    "email": parent.state.email,
+    "first_name": parent.state.first_name,
+    "last_name": parent.state.last_name,
+    "username": parent.state.email,
+    "password": parent.state.password,
   }
+  console.log("Sending register request");
   var response = await Api.post(WEB_URL + "/customers", customer, false);
 
   console.log(response)
+  if(!response.err) {
+    parent.refs.register_button.success();
+    parent.props.navigation.navigate('Home');
+    //TODO: Launch a modal saying: "Tilisi luotiin. Voit kirjautua sisään, 
+    // vahvistettuasi sähköpostisi sinulle lähettämästämme sähköpostiviestistä."
+  } else {
+    parent.refs.register_button.reset();
+    //TODO: Show error modal. E.g. 
+    //Palvelimeen ei saada tällä hetkellä yhteyttä. Tarkista Internet-yhteytesi.
+  }
 
   //Handle database stuff on Node side. Probably not required
   // TODO:
