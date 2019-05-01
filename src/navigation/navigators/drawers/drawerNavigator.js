@@ -4,7 +4,7 @@ import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'r
 import { createBundleRenderer } from 'react-navigation'
 import HomeScreen from '../../containers/home/screens/HomeScreen'
 import PaymentScreen from '../../containers/payment/screens'
-import ProfileScreen from '../../containers/profile/screens'
+import ProfileScreen from '../../containers/profile/screens/profileScreen'
 import DrawerScreen from '../../containers/drawer/screens/drawerScreen'
 
 

@@ -1,6 +1,6 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { View, Text, Easing, Animated, ScrollView } from 'react-native'
-import ProfileScreen from '../../../containers/profile/screens'
+import ProfileScreen from '../../../containers/profile/screens/profileScreen'
 import CustomerOrdersScreen from '../../../containers/profile/screens/myOrdersScreen'
 
 const transitionConfig = () => {
