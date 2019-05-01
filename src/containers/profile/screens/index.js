@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { View, StyleSheet, Text, Button, ScrollView, ActivityIndicator, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { theme } from '../../..//app/styles/global'
-import { FormInput } from 'react-native-elements'
+import { theme,  primaryGradientColors, } from '../../../app/styles/global'
+import { Input } from 'react-native-elements'
 import ButtonDefault from '../components/defaultLoginButton'
 import Toast from '../toast'
-import { WEB_URL, DB_URL } from '../../../app/config/index'
-import { HeaderBackButton } from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
+//import { HeaderBackButton } from 'react-navigation';
 
 class Profile extends Component {
 	constructor(props) {
@@ -34,7 +34,7 @@ class Profile extends Component {
 			headerTitle: <Text style={{ flex: 1, textAlign: 'center', fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 32, }}>Profiili</Text>,
 			headerRight: (<View></View>),
 			headerTintColor: '#FFF',
-			headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />),
+			//headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />),
 			headerStyle: {
 				backgroundColor: theme.color.navigation.background,
 				height: theme.navigation.height,
@@ -64,7 +64,7 @@ class Profile extends Component {
 		}
 
 
-		fetch(WEB_URL + '/customer/update/ ' + this.props.contact.id, {
+		/*fetch(WEB_URL + '/customer/update/ ' + this.props.contact.id, {
 			method: 'PUT',
 			headers: {
 				accept: 'application/json',
@@ -90,6 +90,7 @@ class Profile extends Component {
 			.catch((error) => {
 				console.error(error);
 			});
+			*/
 
 
 	}
@@ -105,6 +106,27 @@ class Profile extends Component {
 	}
 
 	render() {
+		var address = '';
+		var city = '';
+		var postcode = '';
+		var country = '';
+		var firstname = '';
+		if (this.props.shipping.address_1) {
+			address = this.props.shipping.address_1;
+		}
+		if (this.props.shipping.city) {
+			city = this.props.shipping.city;
+		}
+		if (this.props.shipping.postcode) {
+			postcode = this.props.shipping.postcode;
+		}
+		if (this.props.shipping.country) {
+			country = this.props.shipping.country;
+		}
+		if (this.props.shipping.first_name) {
+			firstname = this.props.shipping.first_name;
+		}
+		console.log("ASD")
 		return (
 			/*<View>
 				<Text>This is your profile</Text>
@@ -115,55 +137,84 @@ class Profile extends Component {
 					}
 				/>
 			</View>*/
-			<ScrollView style={{ backgroundColor: theme.color.hurja.main }}>
-				<View style={styles.container}>
-					<Toast ref='toast' position='BOTTOM' positionOffset={100} onPress={() => this.props.navigation.navigate('Home')} />
+			<LinearGradient
+				start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+				colors={primaryGradientColors}
+				style={[styles.linearGradient, theme.inputScreenContainer, { height: '100%' }]}>
 
-					<ImageBackground source={require('../../../assets/images/header_tmp2.jpg')} style={{ height: 300, width: '100%' }} resizeMode='cover'>
-						<View style={styles.innerContainer}>
-							<View style={styles.profilepicWrap}>
-								{profilePic}
+				<ScrollView >
+					<View style={styles.container}>
+
+						<Toast ref='toast' position='BOTTOM' positionOffset={100} onPress={() => this.props.navigation.navigate('Home')} />
+
+						<ImageBackground source={require('../../../assets/images/header_tmp2.jpg')} style={{ height: 300, width: '100%' }} resizeMode='cover'>
+							<View style={styles.innerContainer}>
+
+								<Text style={styles.pacifico}>- Terve {firstname}! -</Text>
 							</View>
-							<Text style={styles.pacifico}>- Terve {this.props.contact.first_name}! -</Text>
-						</View>
-					</ImageBackground>
+						</ImageBackground>
 
-					<View style={[styles.bar, styles.barBottom]}>
-						<TouchableOpacity style={[styles.barItem, styles.barseparator]} onPress={() => { this.props.navigation.navigate('Orders') }}>
-							<Text style={styles.barTop}>Omat tilaukset</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[styles.barItem]} onPress={() => this.setState({ disabled: !this.state.disabled })}>
-							<Text style={styles.barTop}>Muokkaa tietoja</Text>
-						</TouchableOpacity>
+						<View style={[styles.bar, styles.barBottom]}>
+							<TouchableOpacity style={[styles.barItem, styles.barseparator]} onPress={() => { this.props.navigation.navigate('CustomerOrders') }}>
+								<Text style={styles.barTop}>Omat tilaukset</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={[styles.barItem]} onPress={() => this.setState({ disabled: !this.state.disabled })}>
+								<Text style={styles.barTop}>Muokkaa tietoja</Text>
+							</TouchableOpacity>
+						</View>
+
+						<View style={styles.formContainer}>
+							<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Lähiosoite:</Text>
+							<View style={styles.inputContainer}>
+								<Input
+									editable={this.state.disabled}
+									placeholder={address}
+									autoCapitalize='words'
+									inputStyle={styles.input}
+									onChangeText={(address) => this.setState({ address })} underlineColorAndroid='transparent' blurOnSubmit={true} />
+							</View>
+							<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Kaupunki:</Text>
+							<View style={styles.inputContainer}>
+								<Input
+									editable={this.state.disabled}
+									placeholder={city}
+									autoCapitalize='words' inputStyle={styles.input}
+									onChangeText={(city) => this.setState({ city })}
+									underlineColorAndroid='transparent'
+									returnKeyType={'next'}
+									blurOnSubmit={true} />
+							</View>
+							<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Maa:</Text>
+							<View style={styles.inputContainer}>
+								<Input
+									editable={this.state.disabled}
+									placeholder={country}
+									autoCapitalize='none' inputStyle={styles.input}
+									onChangeText={(country) => this.setState({ country })}
+									underlineColorAndroid='transparent'
+									returnKeyType={'next'}
+									blurOnSubmit={true} />
+							</View>
+							<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Postinumero:</Text>
+							<View style={styles.inputContainer}>
+								<Input
+									editable={this.state.disabled}
+									placeholder={postcode}
+									autoCapitalize='none' inputStyle={styles.input}
+									onChangeText={(postcode) => this.setState({ postcode })}
+									underlineColorAndroid='transparent'
+									returnKeyType={'next'}
+									blurOnSubmit={true} />
+							</View>
+
+							<View style={{ width: 300, marginTop: 10 }}>
+								<ButtonDefault disabled={!this.state.isFilled} text="Päivitä tiedot" type="success" onPress={() => { this.updateUser() }} />
+							</View>
+						</View>
+
 					</View>
-
-					<View style={styles.formContainer}>
-						<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Lähiosoite:</Text>
-						<View style={styles.inputContainer}>
-							<FormInput editable={!this.state.disabled} placeholder={this.props.contact.shipping.address_1} autoCapitalize='words' inputStyle={styles.input} onChangeText={(address) => this.setState({ address })} underlineColorAndroid='transparent' blurOnSubmit={true} />
-						</View>
-						<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Kaupunki:</Text>
-						<View style={styles.inputContainer}>
-							<FormInput editable={!this.state.disabled} placeholder={this.props.contact.shipping.city} autoCapitalize='words' inputStyle={styles.input} onChangeText={(city) => this.setState({ city })} underlineColorAndroid='transparent' returnKeyType={'next'} blurOnSubmit={true} />
-						</View>
-						<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Maa:</Text>
-						<View style={styles.inputContainer}>
-							<FormInput editable={!this.state.disabled} placeholder={this.props.contact.shipping.country} autoCapitalize='none' inputStyle={styles.input} onChangeText={(country) => this.setState({ country })} underlineColorAndroid='transparent' returnKeyType={'next'} blurOnSubmit={true} />
-						</View>
-						<Text style={{ fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 23 }}>Postinumero:</Text>
-						<View style={styles.inputContainer}>
-							<FormInput editable={!this.state.disabled} placeholder={this.props.contact.shipping.postcode} autoCapitalize='none' inputStyle={styles.input} onChangeText={(postcode) => this.setState({ postcode })} underlineColorAndroid='transparent' returnKeyType={'next'} blurOnSubmit={true} />
-						</View>
-
-						<View style={{ width: 300, marginTop: 10 }}>
-
-							<ButtonDefault disabled={!this.state.isFilled} text="Päivitä tiedot" type="success" onPress={() => { this.updateUser() }} />
-						</View>
-					</View>
-
-
-				</View>
-			</ScrollView>
+				</ScrollView>
+			</LinearGradient>
 		);
 	}
 }
@@ -231,26 +282,23 @@ const styles = StyleSheet.create({
 		borderColor: '#fff'
 	},
 	inputContainer: {
-		width: '100%',
+		width: 500,
 		backgroundColor: '#fff',
 		borderRadius: 4,
 		marginVertical: 10,
 		maxWidth: 300,
 	},
+	linearGradient: {
+		flex: 1,
+	  },
 
 });
 
 let mapStateToProps = (state) => {
 	return {
-		contact: state.contact_reducer.contact,
-		social: state.contact_reducer.social,
+		contact: state.user.contact,
+		shipping: state.user.shipping
 	}
 };
 
-/*export default
-connect(
-	map_state_props,
-	map_dispach_props
-)
-*/
 export default connect(mapStateToProps)(Profile);
