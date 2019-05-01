@@ -141,7 +141,7 @@ class Login extends Component {
       console.log("Google login success!");
       var user = await logInGoogle(userInfo.serverAuthCode, userInfo.user);
       this.props.setLoginStatus(true);
-      this.props.addContact(user);
+      await this.props.addContact(user);
       this.props.navigation.navigate('Home');
 
     } catch (error) {

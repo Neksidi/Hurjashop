@@ -5,6 +5,7 @@ import productReducer from '../../containers/product/redux/productReducer';
 import categoryReducer from '../../containers/category/redux/categoryReducer';
 import userReducer from '../../containers/profile/redux/userReducer';
 import orderReducer from '../../containers/orders/redux/orderReducer';
+import paymentReducer from '../../containers/payment/redux/paymentReducer';
 
 const allReducers = combineReducers({
   home: homeReducer,
@@ -12,7 +13,8 @@ const allReducers = combineReducers({
   products: productReducer,
   categories: categoryReducer,
   user: userReducer,
-  orders: orderReducer
+  orders: orderReducer,
+  payment: paymentReducer
 });
 
 export default allReducers;

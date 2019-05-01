@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux';
 import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import ButtonDefault from '../components/defaultButton'
 import { theme , primaryGradientColors, styles} from '../../../app/styles/global'
@@ -9,9 +10,9 @@ import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 //import { WEB_URL, DB_URL } from '../redux/actiontypes'
 import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
+import { addPayment } from '../../payment/redux/paymentActions'
 
 class Review extends Component {
-    
     static navigationOptions = {
 		headerStyle: {
             backgroundColor: theme.color.navigation.background,
@@ -92,10 +93,23 @@ class Review extends Component {
         }
     }*/
 
-    handleSubmit = () => {
+    async handleSubmit() {
     //TODO
     //Tilauksen statuksen muuttaminen
-    };
+    var payment = {
+        "first_name": this.props.order.billing.first_name,
+		"last_name": this.props.order.billing.last_name,
+		"total": this.props.order.total,
+		"currency": this.props.order.currency,
+		"lang": "FI",
+		"id": this.props.order.id,
+		"order_key": this.props.order.order_key,
+    }
+    console.log("Adding payment data")
+    console.log(payment)
+    await this.props.addPayment(payment);
+    }
+
     getSum(products) {
         let sum = 0;
         products.map((item, i) => {
@@ -163,7 +177,7 @@ class Review extends Component {
                             <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
                         </View>
 
-                        <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('PaymentHighway'); }} style={reviewStyles.signupButton} />
+                        <ButtonDefault text="Maksamaan" type="success" onPress={() => { this.handleSubmit(); this.props.navigation.navigate('Payment', {'method': true}); }} style={reviewStyles.signupButton} />
                     </View>
                 </ScrollView>
             </LinearGradient>
@@ -181,4 +195,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Review);
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ addPayment }, dispatch));
+
+export default connect(mapStateToProps, mapDispatchToProps)(Review);
