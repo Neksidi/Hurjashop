@@ -51,7 +51,7 @@ class Payment extends Component {
 				//TODO: Show modal telling about server error. E.g. Contact our customer support / Report bug.
 			}
 
-
+			console.log(parsed)
 			var token = parsed.token;
 			var type = parsed.type;
 			var partialPan = parsed.partial_pan;
