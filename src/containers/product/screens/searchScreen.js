@@ -16,6 +16,7 @@ class Search extends Component {
 		this.state = {
 			searchText: '',
 			searchResults: [],
+			searchDone: false,
 		}
 	}
 
@@ -44,12 +45,8 @@ class Search extends Component {
 	}
 
 	async search() {
-		var results = await searchForProduct(this.state.searchText)
-		console.log("Results in searchScreen");
-		console.log(results);
-		this.setState({searchResults: results})
-		console.log("Search state");
-		console.log(this.state.searchResults)
+		var results = await searchForProduct(this.state.searchText);
+		this.setState({searchResults: results, searchDone: true});
 	}
 
 	formatRow = (data, numColumns) => {
@@ -139,8 +136,13 @@ class Search extends Component {
 			<View/>
 		);
 
-		let headerResults = this.state.searchResults.length ? (
-			<Text style={app_style.front_item_title}>Haun tulokset:</Text>
+		let headerResults = this.state.searchResults.length || this.state.searchDone ? (
+			this.state.searchResults.length ? (
+				<Text style={app_style.front_item_title}>Haun tulokset:</Text>
+			) : (
+				<Text style={app_style.front_item_title}>Haku ei tuottanut tuloksia</Text>
+			)
+			
 		) : (
 			<View/>
 		);
