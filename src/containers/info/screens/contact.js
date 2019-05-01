@@ -17,7 +17,7 @@ class Index extends Component {
             email: this.props.logged ? this.props.contact.email : '',
             subject: '',
             comment: '',
-            response: null,
+           // response: null,
             isFilled: false,
             isSending: false,
             selected: 'productFeedback',//DEFAULT
@@ -70,7 +70,7 @@ class Index extends Component {
             },
             body: JSON.stringify(body)
         })
-            .then((response) => response.json())
+            /*.then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
                     response: responseJson,
@@ -83,7 +83,7 @@ class Index extends Component {
             })
             .catch((error) => {
                 console.error(error);
-            });
+            });*/
     }
 
     _renderContactInfoInput() {
