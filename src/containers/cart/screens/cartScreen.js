@@ -125,7 +125,6 @@ class Cart extends Component {
 
     return (
       <View style ={{flex: 1,flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-
         <TouchableOpacity
           disabled={decreaseDisabled}
           style={[btn.default, {height:20, width:20, justifyContent: 'center', alignItems: 'center'}]}
@@ -137,7 +136,7 @@ class Cart extends Component {
           <FeatherIcon name='minus' size={15} color='#292929' />
         </TouchableOpacity>
 
-        <Text style={{fontWeight: 'bold', fontSize: 14, color: '#292929'}}>{getQuantity(this.props, item.id)}</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14, color: 'black', justifyContent: 'center', alignItems: 'center'}}>{getQuantity(this.props, item.id)}</Text>
 
         <TouchableOpacity
           disabled={increaseDisabled}
@@ -205,8 +204,11 @@ class Cart extends Component {
                 key={item.id}
                 title={item.name}
                 subtitle={priceText}
+                titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                subtitleStyle={{ color: 'black' }}
                 leftAvatar={{ source: { uri: item.images[0].src } }}
                 rightElement={this.renderRightElement(item)}
+                containerStyle={{backgroundColor: '#9be9ff'}}
               />
             )
           })
@@ -246,7 +248,7 @@ class Cart extends Component {
                   </View>
                 </View>
                 <View style={{backgroundColor: "transparent"}}>
-                    {cartContainer}
+                  {cartContainer}
                 </View>
     
             </ScrollView>

@@ -116,7 +116,7 @@ class Review extends Component {
             sum += parseFloat(item.total);
             sum += parseFloat(item.total_tax);
         })
-        return sum;
+        return sum.toFixed(2);
     }
 
     render() {

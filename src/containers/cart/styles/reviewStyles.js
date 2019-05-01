@@ -6,6 +6,9 @@ export const reviewStyles = StyleSheet.create({
         marginTop: 0,
         padding: 10,
     },
+    list: {
+        backgroundColor: '#9BE9FF',
+    },
     item: {
         height: 'auto',
         elevation: 2,
@@ -54,4 +57,28 @@ export const reviewStyles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'skyblue'
     },
+    reviewItem: {
+        height: 75,
+        elevation: 0,
+        width: '100%',
+        borderRadius: 0,
+        marginBottom: 10,
+        paddingVertical: 1,
+        paddingLeft: 8,
+        position: 'relative',
+        shadowColor: '#000000',
+        backgroundColor: 'transparent',
+        flex: 1,
+        flexDirection: 'row',
+    },
+    reviewImage: {
+      width: 70,
+      height: 70,
+      paddingHorizontal: 20,
+      alignSelf: 'flex-start',
+    },
+    reviewItemName: {
+      fontSize: 20,
+      marginHorizontal: 5,
+    },  
 });
