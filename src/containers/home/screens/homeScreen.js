@@ -274,6 +274,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts, setCategories, getCategories, /*setLoginStatus*/ }, dispatch));		//TODO: Remove setLoginStatus Debug
+	bindActionCreators({ setProducts, setCategories, getCategories }, dispatch));
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
