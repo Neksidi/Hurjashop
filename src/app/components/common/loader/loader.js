@@ -3,7 +3,11 @@ import { View, ActivityIndicator } from 'react-native'
 import { theme } from '../../../styles/global'
 import PropTypes from 'prop-types';
 
-export default class Loader extends PureComponent {
+class Loader extends PureComponent {
+
+  constructor(props) {
+    super(props);
+  }
 
   static propTypes = {
     color: PropTypes.string,
@@ -26,3 +30,4 @@ export default class Loader extends PureComponent {
     );
   }
 }
+export { Loader }

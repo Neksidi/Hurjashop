@@ -4,7 +4,7 @@ import { View, Text, Button, Dimensions, ScrollView, Image, ImageBackground, Fla
 import { bindActionCreators } from 'redux';
 import { getProductsByCategory } from '../../product/controllers/requests'
 import { setCategoryProducts } from '../../product/redux/productActions'
-import Loader from '../../../app/components/common/loader/loader';
+import { Loader } from '../../../app/components/common/loader/loader';
 import { theme, grid, app_style, styles, primaryGradientColors,  boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import { withTheme } from 'react-native-elements';

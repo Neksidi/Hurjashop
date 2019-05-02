@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import Loader from '../../../app/components/common/loader/loader'
+import { Loader } from '../../../app/components/common/loader/loader'
 import ColorPicker from '../../../app/components/list/attributes/color/container'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { getProducts } from '../controllers/requests'

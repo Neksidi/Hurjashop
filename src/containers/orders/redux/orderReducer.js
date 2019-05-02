@@ -15,6 +15,7 @@ const INITIAL_STATE = {
       case SET_ORDERS: {
         state.all = action.payload;
         console.log("why you?")
+        console.log(state.all)
         return {...state};
       }
       default:

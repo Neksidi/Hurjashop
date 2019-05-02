@@ -7,7 +7,7 @@ import { theme, styles, primaryGradientColors, primaryGradientColorsButton, app_
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { CheckBox } from 'react-native-elements'
 import { POSTI_URL } from '../../../app/config'
-import Loader from '../components/loader/loader'
+import { Loader } from '../components/loader/loader'
 import { getPickUps } from '../controllers/postiController'
 import { methodsStyles } from '../styles/methods' 
 import LinearGradient from 'react-native-linear-gradient';

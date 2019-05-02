@@ -17,15 +17,25 @@ async function createOrder(order) {
   const response = await Api.post(WEB_URL + '/orders', order, false);
   if(!response.error) {
       console.log(response);
-      return response.body;
+      return response;
   } else {
       //TODO: Show error modal?
   }
-
 }
 
+async function getOrders(userId) {
+  console.log("Getting orders for:" + userId)
+  const response = await Api.get(WEB_URL + '/orders/' + userId, false);
+  if(!response.error) {
+      console.log(response);
+      return response;
+  } else {
+      //TODO: Show error modal?
+  }
+}
 
 export {
   updateOrderStatus,
-  createOrder
+  createOrder,
+  getOrders
 }

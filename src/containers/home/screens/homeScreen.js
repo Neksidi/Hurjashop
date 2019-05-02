@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight } from 'react-native';
 import { bindActionCreators } from 'redux';
 
-import Loader from '../../../app/components/common/loader/loader';
+import { Loader } from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import Item from '../../../app/components/list/horizontal/item';
 import { getCategories } from '../../category/controller/requests'

@@ -1,7 +1,8 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { View, Text, Easing, Animated, ScrollView } from 'react-native'
 import ProfileScreen from '../../../containers/profile/screens/profileScreen'
-import CustomerOrdersScreen from '../../../containers/profile/screens/myOrdersScreen'
+import CustomerOrdersScreen from '../../../containers/orders/screens/myOrdersScreen'
+import OrderScreen from '../../../containers/orders/screens/orderScreen'
 
 const transitionConfig = () => {
     return {
@@ -29,7 +30,8 @@ const transitionConfig = () => {
 
 const MainNavigator = createStackNavigator({
   Profile: { screen: ProfileScreen },
-  CustomerOrders: { screen: CustomerOrdersScreen }
+  CustomerOrders: { screen: CustomerOrdersScreen },
+  Order: { screen: OrderScreen }
 }, {
     transitionConfig,
     initialRouteName: 'Profile',
