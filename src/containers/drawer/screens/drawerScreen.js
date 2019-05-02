@@ -15,7 +15,7 @@ class DrawerScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: ['Paidat', 'Lippikset', 'Mäkiautot']      // FOR DEBUG ONLY!
+      categories: ['Paidat', 'Lippikset', 'Mäkiautot']     
     }
   };
 
@@ -33,10 +33,7 @@ class DrawerScreen extends Component {
 
   render() {
     return (
-      /*<TouchableWithoutFeedback
-        onPress={() => alert("Close Drawer")}
-        style={{ width: "100%", backgroundColor: "blue"}}
-      >*/
+     
       <View style={{ flex: 1, backgroundColor: theme.color.hurja.main }}>
         <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{ flex: 1, justifyContent: 'space-between' }}>
           <View style={{ width: '100%' }}>
@@ -83,7 +80,7 @@ class DrawerScreen extends Component {
           </View>
         </ImageBackground>
       </View>
-      //</View></TouchableWithoutFeedback>
+    
 
     );
 

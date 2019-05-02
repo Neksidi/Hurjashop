@@ -8,26 +8,6 @@ let {height, width} = Dimensions.get('window');
 
 class Preview extends Component {
 
-  /*KÄYTTÖ:
-  - Komponentin tagien sisään tulee komponentti jolla avataan overlay
-  - Jos halutaan kuva jonka päällä on ikoni, josta overlay aukeaa tulee asettaa propsi openWithIcon={true}
-    - ikonin voi päättää FontAwesome ikoneista sen nimellä käyttäen propsia icon=' ikonin nimi ' stringinä. OLETUS: search.plus
-    - ikonin värin voi päättää propsilla iconColor esim. iconColor={'#fff'}, joka on myös oletuksena
-    - ikonin koon voi valita propsilla iconSize esim. iconSize={25} OLETUS: 25
-  - Sisältö on tällä hetkellä mahdollista olla vain kuva(Image) ja sen voi asettaa propsilla contentUrl esim contentUrl={https://kivi.jpg}
-    - kuvan kokoa voi muokata suhteessa laitteen kokoon:
-      - Korkeus on prosenttuaalinen osuus laitteen korkeudesta
-        - Käytetään propsia previewHeight esim. previewHeight={0.6} OLETUS 0.6 eli 60%
-      - Leveys on prosenttuaalinen osuus laitteen leveydestä
-        - Käytetään propsia previewWidth esim previewWidth={0.8} OLETUS 0.8 eli 80%
-  - Komponentille voi määritellä animaatiosiirtymän käyttämällä propsia animationType:
-    - Käytettävissä olevat animaatiot:
-      - fade
-      - slide
-      - none OLETUS
-  - Komponentin voi asettaa aukinaiseksi alussa propsilla visible={true}
-  - Komponentin taustan voi asettaa läpinäkyväksi propsilla transparent={true} OLETUS
-  */
 
   constructor(props) {
     super(props);

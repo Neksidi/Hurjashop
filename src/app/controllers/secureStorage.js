@@ -54,7 +54,7 @@ async function getSessionUser() {
 async function setCardToken(token) {
   await RNSecureStorage.set("cardToken", token, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
   })
@@ -63,7 +63,7 @@ async function setCardToken(token) {
 async function setCardType(type) {
   await RNSecureStorage.set("cardType", type, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
   })
@@ -72,7 +72,7 @@ async function setCardType(type) {
 async function setCardPartial(partial) {
   await RNSecureStorage.set("cardPartial", partial, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
   })
@@ -81,7 +81,7 @@ async function setCardPartial(partial) {
 async function setSessionId(id) {
     await RNSecureStorage.set("sessionId", id, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
     });
@@ -90,7 +90,7 @@ async function setSessionId(id) {
 async function setSessionUser(username) {
     await RNSecureStorage.set("sessionUser", username, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
     })
@@ -99,7 +99,7 @@ async function setSessionUser(username) {
 async function removeCardToken() {
   await RNSecureStorage.remove("cardToken")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
   })
@@ -108,7 +108,7 @@ async function removeCardToken() {
 async function removeCardType() {
   await RNSecureStorage.remove("cardType")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);    
   }, (err) => {
     console.log(err);
   })
@@ -117,7 +117,7 @@ async function removeCardType() {
 async function removeCardPartial() {
   await RNSecureStorage.remove("cardPartial")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);    
   }, (err) => {
     console.log(err);
   })
@@ -126,7 +126,7 @@ async function removeCardPartial() {
 async function removeSessionId() {
     await RNSecureStorage.remove("sessionId")
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
     });
@@ -135,7 +135,7 @@ async function removeSessionId() {
 async function removeSessionUser() {
     await RNSecureStorage.remove("sessionUser")
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);     
     }, (err) => {
       console.log(err);
     })

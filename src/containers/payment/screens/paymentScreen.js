@@ -12,7 +12,6 @@ class Payment extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			//TODO: change to true when loading function is working
 			isLoading: true,
 			data: null,
 			isPaid: false,
@@ -44,11 +43,8 @@ class Payment extends Component {
 			if(parsed.status === 201) {
 				
 			} else if(parsed.status === 402) {
-				//TODO: Show modal telling about payment problems. E.g. Contact your bank.
 			} else if(parsed.status === 500) {
-				//TODO: Show modal telling about server error. E.g. Contact our customer support.
 			} else {
-				//TODO: Show modal telling about server error. E.g. Contact our customer support / Report bug.
 			}
 
 			console.log(parsed)
@@ -146,7 +142,6 @@ class Payment extends Component {
 				)
 			} else if (this.state.paid && !this.state.orderUpdated) {
 				console.log("Maksettu, loppu")
-				//this.updateStatus("processing")	Update order status
 				return (
 					<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />
 				)

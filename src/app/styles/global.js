@@ -456,7 +456,6 @@ export const styles = StyleSheet.create({
     zIndex: 4,
     alignSelf: 'center',
     top: -40,
-    //elevation: 99,
   },
   logoSmall: {
     width: 50,
@@ -464,7 +463,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 4,
     alignSelf: 'center',
-    //elevation: 99,
   },
   sliderContainer: {
     flex: 1,

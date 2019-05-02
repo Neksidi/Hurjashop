@@ -6,16 +6,12 @@ import { Input } from 'react-native-elements'
 import ButtonDefault from '../components/defaultLoginButton'
 import Toast from '../toast'
 import LinearGradient from 'react-native-linear-gradient';
-//import { HeaderBackButton } from 'react-navigation';
 
 class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			//TODO: change to true when loading function is working
-			/*isLoading: false,
-			data: null,
-			categories: null*/
+
 			disabled: true,
 			country: '',
 			address: '',
@@ -34,7 +30,6 @@ class Profile extends Component {
 			headerTitle: <Text style={{ flex: 1, textAlign: 'center', fontFamily: 'BarlowCondensed-Medium', color: '#fff', fontSize: 32, }}>Profiili</Text>,
 			headerRight: (<View></View>),
 			headerTintColor: '#FFF',
-			//headerLeft: (<HeaderBackButton onPress={() => { navigation.navigate('Home') }} />),
 			headerStyle: {
 				backgroundColor: theme.color.navigation.background,
 				height: theme.navigation.height,
@@ -64,33 +59,7 @@ class Profile extends Component {
 		}
 
 
-		/*fetch(WEB_URL + '/customer/update/ ' + this.props.contact.id, {
-			method: 'PUT',
-			headers: {
-				accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(newData)
-		})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					response: responseJson,
-				}, function () {
-					if (responseJson != 400) {
-						this.props.contact.shipping.address_1 = this.state.address;
-						this.props.contact.shipping.city = this.state.city;
-						this.props.contact.shipping.postcode = this.state.postcode;
-						this.props.contact.shipping.country = this.state.country;
-						this.setState({ isUpdating: false })
-						this.refs.toast.show('Käyttäjän tiedot päivitetty');
-					}
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-			*/
+	
 
 
 	}
@@ -128,15 +97,8 @@ class Profile extends Component {
 		}
 		console.log("ASD")
 		return (
-			/*<View>
-				<Text>This is your profile</Text>
-				<Button
-					title="Tehtyihin tilauksiin"
-					onPress={() =>
-						this.props.navigation.navigate('CustomerOrders')
-					}
-				/>
-			</View>*/
+		
+			
 			<LinearGradient
 				start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
 				colors={primaryGradientColors}

@@ -6,13 +6,10 @@ import Navigation from './navigation'
 import Reducers from './app/redux/reducers'
 import NavigationService from './navigation/navigators/NavigationService';
 
-//import fetchMiddleware from './redux/middleware/fetchMiddleware'
 
 const store = createStore(Reducers);
 
-/**
- * Redux related comments like store can be enabled when redux is implemented!
- */
+
 
 export default class App extends Component {
   render() {

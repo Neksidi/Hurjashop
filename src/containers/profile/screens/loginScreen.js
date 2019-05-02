@@ -1,21 +1,16 @@
 //REDUX
 import { connect } from 'react-redux'
-//import { AUTH_URL, WEB_URL, DB_URL } from '../../redux/actiontypes'
-//import { addContact, isLoggedIn } from '../../redux/actioncreators';
+
 //REACT
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, ImageBackground, Keyboard, ScrollView } from 'react-native';
-//Custom components
-//import { CustomBackButton } from '../../navigation/options/Items'
+
 import Separator from '../components/separator'
-//import Loader from '../../components/common/Loader'
 import ButtonDefault from '../components/defaultLoginButton'
 import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 //Vector icons
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
-//Ext methods
-//Styles
-//import { theme } from '../../../app/styles/global'
+
 import { styles } from '../styles/loginStyles'
 import { validate, handleLogin, fetchUser, registerFb } from '../controllers/loginController'
 import { setLoginStatus, addContact } from '../redux/userActions'
@@ -64,7 +59,6 @@ class Login extends Component {
     }
   };
 
-  //Start login button animation onsubmitediting
   _handleLoginOnSubmitEditing(){
     if(this.state.emailValidation && this.state.password.length > 0){
       this.refs.login_button.animateIn();
@@ -95,7 +89,6 @@ class Login extends Component {
       await this.afterFbLoginComplete(token);
     }
     else {
-      //console.log('Login incomplete');
     }
   }
 
@@ -104,28 +97,6 @@ class Login extends Component {
 
     await logInFb(token);
 
-    /*const response = await fetch(
-    `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,picture.type(large),cover&access_token=${token}`);
-    
-    let result = await response.json();
-    console.log("profile data")
-    console.log(result)
-
-      // use this result as per the requirement
-      //this.props.isLogged(true);      // setLoginStatus
-      //this.props.social.facebook.logged = true;
-      //this.props.social.facebook.profilePictureURL = result.picture.data.url;
-      let data = {
-        id: result.id,
-        email: result.email,
-        first_name: result.first_name,
-        last_name: result.last_name,
-      }
-      //this.props.addInfo(data); // addContact
-      console.log(data)
-      console.log("Calling registerFb")
-      registerFb(data);
-      */
       this.props.navigation.navigate('Home');
   };
 
@@ -305,11 +276,7 @@ class Login extends Component {
                 color={GoogleSigninButton.Color.Dark}
                 onPress={this.googleSignIn}
                 disabled={this.state.isSigninInProgress} />
-                /*
-              <View style={{ width: '100%', maxWidth: 400 }}>
-                <ButtonDefault icon='google' text='Google' type="facebook" onPress={() => { this.googleLogin(); }} disabled={this.state.isLoggingIn}/>
-              </View>
-              */}
+                }
 
               <View style={{ marginTop: 10, maxWidth: 400, alignSelf: 'center'}}>
                 <Text onPress={() => { this.props.navigation.navigate('Register') }} style={{ color: '#fff' }}>Puuttuuko sinulta HurjaShop tili?</Text>
@@ -324,16 +291,7 @@ class Login extends Component {
 }
 
 
-/*
-const map_dispatch_props = (dispatch) => ({
-  addInfo: (info) => {
-    dispatch(addContact(info));
-  },
-  isLogged: (logged) => {
-    dispatch(isLoggedIn(logged))
-  }
-});
-*/
+
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({ setLoginStatus, addContact }, dispatch));

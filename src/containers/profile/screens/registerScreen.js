@@ -85,7 +85,7 @@ export default class Register extends Component {
             <View style={styles.formContainer}>
 
               <Text style={styles.formTitle}>Rekisteröidy</Text>
-              {/*this.state.correctCredentials == false && this.state.displayErrorMessage && invalidCredentials*/}
+              {}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Etunimi</Text>
                 <View style={styles.textInputContainer}>
@@ -184,7 +184,6 @@ export default class Register extends Component {
                     onSubmitEditing={() => {
                       Keyboard.dismiss();
                       validate('password_confirm', this);
-                      //this._handleLoginOnSubmitEditing();
                     }}
                   />
                   <TouchableOpacity style={styles.visibilityButton} onPress={() => this.setState({ visibleConfirmation: !this.state.visibleConfirmation })}>

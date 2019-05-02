@@ -28,37 +28,7 @@ class Order extends Component {
 		),
 	};
 
-/*
-    authenticate() {
-        console.log('retrieve order')
-        try {
-            console.log('Order - before storage')
-            AsyncStorage.getItem('user').then((user) => {
-                user = JSON.parse(user)
-                console.log('Order - after storage')
-                if (user.auth == null) {
-                    console.log('token null')
-                    this.setState({ forceLogin: true })
-                } else {
-                    console.log(user.auth)
-                    console.log('token found orderiino')
-                    this.setState({
-                        auth: user.auth,
-                    })
-                }
-            })
 
-        } catch (error) {
-            console.log(error)
-        }
-	}
-	*/
-
-    /*componentDidUpdate(prevProps, prevState) {
-        if (prevState.auth === null && this.state.auth !== null) {
-            this.createOrder()
-        }
-    }*/
     async componentDidMount() {
         Animated.timing(
             this.state.fadeAnim,
@@ -77,7 +47,7 @@ class Order extends Component {
 
     async formOrder() {
             var order = {
-                    "customer_id:": 105, //this.props.contact.id,
+                    "customer_id:": 105, 
                     "payment_method": this.props.methods.payment_method,
                     "payment_method_title": this.props.methods.payment_method_title,
                     "set_paid": false,
@@ -121,56 +91,7 @@ class Order extends Component {
             this.props.navigation.navigate('OrderReview')
     }
     
-    /*
-        componentWillUnmount() {
-            this.props.navigation.pop()
-        }*/
-
-        /*
-    saveToDatabase(order) {
-        return fetch(DB_URL + "/order/add", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                auth: this.state.auth
-            },
-            body: JSON.stringify(
-                {
-                    "customer": this.props.contact.id,
-                    "id": order.id,
-                }
-            )
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(WEB_URL + "/products");
-                console.log("UUSI TILAUS LÄHETETTY")
-                console.log(responseJson)
-                this.setState({
-                    database: responseJson,
-                }, function () {
-                    console.log(responseJson.status)
-                    if (responseJson.status === 200) {
-                        this.setState({
-                            isLoading: false,
-                        })
-
-                        //Varoitus?: return ja pop hax
-                        console.log("Jaa")
-                        this.props.navigation.navigate('Review')
-                    } else {
-                        console.log("Virhe tilauksen tallennuksessa")
-                    }
-
-                });
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-    */
+    
 
     render() {
         

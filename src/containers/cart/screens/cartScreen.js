@@ -8,7 +8,6 @@ import { getProducts } from '../../product/controllers/requests'
 import { setProducts } from '../../product/redux/productActions'
 import Gallery from '../../../app/components/common/images/gallery'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-//import { Loader } from '../../../app/components/common/loader/loader'
 import cartItem from '../components/cartItem'
 import { getQuantity } from '../controllers/helper'
 import { emptyCart, parseCart, increaseCartQuantity, decreaseCartQuantity, removeFromCart } from '../redux/cartActions'
@@ -19,7 +18,6 @@ import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 
-//import Price from '../utility/Price'
 let { width, height } = Dimensions.get('screen');
 
 
@@ -46,7 +44,6 @@ class Cart extends Component {
     this.setState({item: this.props.navigation.getParam('item', null)});
   }
 
-  //Kesken
   _deleteItem(item) {
     this.props.removeItem(item);
   }
@@ -347,24 +344,7 @@ const cartStyle = StyleSheet.create({
     alignItems: 'flex-end'
   },
 });
-/*
-const map_state_props = (state) => {
-  return {
-    cart: state.cart_reducer.cart,
-    products: state.products_reducer.products,
-    contact: state.contact_reducer.contact,
-    logged: state.contact_reducer.isLogged,
-  }
-};
-const map_dispach_props = (dispatch) => ({
-  emptyCartItems: () => {
-    dispatch(emptyCart());
-  },
-  removeItem: (item) => {
-    dispatch(removeItemFromCart(item));
-  }
-});
-*/
+
 
 const mapStateToProps = (state) => {
 	const cart = state.cart.cart

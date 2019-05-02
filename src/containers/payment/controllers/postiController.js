@@ -7,7 +7,6 @@ async function getPickUps(postcode) {
         console.log(response);
         return response;
     } else {
-        //TODO: Show error modal?
     }
 
 }

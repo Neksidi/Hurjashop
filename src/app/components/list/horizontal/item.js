@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Dimensions} from 'react-native'
 import { app_style, carousel_styles } from '../../../styles/global'
-//import Platform from '../../../utility/platform'
 
-//let {width, height} = Dimensions.get('screen');
-
-//let oWidth = Platform.isPortrait() ? width : height;
 
 class Item extends Component {
 

@@ -7,7 +7,6 @@ import LoginStack from '../navigators/stacks/loginStack'
 import infoStack from '../navigators/stacks/infoStack'
 import DrawerScreen from '../../containers/drawer/screens/drawerScreen' 
 import CustomHeader from '../../app/components/header/customHeader'
-// 
 
 const MainNavigator = createDrawerNavigator({
 	Tab: { screen: Tab },
@@ -22,14 +21,6 @@ const MainNavigator = createDrawerNavigator({
 	InitialRouteName: 'Tab'
 });
 
-/*
-const StackNavigator = createStackNavigator({
-    //important: key and screen name (i.e. DrawerNavigator) should be same while using the drawer navigator inside stack navigator.
-    DrawerNavigator:{
-        screen: DrawerNavigator
-    }
-});
-*/
 
 
 

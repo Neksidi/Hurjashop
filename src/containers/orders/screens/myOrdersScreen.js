@@ -12,7 +12,6 @@ class CustomerOrders extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			//TODO: change to true when loading function is working
 			isLoading: true,
 			data: null,
 		};

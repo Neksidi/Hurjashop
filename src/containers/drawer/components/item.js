@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, } from 'react-native';
-// Vendor
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-// Props
 import PropTypes from 'prop-types'
 
 export default class MyComponent extends Component {

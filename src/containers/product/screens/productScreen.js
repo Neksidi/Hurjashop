@@ -70,16 +70,7 @@ class Product extends Component {
       this.setState({count: 0});
     }
 
-    /*
-    if(this.state.count == null) {
-      if(this.state.item.stock_quantity == null || 
-        this.state.item.stock_quantity == 0) {
-          this.setState({count: 0});  //TODO: Move this out of render logic!!!!
-      } else {
-        this.setState({count: 1});  //TODO: Move this out of render logic!!!!
-      }
-    }
-    */
+
   }
 
   renderItem(item){

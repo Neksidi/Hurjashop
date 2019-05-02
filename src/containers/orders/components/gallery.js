@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {TouchableWithoutFeedback, TouchableOpacity, Text, View, Modal, StyleSheet } from 'react-native'
 import Gallery from 'react-native-image-gallery';
-// Vendor components
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 
 export default class Index extends Component {

@@ -6,7 +6,6 @@ import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import { theme } from '../../../app/styles/global'
 import Gallery from '../../../app/components/common/images/gallery'
-//import Price from '../../../utility/Price'
 
 import { removeItemFromCart, increaseCartQuantity, increaseCartQuantityWithVariations, decreaseCartQuantity, decreaseCartQuantityWithVariations } from '../redux/cartActions'
 
@@ -51,7 +50,6 @@ class cartItem extends Component {
       this.props.parentFlatList._onDelete(this.props.data);
   }
 
-  //KOVAKOODATTU VÄRI JA KOKO
   getVariations(product_id, variation_id){
     let ret = [];
     for(i in this.props.variations){

@@ -7,7 +7,6 @@ async function updateOrderStatus(id, body) {
     console.log(response);
     return response;
   } else {
-    //TODO: Show error modal?
   }
 }
  
@@ -19,7 +18,6 @@ async function createOrder(order) {
       console.log(response);
       return response.body;
   } else {
-      //TODO: Show error modal?
   }
 }
 
@@ -30,7 +28,6 @@ async function getOrders(userId) {
       console.log(response);
       return response;
   } else {
-      //TODO: Show error modal?
   }
 }
 

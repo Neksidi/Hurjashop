@@ -6,7 +6,6 @@ class Cart extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			//TODO: change to true when loading function is working
 			isLoading: false,
 			data: null,
 			categories: null
@@ -23,8 +22,4 @@ class Cart extends Component {
 }
 
 export default 
-/*connect(
-	map_state_props,
-	map_dispach_props
-)
-*/(Cart);
+(Cart);

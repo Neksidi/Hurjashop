@@ -6,7 +6,7 @@ async function getProducts(props) {
   console.log(response)
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      return;  
     }
     else {
       props.setProducts(response);
@@ -19,7 +19,7 @@ async function getProduct(id) {
 
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      return;  
     }
     else {
       return response;
@@ -32,7 +32,7 @@ async function getProductsByCategory(props, id) {
 
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      return;  
     }
     else {
       props.setCategoryProducts(response);

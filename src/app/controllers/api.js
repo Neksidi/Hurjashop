@@ -10,11 +10,7 @@ class Api {
         var id = await getSessionId();
         var user = await getSessionUser();
       }
-        //Check if session exists in phone storage
-        //Then set values if found
-        //console.log("header start")
-        //console.log(user)
-        //console.log(id)
+       
       
       if(requiresAuth && id && user) {
         return {
@@ -53,7 +49,6 @@ class Api {
     static async xhr(route, params, method, requiresAuth) {
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
       options.headers = await Api.headers(requiresAuth)
-      //options.credentials = 'same-origin'
       console.log(options)
       console.log(route)
       return await fetch(route, options)

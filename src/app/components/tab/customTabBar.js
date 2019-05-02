@@ -26,24 +26,10 @@ const TabBar = props => {
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? activeTintColor : inactiveTintColor;
-        //console.log(route)        DEBUG route
         return (
         <CustomTabButton key={routeIndex} route={route.routeName}/>
-          /*<TouchableOpacity
-            key={routeIndex}
-            style={S.tabButton}
-            onPress={() => {
-              onTabPress({ route });
-            }}
-            onLongPress={() => {
-              onTabLongPress({ route });
-            }}
-            accessibilityLabel={getAccessibilityLabel({ route })}
-          >
-            {renderIcon({ route, focused: isRouteActive, tintColor })}
-
-            {<Text>{getLabelText({ route })}</Text>}
-          </TouchableOpacity>*/
+     
+      
         );
       })}
     </View>

@@ -36,7 +36,6 @@ class Methods extends Component {
             postiBools: [],
             postcode: null,
 		};
-		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
     }
     
@@ -123,7 +122,6 @@ class Methods extends Component {
 	};
 	
     async postcodeHandler() {
-        //TODO syötteen validointi
 
         this.setState({ isLoadingPoints: true })
         console.log("Haetaan: " + this.state.postcode)

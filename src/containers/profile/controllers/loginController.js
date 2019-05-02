@@ -8,7 +8,6 @@ import {
 function validate(type, parent) {
     switch (type) {
       case 'email': {
-        //console.log('VALIDOI EMAIL');
         const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
         if(emailReg.test(parent.state.email) === true){
@@ -17,32 +16,27 @@ function validate(type, parent) {
           return true;
         }else {
           console.log("false email")
-          //parent.setState({emailValidation: false});
           return false;
         }
       }
       case 'password': {
         console.log('VALIDOI SALIS');
-        if(parent.state.password.length > 0){                 //TODO: Change this to required minimum length
-          //parent.setState({passwordValidation: true});
+        if(parent.state.password.length > 0){                
           console.log("true password")
           return true;
         }else {
           console.log("false password")
-          //parent.setState({passwordValidation: false});
           return false;
         }
       }
       case 'password_confirm': {
         console.log('VERTAA SALASANAT');
         if(parent.state.password === parent.state.password_confirm){
-          //parent.setState({password_confirmValidation: true});
 
           console.log("true compare")
           return true;
         }else {
           console.log("false compare")
-          //parent.setState({password_confirmValidation: false});
           return false;
         }
       }
@@ -50,11 +44,9 @@ function validate(type, parent) {
         const firstnameReg = /^[a-zA-Z]+$/;
         if (firstnameReg.test(parent.state.firstname) === true){
           console.log("true first")
-          //parent.setState({first_nameValidation: true});
           return true;
         } else {
           console.log("false first")
-          //parent.setState({first_nameValidation: false});
           return false;
         }
       }
@@ -62,11 +54,9 @@ function validate(type, parent) {
         const lastnameReg = /^[a-zA-Z]+$/;
         if (lastnameReg.test(parent.state.lastname) === true){
           console.log("true last")
-          //parent.setState({last_nameValidation: true});
           return true;
         } else {
           console.log("false first")
-          //parent.setState({last_nameValidation: false});
           return false;
         }
       }
@@ -111,22 +101,13 @@ async function register(parent) {
   if(!response.err) {
     parent.refs.register_button.success();
     parent.props.navigation.navigate('Home');
-    //TODO: Launch a modal saying: "Tilisi luotiin. Voit kirjautua sisään, 
-    // vahvistettuasi sähköpostisi sinulle lähettämästämme sähköpostiviestistä."
+
   } else {
     parent.refs.register_button.reset();
-    //TODO: Show error modal. E.g. 
-    //Palvelimeen ei saada tällä hetkellä yhteyttä. Tarkista Internet-yhteytesi.
+    
   }
 
-  //Handle database stuff on Node side. Probably not required
-  // TODO:
-  //If register was success call RegisterSuccess Screen
-  //E.g. this.refs.register_button.success();
-  // this.props.navigation.pop();
-  // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
-  //If register failed show custom error modal and return to register screen.
-  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
+  
 }
 
 async function registerFb(user) {
@@ -143,19 +124,11 @@ async function registerFb(user) {
 
   console.log(response)
 
-  // TODO:
-  //If register was success call RegisterSuccess Screen
-  //E.g. this.refs.register_button.success();
-  // this.props.navigation.pop();
-  // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
-  //If register failed show custom error modal and return to register screen.
-  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
+  
 }
 
 async function logInFb(access_token) {
-  //FB.login(function(response) {
-    // Original FB.login code
-  //}, { auth_type: 'reauthorize' })
+ 
 
   console.log("Connecting to own Fb login");
 
@@ -181,19 +154,16 @@ async function logInGoogle(code, user) {
 
   console.log(response);
   if(!response.error) {
-    //Add contact & save session
     var id = response.session.sessionId;
     var username = response.session.username;
     console.log("Saving " + id + " and " + username)
     
-    //Save session
     
     setSessionId(id);
     setSessionUser(username);
     return response.user;
   }
   else {
-    //TODO: Show error modal.
   }
   console.log("own google login success?");
 }
@@ -202,8 +172,7 @@ async function logInGoogle(code, user) {
 async function handleLogin(parent) {
     console.log('Logging in');
     console.log(parent)
-    //Keyboard.dismiss();                           loginScreeniin?
-    //this.setState({ isLoggingIn: true })          loginScreeniin?
+ 
 
     const body = {
         "username": parent.state.email,
@@ -220,7 +189,6 @@ async function handleLogin(parent) {
       var username = response.username;
       console.log("Saving " + id + " and " + username)
       
-      //Save session
       
       setSessionId(id);
       setSessionUser(username);
@@ -251,9 +219,8 @@ async function fetchUser(username, parent) {
             shipping: response.shipping,
         }
         parent.props.addContact(contactData)
-        parent.props.setLoginStatus(true)     // Todo: Possibly replace with setContactStatus?
+        parent.props.setLoginStatus(true)   
     } else {
-      // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
       console.log("Error fetching user")
     }
     
@@ -272,9 +239,7 @@ async function logIn(props){
 }
 
 function logOutPopup(props){
-  /*
-  * TODO: handle logout with back-end
-  */
+ 
   console.log("Logging out")
   props.navigation.closeDrawer();
     Alert.alert(
@@ -297,11 +262,9 @@ async function logOut(props) {
     props.setLoginStatus(false);
     removeSessionId();
     removeSessionUser();
-    // TODO: clear contact data
   }
   else {
     console.log("Logout error")
-    // TODO: show error modal: (Esim. "Ulos kirjautuminen epäonnistui")
   }
 }
 
@@ -310,10 +273,7 @@ async function afterLoginComplete(token) {
   const response = await fetch(
     `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
   let result = await response.json();
-  // use this result as per the requirement
-  //this.props.setLoginStatus(true);                      REDUX
-  //this.props.social.facebook.logged = true;                           REDUX
-  //this.props.social.facebook.profilePictureURL = result.picture.data.url;                     REDUX
+  
   let data = {
     id: null,
     email: result.email,
@@ -322,8 +282,7 @@ async function afterLoginComplete(token) {
     billing: {},
     shipping: {},
   }
-    //this.props.addContact(data);                       //REDUX
-    //this.props.navigation.navigate('Home');
+    
 };
 
 export {

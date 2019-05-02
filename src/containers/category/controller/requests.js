@@ -7,7 +7,7 @@ async function getCategories(props) {
   
     if(response){
       if(response.error) {
-        return;  //TODO: return modal with the custom error msg or don't return the error at all.
+        return; 
       }
       else {
         props.setCategories(response);

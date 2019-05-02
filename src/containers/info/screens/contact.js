@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, Picker, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 
 import ButtonDefault from '../../profile/components/defaultLoginButton'
-//import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
 // Global styles
 import { theme } from '../../../app/styles/global'
 import { MAIL_URL } from '../../../app/config/index'
@@ -17,7 +16,6 @@ class Index extends Component {
             email: this.props.logged ? this.props.contact.email : '',
             subject: '',
             comment: '',
-           // response: null,
             isFilled: false,
             isSending: false,
             selected: 'productFeedback',//DEFAULT
@@ -70,20 +68,7 @@ class Index extends Component {
             },
             body: JSON.stringify(body)
         })
-            /*.then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    response: responseJson,
-                }, function () {
-                    if (response == 201) {
-                        this.setState({ isSending: false })
-                        console.log("Email success")
-                    }
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });*/
+            
     }
 
     _renderContactInfoInput() {

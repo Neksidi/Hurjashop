@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator({
 		navigationOptions: () => ({
 			secure: false,
 			tabBarIcon: <CustomProfileTabButton />,
-			//tabBarLabel: "Oma tili",
+			
 			showLabel: false
 		})
 	},
@@ -43,11 +43,7 @@ const Tab = createBottomTabNavigator({
 	tabBarComponent: CustomTabBar,
 	lazy: true,
 	initialRouteName: 'Home',
-	/*navigationOptions: ({navigation}) => {
-		return {
-			header: null
-		}
-	},*/
+
 	tabBarOptions: {
 		showIcon: true,
 		showLabel: false,

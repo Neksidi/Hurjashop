@@ -5,9 +5,7 @@ import { View, StyleSheet, Text, ScrollView, Button, TouchableOpacity, TextInput
 import ButtonDefault from '../components/defaultButton'
 import { theme , primaryGradientColors, styles} from '../../../app/styles/global'
 import ReviewItem from '../components/reviewItem'
-//import { Logo, Drawer, Cart, } from '../navigation/options/Items'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-//import { WEB_URL, DB_URL } from '../redux/actiontypes'
 import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
@@ -25,77 +23,9 @@ class Review extends Component {
         console.log("Review screen")
     }
 
-    /*removeOrder = () => {
-        console.log("remove alku")
-        return fetch(WEB_URL + "/orders/" + this.props.order.id, {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(WEB_URL + "/products");
-                this.setState({
-                    data: responseJson
-                }, function () {
-                    console.log("order removed")
-                    this.removeFromDatabase()
-
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
-
-    /*removeFromDatabase(){
-        return fetch(DB_URL + "/order/remove", {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: this.props.order.id,
-                customer: this.props.contact.id,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(DB_URL + "/order/remove");
-                this.setState({
-                    remove: responseJson
-                }, function () {
-                    console.log("order removed")
-                    this.responseParser()
-
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
-
-    /*responseParser() {
-        console.log('remove status',this.state.remove)
-        if (this.state.data == 200 && this.state.remove.status == 200) {
-            return (
-                  this.props.navigation.pop(2)
-            );
-        } else {
-            return (
-                <View>
-                    <Text>EI MENNY IHAN PUTKEEN</Text>
-                </View>
-            );
-        }
-    }*/
-
+   
     async handleSubmit() {
-    //TODO
-    //Tilauksen statuksen muuttaminen
+   
     var payment = {
         "first_name": this.props.order.billing.first_name,
 		"last_name": this.props.order.billing.last_name,
@@ -156,9 +86,9 @@ class Review extends Component {
                             <Text>{this.props.order.billing.first_name}</Text>
                             <Text>{this.props.order.billing.last_name}</Text>
                             <Text>{this.props.order.billing.postcode}</Text>
-                            {/*<Text>{this.props.order.id}</Text>*/}
+                            {}
                             <Text>Tilausnumero: {this.props.order.order_key}</Text>
-                            {/*<Text>{this.props.order.payment_method}</Text>*/}
+                            {}
                             <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
                         </View>
                         <View style={reviewStyles.item}>
@@ -168,10 +98,10 @@ class Review extends Component {
                             <Text>Etunimi: {this.props.order.shipping.first_name}</Text>
                             <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
                             <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
-                            {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
+                            {}
                             <Text>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
                             <Text>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
-                            {/*<Text>{this.props.order.status}</Text>*/}
+                            {}
                         </View>
                         <View style={reviewStyles.item}>
                             <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>

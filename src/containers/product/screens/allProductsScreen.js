@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
 import { getProducts } from '../controllers/requests'
 import {  theme } from '../../../app/styles/global'
-//import CustomHeader from '../../../app/components/header/customHeader'
 class AllProducts extends Component {
 	constructor(props) {
 		super(props);
@@ -15,7 +14,7 @@ class AllProducts extends Component {
 		headerStyle: {
       backgroundColor: theme.color.navigation.background,
     },
-    headerTitle: "Kaikki tuotteet", //<CustomHeader/>
+    headerTitle: "Kaikki tuotteet", 
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}
@@ -38,7 +37,6 @@ class AllProducts extends Component {
 	}
 
 	render() {
-		//console.log(this.props.products)				//	Debug fetched products by uncommenting this										
 		
 		if(!this.props.products){
 			return (

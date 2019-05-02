@@ -8,9 +8,9 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topOpacity: new Animated.Value(0),//EKA
+      topOpacity: new Animated.Value(0),
       bottomOpacity: new Animated.Value(0),
-      topScale: new Animated.Value(0),//TOKA
+      topScale: new Animated.Value(0),
       bottomScale: new Animated.Value(0),
     }
   }
@@ -43,7 +43,6 @@ class Header extends Component {
         useNativeDriver: true,
       })
     ]).start(() => {
-      //CALLBACK
     });
   }
 

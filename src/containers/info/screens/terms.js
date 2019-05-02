@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Button, ScrollView, FlatList, ActivityIndicator, WebView, BackHandler } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
-
-//import { Logo, Drawer, Cart, CustomBackButton } from '../../navigation/options/Items'
-// Global styles
 import { theme } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 

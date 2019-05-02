@@ -1,4 +1,4 @@
-/* @flow */
+
 
 import React, { Component } from 'react';
 import {
@@ -172,10 +172,7 @@ export default class AnimatedWithLoader extends Component {
     }
 
     render() {
-        //console.log("Button load status")
-        //console.log(this.state.isLoading)
-        //console.log(this.state.title)
-        //console.log(this.props.title)
+       
         let buttonTitle = !this.state.isLoading ? (
             <Text
               style={{

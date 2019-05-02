@@ -9,7 +9,6 @@ import ShippingScreen from '../../../containers/cart/screens/shippingScreen'
 import MethodsScreen from  '../../../containers/payment/screens/methodsScreen'
 import OrderCreationScreen from '../../../containers/orders/screens/createOrderScreen'
 import OrderReviewScreen from  '../../../containers/cart/screens/reviewScreen'
-//import CustomHeader from '../../../app/components/header/customHeader'
 
 
 const transitionConfig = () => {
@@ -50,14 +49,8 @@ const MainNavigator = createStackNavigator({
 }, {
     transitionConfig,
     initialRouteName: 'Home',
-    /*
+
     defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#e94641',
-      },
-    },*/
-    defaultNavigationOptions: {
-      //headerTitle: <CustomHeader/>,
       headerStyle: {
         backgroundColor: '#00ff00',
       }
