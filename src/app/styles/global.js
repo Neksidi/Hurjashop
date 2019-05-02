@@ -502,6 +502,7 @@ export const styles = StyleSheet.create({
 
 export const primaryGradientColors = ['#a6c0fe', '#f68084'];
 export const primaryGradientColorsButton = ['#4c669f', '#3b5998', '#192f6a'];
+export const modalColors = ['#FFFFFF', '#d8e4ff'];
 
 export const boxHeight =  Dimensions.get('window').width / 2
 export const boxWidth = Dimensions.get('window').width / 2 - grid.item.margin * 2

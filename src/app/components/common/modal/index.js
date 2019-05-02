@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View, ActivityIndicator, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
-import { theme, primaryGradientColorsButton, app_style, primaryGradientColors } from '../../../styles/global'
+import { theme, primaryGradientColorsButton, app_style, modalColors } from '../../../styles/global'
 import Modal from "react-native-modal";
 import LinearGradient from 'react-native-linear-gradient';
 
 const boxWidth = Dimensions.get('window').width * 0.9;
-const boxHeight =  boxWidth / 2;
 
 export default class Index extends Component {
 	constructor(props) {
@@ -16,7 +15,7 @@ export default class Index extends Component {
             title:"",
             content:"",
             type:"info",
-		}
+		  }
     }
     
 
@@ -24,13 +23,13 @@ export default class Index extends Component {
 		this.setState({
             title:this.props.title,
             content:this.props.content,
-            
         });
-	}
 
+  }
+  
   renderOkButton = () => (
     <TouchableOpacity
-        onPress={() => {this.setState({ visible: false })}}>
+        onPress={() => {this.hide();}}>
         <LinearGradient colors={primaryGradientColorsButton} style={[
             theme.linearGradient, {
             postion:"absolute",
@@ -50,12 +49,12 @@ export default class Index extends Component {
     <View style={{justifyContent: "center", alignItems: "center"}}>
         <LinearGradient 
             start={{x: 0, y: 0}} end={{x: 1, y: 1}}
-            colors={primaryGradientColors} 
+            colors={modalColors} 
             style={[styles.modalBox, styles.linearGradient, {width:boxWidth}]}>
             
             <View styles={styles.modalContent}>
-                <Text style={app_style.large_title}>{this.state.title ? ((this.state.title)) : ((""))}</Text>
-                <Text style={app_style.medium_title}>{this.state.content ? ((this.state.content)) : ((""))}</Text>
+                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.state.title ? ((this.state.title)) : ((""))}</Text>
+                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.state.content ? ((this.state.content)) : ((""))}</Text>
                 {this.renderOkButton()}
             </View>
     
@@ -77,6 +76,11 @@ export default class Index extends Component {
 
   show() {
     this.setState({visible: true});
+
+  }
+
+  hide() {
+    this.setState({visible: false});
   }
 
   setTitle(title) {
@@ -115,14 +119,14 @@ const styles = StyleSheet.create({
     },
 
     modalBox: {
-        padding:10
+        padding:10,
+        borderWidth:2,
+        borderColor: '#000000',
     },
     modalContent: {
       padding: 20,
       justifyContent: "center",
       alignItems: "center",
-      borderRadius: 4,
-      borderColor: "rgba(0, 0, 0, 0.1)",
     },
 
     bottom: {
