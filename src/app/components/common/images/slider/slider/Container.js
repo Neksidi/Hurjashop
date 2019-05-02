@@ -55,7 +55,7 @@ class Index extends Component {
                 extrapolate: 'clamp'
               });
               return (
-                <TouchableOpacity key={i} onPress={() => {console.log(i); this._scrollToItem(i)}}>
+                <TouchableOpacity key={i} onPress={() => {this._scrollToItem(i)}}>
                   <Animated.View style={{height: 10, width: 10, borderRadius: 5, backgroundColor: '#595959', opacity, margin: 8,}} />
                 </TouchableOpacity>
               );

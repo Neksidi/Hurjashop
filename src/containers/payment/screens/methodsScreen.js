@@ -17,11 +17,11 @@ class Methods extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            //Postitustavat
             isLoading: true,
+            //Post methods
             postDelivery: false,
             homeDelivery: false,
-            //Maksutavat
+            //Payment methods
             newcard: false,
             oldcard: false,
             payment_method: null,
@@ -48,17 +48,11 @@ class Methods extends Component {
     };
 	
     retrieveToken() {
-        console.log('retrieve options')
         try {
-            console.log('Toimi pls')
             AsyncStorage.getItem('token').then((token) => {
-                console.log('TOIMI NYT')
                 if (token == null) {
-                    console.log('token null')
                     this.setState({ isLoading: false })
                 } else {
-                    console.log(token)
-                    console.log('token found options')
                     this.setState({
                         cardNotFound: false,
                         isLoading: false,
@@ -67,7 +61,6 @@ class Methods extends Component {
             })
             this.state.isLoading = false
         } catch (error) {
-            console.log(error)
         }
     }
 	postIsSelected() {
@@ -84,11 +77,9 @@ class Methods extends Component {
             this.setState({ isChecked: false })
         }
         if (!this.state.isChecked && ((this.state.postDelivery && this.postIsSelected()) || this.state.homeDelivery) && (this.state.newcard || this.state.oldcard)) {
-            console.log("Nice")
             this.setState({ isChecked: true });
         }
         if (prevState.postDelivery === false && this.state.postDelivery === true) {
-            console.log("WHY")
         }
 
     }
@@ -100,16 +91,12 @@ class Methods extends Component {
                 total = '10'
                 break;
             case "home":
-                console.log("homeDelivery")
                 total = '5'
-                console.log(total);
                 break;
             default:
                 total = '0'
                 break;
         }
-        console.log("Shipping to:")
-        console.log(total)
         this.state.methods = {
             payment_method_title: this.state.payment_method_title,
             payment_method: this.state.payment_method,
@@ -124,16 +111,13 @@ class Methods extends Component {
     async postcodeHandler() {
 
         this.setState({ isLoadingPoints: true })
-        console.log("Haetaan: " + this.state.postcode)
         await this.getPickUps(this.state.postcode);
 
     }
 
     async getPickUps(postcode) {
-        console.log("Getting pickups, code: " + postcode);
         this.state.postiBools = [];
         var result = await getPickUps(postcode)
-        console.log(result);
 
         this.setState({
             points: result,
@@ -144,9 +128,7 @@ class Methods extends Component {
     }
 
     renderPoints() {
-        console.log("Points:", this.state.points)
         if (this.state.points == null || this.state.points.length == 0) {
-            console.log("Points virhe");
             return (<View>
                 <Text>Virhe toimipisteiden haussa. Tarkista antamasi postinumero ja yritä uudestaan.</Text>
             </View>);
@@ -154,7 +136,6 @@ class Methods extends Component {
             return (
                 <View>
                     {this.state.points.map((item, i) => {
-                        console.log(i);
                         if (this.state.postiBools[i] == null) {
                             this.state.postiBools[i] = false;
                         }
@@ -176,9 +157,6 @@ class Methods extends Component {
     }
 
     postiHandler(button) {
-        console.log("test", this.state.postiBools[button])
-        console.log("handler: ", this.state.postiBools)
-        console.log("button:", button)
         if (this.state.postiBools[button] == false) {
             this.state.postiBools[button] = true;
             this.state.shipping_method = "Kovakoodattu Pakettiautomaatti";
@@ -217,8 +195,6 @@ class Methods extends Component {
             )
         }
         else if (this.state.postDelivery) {
-            console.log("Points loading:")
-            console.log(this.state.isLoadingPoints);
 			let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : <Loader/>;
 			
             return (

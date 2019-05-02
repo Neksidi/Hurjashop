@@ -95,7 +95,6 @@ class Profile extends Component {
 		if (this.props.shipping.first_name) {
 			firstname = this.props.shipping.first_name;
 		}
-		console.log("ASD")
 		return (
 		
 			

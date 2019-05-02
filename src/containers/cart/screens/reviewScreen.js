@@ -20,7 +20,6 @@ class Review extends Component {
     };
 
     componentDidMount(){
-        console.log("Review screen")
     }
 
    
@@ -35,8 +34,6 @@ class Review extends Component {
 		"id": this.props.order.id,
 		"order_key": this.props.order.order_key,
     }
-    console.log("Adding payment data")
-    console.log(payment)
     await this.props.addPayment(payment);
     }
 
@@ -50,8 +47,6 @@ class Review extends Component {
     }
 
     render() {
-        console.log("Review render");
-        console.log(this.props.order);
         var currency = "";
         switch (this.props.order.currency) {
             case "EUR": {

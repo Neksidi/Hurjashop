@@ -9,11 +9,6 @@ const icon_size = 25;
 const icon_color = theme.color.navigation.main;
 
 class CustomHeader extends Component {
-
-	onPress(){
-		console.log("Cart")
-	}
-
     render() {
 		let logoSize = this.props.small == true ? (styles.logoSmall) : (styles.logo);
 		let logoTop = this.props.small == true ? (0) : (30);
@@ -34,7 +29,5 @@ class CustomHeader extends Component {
 		    </View>
         );
 	}
-	
 };
-
 export default CustomHeader;

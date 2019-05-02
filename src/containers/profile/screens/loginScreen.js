@@ -43,10 +43,10 @@ class Login extends Component {
     super(props);
     this.state = {
       visible: false, //Password eye
-      email: '',       //Default ''
-      emailValidation: false,      //Default false
-      password: '',//STRING    //Default ''
-      passwordValidation: false,   //Default false
+      email: '',      
+      emailValidation: false,    
+      password: '',
+      passwordValidation: false,
       isLoggingIn: false,
       correctCredentials: null,
       displayErrorMessage: false,
@@ -72,8 +72,6 @@ class Login extends Component {
 
   onLoginSuccess() {
       this.refs.login_button.reset();
-      console.log("Is loginscreen focused?")
-      console.log(this.props.isFocused);
       this.props.navigation.navigate('Home');
   }
 
@@ -84,8 +82,6 @@ class Login extends Component {
     if ( !isCancelled ) {
       let data = await AccessToken.getCurrentAccessToken();
       let token = data.accessToken.toString();
-      console.log("Fb token");
-      console.log(token);
       await this.afterFbLoginComplete(token);
     }
     else {
@@ -108,8 +104,6 @@ class Login extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
-      console.log("Google login success!");
       var user = await logInGoogle(userInfo.serverAuthCode, userInfo.user);
       this.props.setLoginStatus(true);
       await this.props.addContact(user);
@@ -118,17 +112,12 @@ class Login extends Component {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        console.log("User cancelled google");
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (f.e. sign in) is in progress already
-        console.log("Google login in progress");
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
-        console.log("Google Play services error");
       } else {
         // some other error happened
-        console.log("Google unknown error");
-        console.log(error);
       }
     }
   };
@@ -137,49 +126,35 @@ class Login extends Component {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
-      console.log("Logged out google");
     } catch (error) {
-      console.error(error);
     }
   };
 
   googleRevokeAccess = async () => {
     try {
       await GoogleSignin.revokeAccess();
-      console.log('deleted Google');
     } catch (error) {
-      console.error(error);
     }
   };
 
   googleGetCurrentUser = async () => {
     const currentUser = await GoogleSignin.getCurrentUser();
-    console.log(currentUser);
   };
 
   googleSilentLogin = async () => {
     try {
       const userInfo = await GoogleSignin.signInSilently();
-      console.log("UserInfo");
-      console.log(userInfo)
       return userInfo;
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        console.log("Google User not yet logged in");
       } else {
-        console.log("Google silent login error")
-        console.log(error);
       }
     }
   };
 
   async componentDidMount() {
     var login = await this.googleSilentLogin();
-    console.log("Google silent login");
-    console.log(login);
     var logged = await this.googleIsSignedIn();
-    console.log("google login status");
-    console.log(logged);
   }
 
   render() {

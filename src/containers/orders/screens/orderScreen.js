@@ -126,14 +126,11 @@ class Order extends Component {
   }
 
   renderItems(){
-
     return this.state.item.line_items.map((item, i) => {
       if(item.variation_id != 0){
-        //On variaatioita
 
-        //Ei ole reduxissa
         if(!this._itemInVariations(item.product_id)){
-          //Haetaan reduxiin
+
           fetch(WEB_URL + '/products/' + item.product_id + '/variations')
           .then((response) => response.json())
           .then((responseJson) => {
@@ -243,11 +240,9 @@ class Order extends Component {
   }
 
   _handleCancel(){
-    console.log('CANCEL');
   }
 
   _handlePayment(){
-    console.log('PAYMENT');
   }
 
   renderOrderInfo(){

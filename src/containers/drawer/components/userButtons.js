@@ -19,13 +19,9 @@ class UserButtons extends Component {
   };
 
   async componentDidMount() {
-    console.log("User buttons mount")
     if (!this.props.isLoggedIn) {
-      console.log("Not logged in")
       var user = await getSessionUser();
-      console.log("User in buttons " + user)
       if(user) {
-        console.log("User found and logging in")
         await logIn(this.props);
 
         if(this.props.isLoggedIn) {

@@ -115,8 +115,6 @@ class Search extends Component {
 	}
 
 	_handleSubmit() {
-		console.log(this.state.username);
-		console.log(this.state.password);
  }
 		
 	render() {

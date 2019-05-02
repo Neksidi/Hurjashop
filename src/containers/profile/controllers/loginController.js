@@ -12,81 +12,56 @@ function validate(type, parent) {
 
         if(emailReg.test(parent.state.email) === true){
           parent.setState({emailValidation: true});
-          console.log("true email")
           return true;
         }else {
-          console.log("false email")
           return false;
         }
       }
       case 'password': {
-        console.log('VALIDOI SALIS');
         if(parent.state.password.length > 0){                
-          console.log("true password")
           return true;
         }else {
-          console.log("false password")
           return false;
         }
       }
       case 'password_confirm': {
-        console.log('VERTAA SALASANAT');
         if(parent.state.password === parent.state.password_confirm){
-
-          console.log("true compare")
           return true;
         }else {
-          console.log("false compare")
           return false;
         }
       }
       case 'firstname': {
         const firstnameReg = /^[a-zA-Z]+$/;
         if (firstnameReg.test(parent.state.firstname) === true){
-          console.log("true first")
           return true;
         } else {
-          console.log("false first")
           return false;
         }
       }
       case 'lastname': {
         const lastnameReg = /^[a-zA-Z]+$/;
         if (lastnameReg.test(parent.state.lastname) === true){
-          console.log("true last")
           return true;
         } else {
-          console.log("false first")
           return false;
         }
       }
       default:
-        console.log('Jotain meni pieleen!');
       return false;
     }
 }
 
 function validateAll(parent) {
-  
-      console.log('VALIDATE ALL');
       var ps = parent.state;
-      console.log(ps.emailValidation)
-      console.log(ps.first_nameValidation)
-      console.log(ps.last_nameValidation)
-      console.log(ps.passwordValidation)
-      console.log(ps.password_confirmValidation)
-      console.log(ps.checked)
       if(ps.emailValidation && ps.first_nameValidation && ps.last_nameValidation && ps.passwordValidation && ps.password_confirmValidation && ps.checked) {
-        console.log("true all")
         return true;
       } else {
-        console.log("false all")
         return false;
       }
 }
 
 async function register(parent) {
-  console.log("REGISTERING")
   var customer = {
     "email": parent.state.email,
     "first_name": parent.state.first_name,
@@ -94,10 +69,8 @@ async function register(parent) {
     "username": parent.state.email,
     "password": parent.state.password,
   }
-  console.log("Sending register request");
   var response = await Api.post(WEB_URL + "/customers", customer, false);
 
-  console.log(response)
   if(!response.err) {
     parent.refs.register_button.success();
     parent.props.navigation.navigate('Home');
@@ -111,8 +84,6 @@ async function register(parent) {
 }
 
 async function registerFb(user) {
-  console.log("REGISTERING")
-  console.log(user)
   var customer = {
     "email": user.email,
     "first_name": user.first_name,
@@ -121,43 +92,27 @@ async function registerFb(user) {
     "id": user.id
   }
   var response = await Api.post(WEB_URL + "/customers/facebook", customer, false);
-
-  console.log(response)
-
-  
 }
 
 async function logInFb(access_token) {
  
-
-  console.log("Connecting to own Fb login");
-
   var body = {
     "access_token": access_token,
   }
 
   var response = await Api.post(AUTH_URL + "/loginfb", body, false);
-
-  console.log(response)
 }
 
 async function logInGoogle(code, user) {
-  console.log("Connecting to own Google login");
-  console.log(code);
-
   var body = {
     "auth_code": code,
     "user": user,
   }
 
   var response = await Api.post(AUTH_URL + "/logingoogle", body, false);
-
-  console.log(response);
   if(!response.error) {
     var id = response.session.sessionId;
     var username = response.session.username;
-    console.log("Saving " + id + " and " + username)
-    
     
     setSessionId(id);
     setSessionUser(username);
@@ -165,30 +120,20 @@ async function logInGoogle(code, user) {
   }
   else {
   }
-  console.log("own google login success?");
 }
 
 
 async function handleLogin(parent) {
-    console.log('Logging in');
-    console.log(parent)
- 
-
     const body = {
         "username": parent.state.email,
         "password": parent.state.password,
     }
-    console.log(body)
     const response = await Api.post(AUTH_URL + "/wordpress", body, false);
     
-    console.log(response)
     if (!response.error) {
-      console.log("Success")
       parent.refs.login_button.success();
       var id = response.sessionId;
       var username = response.username;
-      console.log("Saving " + id + " and " + username)
-      
       
       setSessionId(id);
       setSessionUser(username);
@@ -199,15 +144,12 @@ async function handleLogin(parent) {
     else {
       parent.refs.login_button.dismiss();
       parent.setState({ correctCredentials: false });
-      console.log("handleLogin fail")
     }
 }
 
 async function fetchUser(username, parent) {
-    console.log("fetching user " + username)
     const response = await Api.get(WEB_URL + "/customer/email/" + username, true)
   
-    console.log(response)
     if(!response.error) {
 
         let contactData = {
@@ -221,17 +163,13 @@ async function fetchUser(username, parent) {
         parent.props.addContact(contactData)
         parent.props.setLoginStatus(true)   
     } else {
-      console.log("Error fetching user")
     }
     
     
 }
 
 async function logIn(props){
-  console.log("Logging in")
   var response = await Api.get(AUTH_URL + "/login", true);
-  console.log("Login result: ")
-  console.log(response)
 
   if(!response.error) {
     await props.setLoginStatus(true);
@@ -239,8 +177,6 @@ async function logIn(props){
 }
 
 function logOutPopup(props){
- 
-  console.log("Logging out")
   props.navigation.closeDrawer();
     Alert.alert(
       'Kirjaudu ulos',
@@ -254,22 +190,18 @@ function logOutPopup(props){
 }
 
 async function logOut(props) {
-  console.log ("LOgging out serverside")
   var response = await Api.get(AUTH_URL + "/logout", true);
 
   if(!response.error) {
-    console.log("clearing storage")
     props.setLoginStatus(false);
     removeSessionId();
     removeSessionUser();
   }
   else {
-    console.log("Logout error")
   }
 }
 
 async function afterLoginComplete(token) {
-  console.log("after Login complete")
   const response = await fetch(
     `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,gender,picture.type(large),cover&access_token=${token}`);
   let result = await response.json();

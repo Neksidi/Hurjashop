@@ -11,15 +11,15 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: 'kissa',
+      first_name: '',
       first_nameValidation: false,
-      last_name: 'kissa',
+      last_name: '',
       last_nameValidation: false,
-      email: 'kissa@hurja.fi',
+      email: '',
       emailValidation: false,
-      password: 'kissakissa123',//STRING
+      password: '',//STRING
       passwordValidation: false,
-      password_confirm: 'kissakissa123',//STRING
+      password_confirm: '',//STRING
       password_confirmValidation: false,//BOOL
       checked: false,
       isFilled: true, //
@@ -36,31 +36,22 @@ export default class Register extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState)
-    console.log(this.state)
     if (prevState.first_name !== this.state.first_name) {
-      console.log("different first bool")
       this.setState({ first_nameValidation: validate("firstname", this) })
     }
     if (prevState.last_name !== this.state.last_name) {
-      console.log("different last bool") 
       this.setState({ last_nameValidation: validate("lastname", this) })
     }
     if (prevState.email !== this.state.email) {
-      console.log("different email bool")
       this.setState({ emailValidation: validate("email", this) })
     }
     if (prevState.password !== this.state.password) {
-      console.log("different password bool")
       this.setState({ passwordValidation: validate("password", this) })
     }
     if (prevState.password_confirm !== this.state.password_confirm) {
-      console.log("different confirm bool")
       this.setState({ password_confirmValidation: validate("password_confirm", this) })
     }
     if (this.state.isFilled != validateAll(this)) {
-      console.log("different filled bool " + this.state.isFilled)
-      console.log("Setting filled to " + !this.state.isFilled)
       this.setState({ isFilled: !this.state.isFilled })
     }
   }
@@ -205,7 +196,7 @@ export default class Register extends Component {
                 <ButtonWithAnimatedLoader 
                   ref='register_button' 
                   title='Rekisteröidy' 
-                  errorHandler={() => { console.log("Error handle") }} 
+                  errorHandler={() => { }} 
                   onPress={() => { register(this) }} 
                   disabled={!this.state.isFilled} />
               </View>

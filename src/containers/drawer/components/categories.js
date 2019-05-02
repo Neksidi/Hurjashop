@@ -24,7 +24,6 @@ class Categories extends Component {
 	}
 
   categoryButtonHandler() {
-    console.log("clicketi click")
   }
 
   render() {

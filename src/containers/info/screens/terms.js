@@ -58,13 +58,11 @@ class Terms extends Component {
     }
 
     handleBack = () => {
-        console.log("Header back")
         this.setState({refresh: this.state.refresh + 1});
         this.props.navigation.navigate('Home');
     };
 
     onBackButtonPressAndroid = () => {
-        console.log("DIEEE")
         this.setState({refresh: this.state.refresh + 1});
     };
 

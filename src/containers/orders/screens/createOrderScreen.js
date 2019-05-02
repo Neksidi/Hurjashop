@@ -82,12 +82,8 @@ class Order extends Component {
                         }
                     ]
             }
-            console.log(order)
             var newOrder = await createOrder(order);
-            console.log("Addind this order:")
-            console.log(newOrder);
             this.props.addOrder(newOrder);
-            console.log("Navigating")
             this.props.navigation.navigate('OrderReview')
     }
     

@@ -47,7 +47,6 @@ class Payment extends Component {
 			} else {
 			}
 
-			console.log(parsed)
 			var token = parsed.token;
 			var type = parsed.type;
 			var partialPan = parsed.partial_pan;
@@ -58,9 +57,6 @@ class Payment extends Component {
 			var test = await getCardToken();
 			var test2 = await getCardType();
 			var test3 = await getCardPartial();
-			console.log(test);
-			console.log(test2);
-			console.log(test3);
 			this.setState({
 				token: parsed.token
 			})
@@ -79,21 +75,15 @@ class Payment extends Component {
 		async componentDidMount() {
 			var paysWithNewCard = this.props.navigation.getParam('method', null);
 			var token = this.props.navigation.getParam('token', null);
-			console.log(paysWithNewCard)
 			if(paysWithNewCard || !token) {
-				console.log("Pays with new card")
-				console.log("Getting new token prompt html")
 				var html = await newCardPayment(this.props.payment)
 				this.setState({cardFormHtml: html, isLoading: false, paysWithNewCard: paysWithNewCard});
 			} else {
 				this.setState({token: token});
 			}
-			//newCardPayment(1234, "Test order")
 		}
 
     render() {
-			console.log("PAYDAY")
-			console.log(this.props)
 			if (this.state.isLoading) {
 				return (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />)
 			} 
@@ -136,12 +126,10 @@ class Payment extends Component {
 	
 				)
 			} else if (!this.state.isPaid && this.state.token) {
-				console.log("Token heti postin jälkeen: ", this.state.token)
 				return (
 					<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />
 				)
 			} else if (this.state.paid && !this.state.orderUpdated) {
-				console.log("Maksettu, loppu")
 				return (
 					<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />
 				)

@@ -49,11 +49,8 @@ class Api {
     static async xhr(route, params, method, requiresAuth) {
       var options = Object.assign({ method }, params ? { body: JSON.stringify(params) } : null);
       options.headers = await Api.headers(requiresAuth)
-      console.log(options)
-      console.log(route)
       return await fetch(route, options)
-        .then((response) => {
-          console.log(response)     
+        .then((response) => {  
           var statusShort = response.status.toString().charAt(0)
           switch(statusShort) {
             case '2': {

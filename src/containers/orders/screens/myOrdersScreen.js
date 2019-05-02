@@ -27,10 +27,7 @@ class CustomerOrders extends Component {
 
 	async componentDidMount() {
 		var fetchedOrders = await getOrders(0);
-		console.log("Orders fetched")
-		console.log(fetchedOrders)
 		await this.props.setOrders(fetchedOrders);
-		console.log("orders set")
 		this.setState({isLoading: false});
 	}
 
@@ -45,8 +42,6 @@ class CustomerOrders extends Component {
 	}
 
     render() {
-		console.log("Render orders")
-		console.log(this.props.orders)
 		if(this.state.isLoading){
 		  return (<Loader />);
 		}
