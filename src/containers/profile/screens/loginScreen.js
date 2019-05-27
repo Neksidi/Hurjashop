@@ -101,8 +101,9 @@ class Login extends Component {
 
   //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
-
+    console.log("afterFbLoginComplete")
     await logInFb(token);
+    this.props.navigation.navigate('Home');
 
     /*const response = await fetch(
     `https://graph.facebook.com/me?fields=id,name,first_name,last_name,address,email,picture.type(large),cover&access_token=${token}`);
@@ -126,7 +127,7 @@ class Login extends Component {
       console.log("Calling registerFb")
       registerFb(data);
       */
-      this.props.navigation.navigate('Home');
+
   };
 
   googleIsSignedIn = async () => {
@@ -204,10 +205,10 @@ class Login extends Component {
 
   async componentDidMount() {
     var login = await this.googleSilentLogin();
-    console.log("Google silent login");
+    console.log("Silent login");
     console.log(login);
     var logged = await this.googleIsSignedIn();
-    console.log("google login status");
+    console.log("Login status");
     console.log(logged);
   }
 

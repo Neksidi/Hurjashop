@@ -119,25 +119,6 @@ class Review extends Component {
         return sum.toFixed(2);
     }
 
-<<<<<<< HEAD
-=======
-    getTax(products) {
-        let sum = 0;
-        products.map((item, i) => {
-            sum += parseFloat(item.total_tax);
-        })
-        return sum.toFixed(2);
-    }
-
-    getItemSum(products) {
-        let sum = 0;
-        products.map((item, i) => {
-            sum += parseFloat(item.total);
-        })
-        return sum.toFixed(2);
-    }
-
->>>>>>> parent of 79398af... posti etc
     render() {
         console.log("Review render");
         console.log(this.props.order);

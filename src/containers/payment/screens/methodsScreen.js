@@ -349,8 +349,4 @@ class Methods extends Component {
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({ addMethods }, dispatch));
 
-<<<<<<< HEAD
 export default connect(null, mapDispatchToProps)(Methods);
-=======
-export default connect(mapDispatchToProps)(Methods);
->>>>>>> parent of 79398af... posti etc
