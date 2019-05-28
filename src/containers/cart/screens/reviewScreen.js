@@ -138,7 +138,7 @@ class Review extends Component {
                 <ScrollView>
                     <View>
                         <View style={reviewStyles.item}>
-                            <Text>Valitut tuotteet</Text>
+                            <Text style={{fontSize:20}}>Valitut tuotteet</Text>
                             <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => 
                                 <ReviewItem 
                                     data={item} 
@@ -149,20 +149,20 @@ class Review extends Component {
                             <Text style={reviewStyles.text}>Tuotteet yhteensä: {this.getSum(this.props.order.line_items)}{currency}</Text>
                         </View>
                         <View style={reviewStyles.item}>
-                            <Text>Laskutustiedot</Text>
-                            <Text>{this.props.order.billing.address_1}</Text>
-                            <Text>{this.props.order.billing.city}</Text>
-                            <Text>{this.props.order.billing.email}</Text>
-                            <Text>{this.props.order.billing.first_name}</Text>
-                            <Text>{this.props.order.billing.last_name}</Text>
-                            <Text>{this.props.order.billing.postcode}</Text>
+                            <Text style={{fontSize:20}}>Laskutustiedot</Text>
+                            <Text>Osoite: {this.props.order.billing.address_1}</Text>
+                            <Text>Postitoimipaikka: {this.props.order.billing.city}</Text>
+                            <Text>Postinumero: {this.props.order.billing.postcode}</Text>
+                            <Text>Sähköpostiosoite: {this.props.order.billing.email}</Text>
+                            <Text>Etunimi: {this.props.order.billing.first_name}</Text>
+                            <Text>Sukunimi: {this.props.order.billing.last_name}</Text>
                             {/*<Text>{this.props.order.id}</Text>*/}
                             <Text>Tilausnumero: {this.props.order.order_key}</Text>
                             {/*<Text>{this.props.order.payment_method}</Text>*/}
                             <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
                         </View>
                         <View style={reviewStyles.item}>
-                            <Text>Toimitustiedot</Text>
+                            <Text style={{fontSize:20}}>Toimitustiedot</Text>
                             <Text>Osoite: {this.props.order.shipping.address_1}</Text>
                             <Text>Postitoimipaikka: {this.props.order.shipping.city}</Text>
                             <Text>Etunimi: {this.props.order.shipping.first_name}</Text>

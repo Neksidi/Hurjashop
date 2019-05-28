@@ -7,7 +7,7 @@ export const reviewStyles = StyleSheet.create({
         padding: 10,
     },
     list: {
-        backgroundColor: '#9BE9FF',
+   
     },
     item: {
         height: 'auto',
@@ -22,6 +22,10 @@ export const reviewStyles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         flex: 1,
         flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    empty:{
+        flex:1,
     },
     text: {
         textAlign: 'right',

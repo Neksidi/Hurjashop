@@ -8,7 +8,7 @@ import {
 export default class Badge extends PureComponent {
   render() {
     return (
-      <View style={{zIndex: 4, elevation: 99, width: 16, height: 16, borderWidth: 1, backgroundColor: '#fff', borderRadius: 8, position: 'absolute', top: -40, right: 10, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{zIndex: 4, elevation: 99, width: 20, height: 20, borderWidth: 1, backgroundColor: '#fff', borderRadius: 8, position: 'absolute', top: -45, right: 6, justifyContent: 'center', alignItems: 'center'}}>
         <Text>{this.props.count}</Text>
       </View>
     );

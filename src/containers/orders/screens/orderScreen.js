@@ -157,17 +157,18 @@ class Order extends Component {
 
             <View style={orderStyles.orderItemContainer} key={i}>
               <View style={orderStyles.itemCol}>
-                <View style={{flexDirection: 'row'}}>
+                <View>
                   <View style={{width: 50, height: 50, marginRight: 5}}>
                     <TouchableOpacity onPress={() => {this.refs.gallery.show(0)}}>
                       <Image source={{uri: images[0].src}} style={{width: 50, height: 50 }}/>
                     </TouchableOpacity>
                   </View>
-                  <View style={{justifyContent: 'center'}}>
+                  <View>
                     <Text>{item.name}</Text>
                     {this.renderVariations(this.getVariations(item.product_id, item.variation_id))}
                   </View>
                 </View>
+                  <View style={orderStyles.empty}></View>
               </View>
               <View style={orderStyles.priceCol}><Text>{priceToString(item.price)}€</Text></View>
               <View style={orderStyles.quantityCol}><Text>x{item.quantity}</Text></View>
@@ -182,6 +183,7 @@ class Order extends Component {
 
         <View style={orderStyles.orderItemContainer} key={i}>
           <View style={orderStyles.itemCol}>{this._renderItemCol(item)}</View>
+          <View style={orderStyles.empty}></View>
           <View style={orderStyles.priceCol}><Text>{priceToString(item.price)}€</Text></View>
           <View style={orderStyles.quantityCol}><Text>x{item.quantity}</Text></View>
           <View style={orderStyles.totalPriceCol}><Text>{priceToString(item.price * item.quantity)}€ </Text></View>
