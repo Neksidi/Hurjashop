@@ -43,7 +43,7 @@ class UserButtons extends Component {
                         <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10}}>
                           <Text style={app_style.drawer_contact}>Hei {this.props.contact.first_name} {this.props.contact.last_name}!</Text>
                           <Item title='Profiili' icon='user-o' onPress={() => this.props.navigation.navigate('Profile')}/>
-                          <Item title='Omat tilaukset' icon='list-alt' onPress={() => this.props.navigation.navigate('Orders')}/>
+                          <Item title='Omat tilaukset' icon='list-alt' onPress={() => this.props.navigation.navigate('CustomerOrders')}/>
                           <Item title='Kirjaudu ulos' icon='sign-out' onPress={() => logOutPopup(this.props)}/>
                         </View>
                     ) : (
