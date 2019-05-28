@@ -168,9 +168,11 @@ class Product extends Component {
           style={styles.linearGradient}>
 	
           <View style={{ flex: 1}}>
-            <TouchableOpacity style={{zIndex: 4, elevation: 99, width: 20, height: 20, borderWidth: 1, backgroundColor: 'transparent', borderRadius: 8, position: 'absolute', top: -45, right: 6, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity style={{zIndex: 4, elevation: 99, width: 20, height: 20, borderWidth: 1, backgroundColor: '#fff', borderRadius: 8, position: 'absolute', top: -45, right: 6, justifyContent: 'center', alignItems: 'center'}} onPress={() => { this.props.navigation.navigate('Cart') }}> 
+              <View>
+                <Text>{productsInCart}</Text>
+              </View> 
             </TouchableOpacity>
-            <Badge style={{zIndex: 4, elevation: 99, width: 20, height: 20, borderWidth: 1, backgroundColor: '#fff', borderRadius: 8, position: 'absolute', top: -45, right: 6, justifyContent: 'center', alignItems: 'center'}} count={productsInCart} />   
             <ScrollView style={{  }}>
               {/* IMAGE CAROUSEL */}
               <View style={{ width: '100%', height: 350, alignItems: 'center', elevation: 2,}}>
