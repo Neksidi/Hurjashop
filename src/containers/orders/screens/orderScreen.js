@@ -170,9 +170,9 @@ class Order extends Component {
                 </View>
                   <View style={orderStyles.empty}></View>
               </View>
-              <View style={orderStyles.priceCol}><Text>{priceToString(item.price)}€</Text></View>
+              <View style={orderStyles.priceCol}><Text>{priceToString(item.total)}€</Text></View>
               <View style={orderStyles.quantityCol}><Text>x{item.quantity}</Text></View>
-              <View style={orderStyles.totalPriceCol}><Text>{priceToString(item.price * item.quantity)}€</Text></View>
+              <View style={orderStyles.totalPriceCol}><Text>{priceToString(item.total * item.quantity)}€</Text></View>
               <Gallery images={images} ref='gallery'/>
             </View>
           );
@@ -184,9 +184,9 @@ class Order extends Component {
         <View style={orderStyles.orderItemContainer} key={i}>
           <View style={orderStyles.itemCol}>{this._renderItemCol(item)}</View>
           <View style={orderStyles.empty}></View>
-          <View style={orderStyles.priceCol}><Text>{priceToString(item.price)}€</Text></View>
+          <View style={orderStyles.priceCol}><Text>{priceToString(item.total)}€</Text></View>
           <View style={orderStyles.quantityCol}><Text>x{item.quantity}</Text></View>
-          <View style={orderStyles.totalPriceCol}><Text>{priceToString(item.price * item.quantity)}€ </Text></View>
+          <View style={orderStyles.totalPriceCol}><Text>{priceToString(item.total * item.quantity)}€ </Text></View>
         </View>
 
       );
@@ -205,12 +205,14 @@ class Order extends Component {
               <View style={{justifyContent: 'center'}}><Text>{this.state.item.shipping_lines[0].method_title}</Text></View>
             </View>
           </View>
+          <View style={orderStyles.empty}></View>
           <View style={orderStyles.priceCol}></View>
           <View style={orderStyles.quantityCol}></View>
           <View style={orderStyles.totalPriceCol}><Text>{priceToString(this.state.item.shipping_total)}€</Text></View>
         </View>
         <View style={[orderStyles.orderItemContainer, {borderBottomWidth: 0}]}>
           <View style={orderStyles.itemCol}/>
+          <View style={orderStyles.empty}></View>
           <View style={orderStyles.priceCol}/>
           <View style={orderStyles.quantityCol}><Text style={{}}>ALV(24%):</Text></View>
           <View style={orderStyles.totalPriceCol}>
@@ -219,6 +221,7 @@ class Order extends Component {
         </View>
         <View style={orderStyles.orderItemContainer}>
           <View style={orderStyles.itemCol}/>
+          <View style={orderStyles.empty}></View>
           <View style={orderStyles.priceCol}/>
           <View style={orderStyles.quantityCol}><Text style={{fontWeight: '600'}}>Yhteensä:</Text></View>
           <View style={orderStyles.totalPriceCol}>
@@ -234,6 +237,7 @@ class Order extends Component {
       <View style={{marginVertical: 10,width: '100%'}}>
         <View style={orderStyles.orderItemsHeaderContainer}>
           <View style={orderStyles.itemCol}><Text>Tuote:</Text></View>
+          <View style={orderStyles.empty}></View>
           <View style={orderStyles.priceCol}><Text>Hinta:</Text></View>
           <View style={orderStyles.quantityCol}><Text>Määrä:</Text></View>
           <View style={orderStyles.totalPriceCol}><Text>Yhteensä:</Text></View>
