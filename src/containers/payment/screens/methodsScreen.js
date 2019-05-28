@@ -35,6 +35,7 @@ class Methods extends Component {
             isLoadingPoints: false,
             postiBools: [],
             postcode: null,
+            infotext: null,
 		};
 		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
@@ -140,6 +141,7 @@ class Methods extends Component {
         this.setState({
             points: result,
             isLoadingPoints: false,
+            infotext: "Virhe toimipisteiden haussa. Tarkista antamasi postinumero ja yritä uudestaan",
         });
 
 
@@ -150,7 +152,7 @@ class Methods extends Component {
         if (this.state.points == null || this.state.points.length == 0) {
             console.log("Points virhe");
             return (<View>
-                <Text>Virhe toimipisteiden haussa. Tarkista antamasi postinumero ja yritä uudestaan.</Text>
+                <Text>{this.state.infotext}</Text>
             </View>);
         } else {
             return (
