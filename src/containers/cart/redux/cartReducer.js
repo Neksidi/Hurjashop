@@ -16,6 +16,7 @@ import {
 
   
   const cartReducer = (state = INITIAL_STATE, action) => {
+    console.log("CartReducer action: ",action.type)
     switch (action.type) {
       case ADD_TO_CART:
         //If product is already in the cart add 1 to quantity

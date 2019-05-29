@@ -165,8 +165,21 @@ async function logInFb(access_token) {
 
   var response = await Api.post(AUTH_URL + "/loginfb", body, false);
 
-  console.log("Response: ",response)
-  
+  if(!response.error) {
+    //Add contact & save session
+    var id = response.session.sessionId;
+    var username = response.session.username;
+    console.log("Saving " + id + " and " + username)
+    
+    //Save session
+    
+    setSessionId(id);
+    setSessionUser(username);
+    return response.user;
+  }
+  else {
+    //TODO: Show error modal.
+  }
 }
 
 async function logInGoogle(code, user) {

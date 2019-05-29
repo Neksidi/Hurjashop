@@ -12,6 +12,7 @@ import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { getProducts } from '../controllers/requests'
 import { setProducts } from '../redux/productActions'
 import { getQuantity } from '../../cart/controllers/helper'
+import { getCartQuantity } from '../../cart/controllers/helper'
 import { addToCart } from '../../cart/redux/cartActions'
 import Badge from '../../../app/components/common/badge/index'
 import CustomHeader from '../../../app/components/header/customHeader'
@@ -39,6 +40,7 @@ class Product extends Component {
     this.state = {
       item: null,
       count: 1,
+      cartCount: 0
     }
   }
   
@@ -63,6 +65,7 @@ class Product extends Component {
   handleAddToCart(){
     console.log("addtoCarttiin lähtee: ",this.state.item)
     this.props.addToCart(this.state.item, this.state.count);
+    console.log("Cart: ",this.props.cart)
 
     if(getQuantity(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity ||
       (this.state.item.in_stock == false && this.state.item.stock_quantity == null)) {
@@ -171,7 +174,7 @@ class Product extends Component {
           <View style={{ flex: 1}}>
             <TouchableOpacity style={{zIndex: 4, elevation: 99, width: 20, height: 20, borderWidth: 1, backgroundColor: '#fff', borderRadius: 8, position: 'absolute', top: -45, right: 6, justifyContent: 'center', alignItems: 'center'}} onPress={() => { this.props.navigation.navigate('Cart') }}> 
               <View>
-                <Text>{productsInCart}</Text>
+                <Text>{getCartQuantity(this.props)}</Text>
               </View> 
             </TouchableOpacity>
             <ScrollView style={{  }}>

@@ -7,17 +7,18 @@ import { addShipping } from '../../profile/redux/userActions'
 import LinearGradient from 'react-native-linear-gradient';
 
 
+
 class Shipping extends Component {
 	constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
             data: null,
-            first_name: 'Severi',
-            last_name: 'Serveri',
-            address: 'Kauppakatu 20',
-            zipcode: '70100',
-            city: 'Mualiman napa',
+            first_name: '',
+            last_name: '',
+            address: '',
+            zipcode: '',
+            city: '',
             shipping: null,
         };
 	}
@@ -39,7 +40,6 @@ class Shipping extends Component {
             city: this.state.city,
         };
         this.props.addShipping(this.state.shipping);
-
     };
 
 	render() {

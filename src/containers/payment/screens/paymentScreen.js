@@ -13,16 +13,15 @@ class Payment extends Component {
 		super(props);
 		this.state = {
 			//TODO: change to true when loading function is working
-			isLoading: true,
 			data: null,
-			isPaid: false,
+			isPaid: false, //false
 			isCancelled: false,
 			failed: false,
 			isLoading: false,
-			token: null,
+			token: null, //null
 			cardFormHtml: null,
 			paysWithNewCard: null,
-			orderUpdated: false,
+			orderUpdated: false, //false
 		};
 	}
 
@@ -41,14 +40,40 @@ class Payment extends Component {
 
 		async webviewHandler(data) {
 			var parsed = JSON.parse(data);
+			console.log("Parsed: ",parsed)
 			if(parsed.status === 201) {
+				console.log("Payment done!")
+				this.setState({
+					isCancelled: false,
+					failed: false,
+					isPaid: true,
+					orderUpdated: true,
+				})
 				
 			} else if(parsed.status === 402) {
 				//TODO: Show modal telling about payment problems. E.g. Contact your bank.
+				this.setState({
+					isCancelled: false,
+					failed: false,
+					isPaid: false,
+					orderUpdated: false,
+				})
 			} else if(parsed.status === 500) {
 				//TODO: Show modal telling about server error. E.g. Contact our customer support.
+				this.setState({
+					isCancelled: false,
+					failed: false,
+					isPaid: false,
+					orderUpdated: false,
+				})
 			} else {
 				//TODO: Show modal telling about server error. E.g. Contact our customer support / Report bug.
+				this.setState({
+					isCancelled: false,
+					failed: false,
+					isPaid: false,
+					orderUpdated: false,
+				})
 			}
 
 			console.log(parsed)
@@ -56,6 +81,7 @@ class Payment extends Component {
 			var type = parsed.type;
 			var partialPan = parsed.partial_pan;
 
+			//Saving into phone memory
 			await setCardToken(token);
 			await setCardType(type);
 			await setCardPartial(partialPan);
@@ -72,8 +98,8 @@ class Payment extends Component {
 		
 		reset(){
 			this.setState({
-				response: null,
-				cancelled: false,
+				data: null,
+				isCancelled: false,
 				failed: false,
 				token: null,
 				gotToken: false,
@@ -144,16 +170,18 @@ class Payment extends Component {
 				return (
 					<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />
 				)
-			} else if (this.state.paid && !this.state.orderUpdated) {
+			} else if (this.state.isPaid && !this.state.orderUpdated) {
 				console.log("Maksettu, loppu")
 				//this.updateStatus("processing")	Update order status
 				return (
 					<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />
 				)
 			} 
-			else if(this.state.paid && this.state.orderUpdate) {
+			else if(this.state.isPaid && this.state.orderUpdated) {
 				return (
-					<View>Tilauksesi on suoritettu.</View>
+					<View>
+						<Text>Tilauksesi on suoritettu.</Text>
+					</View>
 				)
 			}
 			else {

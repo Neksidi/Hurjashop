@@ -17,8 +17,8 @@ async function newCardPayment(payment) {
 async function existingCardPayment(orderId, cardToken) {
     var body = {
         "token": cardToken, //this.state.token,
-        "total": "20.00",//this.props.order.total,
-        "currency": "EUR", //this.props.order.currency, 
+        "total": this.props.order.total,//this.props.order.total,
+        "currency": this.props.order.currency, //this.props.order.currency, 
         "id": orderId,
     }
     const response = await Api.post(PH_URL + "/maksa_tokenilla", body, true);
