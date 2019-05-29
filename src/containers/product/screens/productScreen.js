@@ -61,6 +61,7 @@ class Product extends Component {
   }
 
   handleAddToCart(){
+    console.log("addtoCarttiin lähtee: ",this.state.item)
     this.props.addToCart(this.state.item, this.state.count);
 
     if(getQuantity(this.props, this.state.item.id) + 1 <= this.state.item.stock_quantity ||

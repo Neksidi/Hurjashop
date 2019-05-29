@@ -165,7 +165,8 @@ async function logInFb(access_token) {
 
   var response = await Api.post(AUTH_URL + "/loginfb", body, false);
 
-  console.log(response)
+  console.log("Response: ",response)
+  
 }
 
 async function logInGoogle(code, user) {

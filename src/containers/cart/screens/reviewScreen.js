@@ -118,6 +118,21 @@ class Review extends Component {
         })
         return sum.toFixed(2);
     }
+    getTotal(products) {
+        let sum = 0;
+        products.map((item, i) => {
+            sum += parseFloat(item.total);
+        })
+        return sum.toFixed(2);
+    }   
+     getTaxes(products) {
+        let sum = 0;
+        products.map((item, i) => {
+            sum += parseFloat(item.total_tax);
+        })
+        return sum.toFixed(2);
+    }
+
 
     render() {
         console.log("Review render");
@@ -174,6 +189,9 @@ class Review extends Component {
                             {/*<Text>{this.props.order.status}</Text>*/}
                         </View>
                         <View style={reviewStyles.item}>
+                            <Text>Tuotteet yhteensä: {this.getTotal(this.props.order.line_items)}{currency}</Text>
+                            <Text>Alv: {this.getTaxes(this.props.order.line_items)}{currency}</Text>
+                            <Text>Toimitus: {this.props.order.shipping_lines[0].total}{currency}</Text>
                             <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
                         </View>
 

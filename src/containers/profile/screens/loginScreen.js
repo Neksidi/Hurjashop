@@ -102,10 +102,8 @@ class Login extends Component {
   //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
     console.log("afterFbLoginComplete")
-    var user=await logInFb(token);
-    console.log("User: ",user)
+    await logInFb(token);
     this.props.setLoginStatus(true);
-    await this.props.addContact(user);
     this.props.navigation.navigate('Home');
 
     /*const response = await fetch(
