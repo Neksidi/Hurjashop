@@ -5,7 +5,6 @@ const INITIAL_STATE = {
 };
 
 const categoryReducer = (state = INITIAL_STATE, action) => {
-  console.log("category action: ",action.type)
   switch (action.type) {
     case SET_CATEGORIES: {
       let { all } = state;

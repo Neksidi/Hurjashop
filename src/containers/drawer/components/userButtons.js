@@ -34,35 +34,16 @@ class UserButtons extends Component {
       }
     }
   }
-
-  getName(data) {
-    console.log("getName: ",data)
-    var firstName = "";
-    var lastName = "";
-    //1.st login returns body previous returns an object inside array TODO: fix
-    try{
-      data.map((item, i) => {
-        firstName=item.first_name
-        lastName=item.last_name
-    })
-    }
-    catch{
-      firstName=data.body.first_name;
-      lastName=data.body.last_name;
-    }
-    return firstName+" "+lastName
-}  
   
-
   render() {
-    console.log("UserButtons render: ",this.props.contact)
-    console.log(typeof this.props.contact)
+    console.log("User in UserButtons")
+    console.log(this.props.contact)
     return (      
             <View style={{ width: '100%' }}>  
                 {
                     this.props.isLoggedIn ? (
                         <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10}}>
-                          <Text style={app_style.drawer_contact}>Hei {this.getName(this.props.contact)}!</Text>
+                          <Text style={app_style.drawer_contact}>Hei {this.props.contact.first_name} {this.props.contact.last_name}!</Text>
                           <Item title='Profiili' icon='user-o' onPress={() => this.props.navigation.navigate('Profile')}/>
                           <Item title='Omat tilaukset' icon='list-alt' onPress={() => this.props.navigation.navigate('CustomerOrders')}/>
                           <Item title='Kirjaudu ulos' icon='sign-out' onPress={() => logOutPopup(this.props)}/>

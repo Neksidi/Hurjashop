@@ -169,15 +169,17 @@ async function logInFb(access_token) {
   if(!response.error) {
     //Add contact & save session
     var id = response.session.sessionId;
-    var username= response.session.email;
+    var username= response.session.username;
     console.log(response.user)
+    console.log(response.session);
     console.log("Saving " + id + " and " + username)
     
     //Save session
     
     setSessionId(id);
     setSessionUser(username);
-    return response.user;
+
+    return response.user.body;
   }
   else {
     //TODO: Show error modal.
@@ -195,8 +197,10 @@ async function logInGoogle(code, user) {
   }
 
   var response = await Api.post(AUTH_URL + "/logingoogle", body, false);
-
-  console.log(response);
+  console.log("Login done")
+  console.log(response)
+  console.log(response.user)
+  console.log(response.session);
   if(!response.error) {
     //Add contact & save session
     var id = response.session.sessionId;
@@ -207,7 +211,7 @@ async function logInGoogle(code, user) {
     
     setSessionId(id);
     setSessionUser(username);
-    return response.user;
+    return response.user[0];
   }
   else {
     //TODO: Show error modal.

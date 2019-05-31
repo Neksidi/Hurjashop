@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 };
   
   const orderReducer = (state = INITIAL_STATE, action) => {
-    console.log("orderReducer action: ",action.type)
     switch (action.type) {
       case ADD_ORDER: {
         state.new = action.payload;

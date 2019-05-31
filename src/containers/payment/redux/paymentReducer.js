@@ -7,8 +7,6 @@ const INITIAL_STATE = {
   const paymentReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case ADD_PAYMENT: {
-        console.log("Payment reducer")
-        console.log(action.payload);
         state.payment = action.payload;
         return {...state};
       }
