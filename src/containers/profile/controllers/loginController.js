@@ -164,11 +164,13 @@ async function logInFb(access_token) {
   }
 
   var response = await Api.post(AUTH_URL + "/loginfb", body, false);
+  console.log(response)
 
   if(!response.error) {
     //Add contact & save session
     var id = response.session.sessionId;
-    var username = response.session.username;
+    var username= response.session.email;
+    console.log(response.user)
     console.log("Saving " + id + " and " + username)
     
     //Save session
@@ -179,6 +181,7 @@ async function logInFb(access_token) {
   }
   else {
     //TODO: Show error modal.
+    console.log("error!")
   }
 }
 

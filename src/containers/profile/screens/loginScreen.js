@@ -92,6 +92,8 @@ class Login extends Component {
       let token = data.accessToken.toString();
       console.log("Fb token");
       console.log(token);
+      console.log("Fb data")
+      console.log(data)
       await this.afterFbLoginComplete(token);
     }
     else {
@@ -102,8 +104,10 @@ class Login extends Component {
   //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
     console.log("afterFbLoginComplete")
-    await logInFb(token);
+    var user= await logInFb(token);
+    console.log("After Fblogin user: ",user)
     this.props.setLoginStatus(true);
+    await this.props.addContact(user);
     this.props.navigation.navigate('Home');
 
     /*const response = await fetch(
