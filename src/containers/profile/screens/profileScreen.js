@@ -106,25 +106,27 @@ class Profile extends Component {
 	}
 
 	render() {
+		console.log("ProfileScreen render: ",this.props)
+		console.log("ProfileScreen render: ",this.props.contact)
 		var address = '';
 		var city = '';
 		var postcode = '';
 		var country = '';
 		var firstname = '';
-		if (this.props.shipping.address_1) {
-			address = this.props.shipping.address_1;
+		if (this.props.contact.billing.country) {
+			address = this.props.contact.billing.address_1;
 		}
-		if (this.props.shipping.city) {
-			city = this.props.shipping.city;
+		if (this.props.contact.billing.country) {
+			city = this.props.contact.billing.city;
 		}
-		if (this.props.shipping.postcode) {
-			postcode = this.props.shipping.postcode;
+		if (this.props.contact.billing.country) {
+			postcode = this.props.contact.billing.postcode;
 		}
-		if (this.props.shipping.country) {
-			country = this.props.shipping.country;
+		if (this.props.contact.billing.country) {
+			country = this.props.contact.billing.country;
 		}
-		if (this.props.shipping.first_name) {
-			firstname = this.props.shipping.first_name;
+		if (this.props.contact.billing.first_name) {
+			firstname = this.props.contact.billing.first_name;
 		}
 		console.log("ASD")
 		return (

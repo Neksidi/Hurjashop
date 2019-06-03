@@ -108,6 +108,7 @@ class Login extends Component {
     console.log("After Fblogin user: ",user)
     this.props.setLoginStatus(true);
     await this.props.addContact(user);
+    console.log("User: ",user)
     this.props.navigation.navigate('Home');
 
     /*const response = await fetch(

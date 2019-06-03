@@ -36,8 +36,6 @@ class UserButtons extends Component {
   }
   
   render() {
-    console.log("User in UserButtons")
-    console.log(this.props.contact)
     return (      
             <View style={{ width: '100%' }}>  
                 {
