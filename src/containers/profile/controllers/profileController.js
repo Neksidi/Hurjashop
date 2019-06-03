@@ -1,7 +1,5 @@
 import Api from '../../../app/controllers/api'
 import { AUTH_URL, WEB_URL } from '../../../app/config'
-import { setSessionId, setSessionUser, removeSessionId, removeSessionUser } from '../../../app/controllers/secureStorage';
-import { Alert } from 'react-native';
 
 async function updateUser(user,id) {
 

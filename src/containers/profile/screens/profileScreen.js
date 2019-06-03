@@ -63,43 +63,7 @@ class Profile extends Component {
 				country: this.state.country,
 			}
 		}
-		console.log(newData)
-		console.log(newData)
-
 		var user= await updateUser(newData,this.props.contact.id);
-		console.log("NewData: ",user)
-
-		//TODO update customer from Router
-
-		/*fetch(WEB_URL + '/customer/update/ ' + this.props.contact.id, {
-			method: 'PUT',
-			headers: {
-				accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(newData)
-		})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					response: responseJson,
-				}, function () {
-					if (responseJson != 400) {
-						this.props.contact.shipping.address_1 = this.state.address;
-						this.props.contact.shipping.city = this.state.city;
-						this.props.contact.shipping.postcode = this.state.postcode;
-						this.props.contact.shipping.country = this.state.country;
-						this.setState({ isUpdating: false })
-						this.refs.toast.show('Käyttäjän tiedot päivitetty');
-					}
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-			*/
-
-
 	}
 
 	componentDidUpdate() {

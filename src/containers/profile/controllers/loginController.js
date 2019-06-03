@@ -195,10 +195,10 @@ async function logInGoogle(code, user) {
     "auth_code": code,
     "user": user,
   }
-
-  var response = await Api.post(AUTH_URL + "/logingoogle", body, false);
+console.log("Body in login google: ",body)
+  var response = await Api.post(AUTH_URL + "/logingoogle", body, true);
  
-  console.log(response)
+  console.log("Login controller response: ",response)
   console.log(response.session);
   if(!response.error) {
     //Add contact & save session
@@ -259,7 +259,7 @@ async function fetchUser(username, parent) {
     console.log("fetching user " + username)
     const response = await Api.get(WEB_URL + "/customer/email/" + username, true)
   
-    console.log(response)
+    console.log("Response: ",response)
     if(!response.error) {
 
         let contactData = {
@@ -270,6 +270,7 @@ async function fetchUser(username, parent) {
             billing: response.billing,
             shipping: response.shipping,
         }
+        console.log("ContactData: ",contactData)
         parent.props.addContact(contactData)
         parent.props.setLoginStatus(true)     // Todo: Possibly replace with setContactStatus?
     } else {

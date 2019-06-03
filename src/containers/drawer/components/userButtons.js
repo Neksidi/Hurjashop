@@ -29,6 +29,7 @@ class UserButtons extends Component {
         await logIn(this.props);
 
         if(this.props.isLoggedIn) {
+          console.log("Fetching user.. ",user)
           fetchUser(user, this);
         }
       }
@@ -36,7 +37,8 @@ class UserButtons extends Component {
   }
   
   render() {
-    return (      
+    console.log("Props @ userbuttons: ",this.props)
+    return ( 
             <View style={{ width: '100%' }}>  
                 {
                     this.props.isLoggedIn ? (
