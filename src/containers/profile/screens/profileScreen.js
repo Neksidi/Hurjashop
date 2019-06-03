@@ -6,6 +6,7 @@ import { Input } from 'react-native-elements'
 import ButtonDefault from '../components/defaultLoginButton'
 import Toast from '../toast'
 import LinearGradient from 'react-native-linear-gradient';
+import { updateUser } from '../../../containers/profile/controllers/profileController'
 //import { HeaderBackButton } from 'react-navigation';
 
 class Profile extends Component {
@@ -43,7 +44,7 @@ class Profile extends Component {
 		}
 	};
 
-	updateUser() {
+	async updateUser() {
 		let newData = {
 			shipping: {
 				first_name: this.props.contact.first_name,
@@ -62,7 +63,13 @@ class Profile extends Component {
 				country: this.state.country,
 			}
 		}
+		console.log(newData)
+		console.log(newData)
 
+		var user= await updateUser(newData,this.props.contact.id);
+		console.log("NewData: ",user)
+
+		//TODO update customer from Router
 
 		/*fetch(WEB_URL + '/customer/update/ ' + this.props.contact.id, {
 			method: 'PUT',
@@ -106,8 +113,6 @@ class Profile extends Component {
 	}
 
 	render() {
-		console.log("ProfileScreen render: ",this.props)
-		console.log("ProfileScreen render: ",this.props.contact)
 		var address = '';
 		var city = '';
 		var postcode = '';
@@ -128,7 +133,6 @@ class Profile extends Component {
 		if (this.props.contact.billing.first_name) {
 			firstname = this.props.contact.billing.first_name;
 		}
-		console.log("ASD")
 		return (
 			/*<View>
 				<Text>This is your profile</Text>
