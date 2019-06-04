@@ -7,7 +7,7 @@ export const reviewStyles = StyleSheet.create({
         padding: 10,
     },
     list: {
-   
+
     },
     item: {
         height: 'auto',
@@ -15,14 +15,20 @@ export const reviewStyles = StyleSheet.create({
         width: '100%',
         borderRadius: 5,
         marginBottom: 10,
-        paddingVertical: 1,
-        paddingLeft: 8,
         position: 'relative',
         shadowColor: '#000000',
         backgroundColor: '#FFFFFF',
         flex: 1,
+        textAlign: 'right',
         flexDirection: 'column',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        borderWidth: 2,
+        borderRadius:2,
+    },
+    header: {
+        fontSize:20,
+        backgroundColor: 'black',
+        color: 'red',
     },
     empty:{
         flex:1,
@@ -30,6 +36,13 @@ export const reviewStyles = StyleSheet.create({
     text: {
         textAlign: 'right',
         marginRight: 20,
+        backgroundColor: '#eae7e4',
+    },
+    row1: {
+
+    },
+    row2: {
+        backgroundColor: '#eae7e4',
     },
     textInput: {
         width: '100%',

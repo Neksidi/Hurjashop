@@ -276,9 +276,19 @@ async function fetchUser(username, parent) {
     } else {
       // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
       console.log("Error fetching user")
-    }
-    
-    
+    }  
+}
+async function fetchUserDetails(username) {
+  console.log("fetching user " + username)
+  const response = await Api.get(WEB_URL + "/customer/email/" + username, true)
+
+  console.log("Response: ",response)
+  if(!response.error) {
+    return response;
+  } else {
+    // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
+    console.log("Error fetching user")
+  }  
 }
 
 async function logIn(props){
@@ -354,6 +364,7 @@ export {
     registerFb,
     handleLogin,
     fetchUser,
+    fetchUserDetails,
     afterLoginComplete,
     logIn,
     logInFb,

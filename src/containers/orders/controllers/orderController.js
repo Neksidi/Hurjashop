@@ -33,9 +33,22 @@ async function getOrders(userId) {
       //TODO: Show error modal?
   }
 }
+ 
+async function updateOrder(newOrder, order) {
+  console.log("Attempting to update order:")
+  console.log(order);
+  const response = await Api.put(WEB_URL + '/order/update/'+newOrder.id, order, false);
+  if(!response.error) {
+      console.log("Updateorder response: ",response);
+      return response;
+  } else {
+      //TODO: Show error modal?
+  }
+}
 
 export {
   updateOrderStatus,
   createOrder,
-  getOrders
+  getOrders,
+  updateOrder
 }

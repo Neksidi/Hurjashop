@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { View, ActivityIndicator, Animated, Text } from 'react-native';
 import { addOrder } from '../redux/orderActions'
 import { theme, primaryGradientColors, styles } from '../../../app/styles/global'
-import { createOrder } from '../controllers/orderController'
+import { createOrder, updateOrder } from '../controllers/orderController'
 import { bindActionCreators } from 'redux';
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
@@ -76,8 +76,12 @@ class Order extends Component {
 
 
     async formOrder() {
+        console.log("Luomma tilauksen: ")
+        console.log(this.props.contact)
+        console.log("ID: ",this.props.contact.id)
+        console.log("Email: ",this.props.contact.email)
             var order = {
-                    "customer_id:": 105, //this.props.contact.id,
+                    "customer_id": this.props.contact.id, //this.props.contact.id,
                     "payment_method": this.props.methods.payment_method,
                     "payment_method_title": this.props.methods.payment_method_title,
                     "set_paid": false,
@@ -114,6 +118,12 @@ class Order extends Component {
             }
             console.log(order)
             var newOrder = await createOrder(order);
+            console.log("NewOrder: ",newOrder)
+            //Update order to set customer_id into order
+            console.log("Lähdetään päivittelemään tilausta")
+            var updatedOrder = await updateOrder(newOrder,order)
+            console.log("Updated order: ",updatedOrder)
+            
             console.log("Addind this order:")
             console.log(newOrder);
             this.props.addOrder(newOrder);

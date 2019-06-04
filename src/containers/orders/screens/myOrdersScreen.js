@@ -7,6 +7,8 @@ import { getOrders } from '../controllers/orderController'
 import { setOrders } from '../redux/orderActions'
 import { theme } from '../../../app/styles/global'
 import { Loader } from '../../../app/components/common/loader/loader'
+import { getSessionUser } from '../../../app/controllers/secureStorage';
+import { fetchUserDetails } from '../../profile/controllers/loginController';
 
 class CustomerOrders extends Component {
 	constructor(props) {
@@ -15,6 +17,7 @@ class CustomerOrders extends Component {
 			//TODO: change to true when loading function is working
 			isLoading: true,
 			data: null,
+			orders: null,
 		};
 	}
 	
@@ -27,7 +30,11 @@ class CustomerOrders extends Component {
 	};
 
 	async componentDidMount() {
-		var fetchedOrders = await getOrders(0);
+		var user = await getSessionUser();
+		console.log("User: " + user)
+		var user_details = await fetchUserDetails(user)
+		console.log("Details: ",user_details)
+		var fetchedOrders = await getOrders(user_details.id);
 		console.log("Orders fetched")
 		console.log(fetchedOrders)
 		await this.props.setOrders(fetchedOrders);
@@ -48,6 +55,8 @@ class CustomerOrders extends Component {
     render() {
 		console.log("Render orders")
 		console.log(this.props.orders)
+
+
 		if(this.state.isLoading){
 		  return (<Loader />);
 		}

@@ -150,48 +150,48 @@ class Review extends Component {
                     start={{x: 0, y: 0}} end={{x: 1, y: 1}}
                     colors={primaryGradientColors} 
                     style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
-                <ScrollView>
-                    <View>
-                        <View style={reviewStyles.item}>
-                            <Text style={{fontSize:20}}>Valitut tuotteet</Text>
-                            <FlatList style={reviewStyles.list} data={this.props.order.line_items} renderItem={({ item }) => 
-                                <ReviewItem 
-                                    data={item} 
-                                    currency={currency} 
-                                    onPress={() => this._onPress(item)} 
-                                    parentFlatList={this} />}>
-                            </FlatList>
+                    <ScrollView>
+                        <View>
+                            <View style={reviewStyles.item}>
+                                <Text style={reviewStyles.header}>Valitut tuotteet</Text>
+                                <FlatList data={this.props.order.line_items} renderItem={({ item }) => 
+                                    <ReviewItem
+                                        data={item} 
+                                        currency={currency} 
+                                        onPress={() => this._onPress(item)} 
+                                        parentFlatList={this} />}>
+                                </FlatList>
                             <Text style={reviewStyles.text}>Tuotteet yhteensä: {this.getSum(this.props.order.line_items)}{currency}</Text>
                         </View>
                         <View style={reviewStyles.item}>
-                            <Text style={{fontSize:20}}>Laskutustiedot</Text>
-                            <Text>Osoite: {this.props.order.billing.address_1}</Text>
-                            <Text>Postitoimipaikka: {this.props.order.billing.city}</Text>
-                            <Text>Postinumero: {this.props.order.billing.postcode}</Text>
-                            <Text>Sähköpostiosoite: {this.props.order.billing.email}</Text>
-                            <Text>Etunimi: {this.props.order.billing.first_name}</Text>
-                            <Text>Sukunimi: {this.props.order.billing.last_name}</Text>
+                            <Text style={reviewStyles.header}>Laskutustiedot</Text>
+                            <Text style={reviewStyles.row1}>Osoite: {this.props.order.billing.address_1}</Text>
+                            <Text style={reviewStyles.row2}>Postitoimipaikka: {this.props.order.billing.city}</Text>
+                            <Text style={reviewStyles.row1}>Postinumero: {this.props.order.billing.postcode}</Text>
+                            <Text style={reviewStyles.row2}>Sähköpostiosoite: {this.props.order.billing.email}</Text>
+                            <Text style={reviewStyles.row1}>Etunimi: {this.props.order.billing.first_name}</Text>
+                            <Text style={reviewStyles.row2}>Sukunimi: {this.props.order.billing.last_name}</Text>
                             {/*<Text>{this.props.order.id}</Text>*/}
-                            <Text>Tilausnumero: {this.props.order.order_key}</Text>
+                            <Text style={reviewStyles.row1}>Tilausnumero: {this.props.order.order_key}</Text>
                             {/*<Text>{this.props.order.payment_method}</Text>*/}
-                            <Text>Maksutapa: {this.props.order.payment_method_title}</Text>
+                            <Text style={reviewStyles.row2}>Maksutapa: {this.props.order.payment_method_title}</Text>
                         </View>
                         <View style={reviewStyles.item}>
-                            <Text style={{fontSize:20}}>Toimitustiedot</Text>
-                            <Text>Osoite: {this.props.order.shipping.address_1}</Text>
-                            <Text>Postitoimipaikka: {this.props.order.shipping.city}</Text>
-                            <Text>Etunimi: {this.props.order.shipping.first_name}</Text>
-                            <Text>Sukunimi: {this.props.order.shipping.last_name}</Text>
-                            <Text>Postinumero: {this.props.order.shipping.postcode}</Text>
+                            <Text style={reviewStyles.header}>Toimitustiedot</Text>
+                            <Text style={reviewStyles.row1}>Osoite: {this.props.order.shipping.address_1}</Text>
+                            <Text style={reviewStyles.row2}>Postitoimipaikka: {this.props.order.shipping.city}</Text>
+                            <Text style={reviewStyles.row1}>Etunimi: {this.props.order.shipping.first_name}</Text>
+                            <Text style={reviewStyles.row2}>Sukunimi: {this.props.order.shipping.last_name}</Text>
+                            <Text style={reviewStyles.row1}>Postinumero: {this.props.order.shipping.postcode}</Text>
                             {/*<Text>{this.props.order.shipping_lines.method_id}</Text>*/}
-                            <Text>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
-                            <Text>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
+                            <Text style={reviewStyles.row2}>Toimitus: {this.props.order.shipping_lines[0].method_title}</Text>
+                            <Text style={reviewStyles.row1}>Toimituksen hinta: {this.props.order.shipping_lines[0].total}{currency}</Text>
                             {/*<Text>{this.props.order.status}</Text>*/}
                         </View>
                         <View style={reviewStyles.item}>
-                            <Text>Tuotteet yhteensä: {this.getTotal(this.props.order.line_items)}{currency}</Text>
-                            <Text>Alv: {this.getTaxes(this.props.order.line_items)}{currency}</Text>
-                            <Text>Toimitus: {this.props.order.shipping_lines[0].total}{currency}</Text>
+                            <Text style={reviewStyles.row1}>Tuotteet yhteensä: {this.getTotal(this.props.order.line_items)}{currency}</Text>
+                            <Text style={reviewStyles.row2}>Alv: {this.getTaxes(this.props.order.line_items)}{currency}</Text>
+                            <Text style={reviewStyles.row1}>Toimitus: {this.props.order.shipping_lines[0].total}{currency}</Text>
                             <Text style={reviewStyles.text}>Kaikki yhteensä {this.props.order.total}{currency}</Text>
                         </View>
 
