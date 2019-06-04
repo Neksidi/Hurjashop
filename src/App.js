@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import Navigation from './navigation'
 import Reducers from './app/redux/reducers'
 import NavigationService from './navigation/navigators/NavigationService';
-
+import {name as appName} from '../app.json';
 //import fetchMiddleware from './redux/middleware/fetchMiddleware'
 
 const store = createStore(Reducers);
@@ -29,4 +29,4 @@ export default class App extends Component {
   }
 }
 
-AppRegistry.registerComponent('App', () => App);
+AppRegistry.registerComponent(appName, () => App);

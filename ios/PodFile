@@ -1,0 +1,7 @@
+target 'HurjaShopClient' do
+	pod 'FBSDKCoreKit', '~> 4.40.0'  
+	pod 'FBSDKLoginKit', '~> 4.40.0'
+	pod 'FBSDKShareKit', '~> 4.40.0'
+	pod 'GoogleSignIn', '~> 4.4.0'
+	pod 'Firebase/Core'
+end
