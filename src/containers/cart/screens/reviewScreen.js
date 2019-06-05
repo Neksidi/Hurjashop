@@ -11,6 +11,7 @@ import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
 import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
+import { emptyCart } from '../../cart/redux/cartActions'
 
 class Review extends Component {
     static navigationOptions = {
@@ -108,6 +109,7 @@ class Review extends Component {
     console.log("Adding payment data")
     console.log(payment)
     await this.props.addPayment(payment);
+    await this.props.emptyCart();
     }
 
     getSum(products) {
@@ -135,6 +137,7 @@ class Review extends Component {
 
 
     render() {
+        console.log(this.props)
         console.log("Review render");
         console.log(this.props.order);
         var currency = "";
@@ -165,14 +168,14 @@ class Review extends Component {
                         </View>
                         <View style={reviewStyles.item}>
                             <Text style={reviewStyles.header}>Laskutustiedot</Text>
-                            <Text style={reviewStyles.row1}>Osoite: {this.props.order.billing.address_1}</Text>
-                            <Text style={reviewStyles.row2}>Postitoimipaikka: {this.props.order.billing.city}</Text>
-                            <Text style={reviewStyles.row1}>Postinumero: {this.props.order.billing.postcode}</Text>
-                            <Text style={reviewStyles.row2}>Sähköpostiosoite: {this.props.order.billing.email}</Text>
+                            <Text style={reviewStyles.row1}>Osoite: {this.props.contact.shipping.address_1}</Text>
+                            <Text style={reviewStyles.row2}>Postitoimipaikka: {this.props.contact.shipping.city}</Text>
+                            <Text style={reviewStyles.row1}>Postinumero: {this.props.contact.shipping.postcode}</Text>
+                            <Text style={reviewStyles.row2}>Sähköpostiosoite: {this.props.contact.email}</Text>
                             <Text style={reviewStyles.row1}>Etunimi: {this.props.order.billing.first_name}</Text>
                             <Text style={reviewStyles.row2}>Sukunimi: {this.props.order.billing.last_name}</Text>
                             {/*<Text>{this.props.order.id}</Text>*/}
-                            <Text style={reviewStyles.row1}>Tilausnumero: {this.props.order.order_key}</Text>
+                            <Text style={reviewStyles.row1}>Tilausnumero: {this.props.order.id}</Text>
                             {/*<Text>{this.props.order.payment_method}</Text>*/}
                             <Text style={reviewStyles.row2}>Maksutapa: {this.props.order.payment_method_title}</Text>
                         </View>
@@ -215,6 +218,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ addPayment }, dispatch));
+	bindActionCreators({ addPayment , emptyCart }, dispatch));
 
 export default connect(mapStateToProps, mapDispatchToProps)(Review);
