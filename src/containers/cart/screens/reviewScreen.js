@@ -154,7 +154,7 @@ class Review extends Component {
                         <View>
                             <View style={reviewStyles.item}>
                                 <Text style={reviewStyles.header}>Valitut tuotteet</Text>
-                                <FlatList data={this.props.order.line_items} renderItem={({ item }) => 
+                                <FlatList style={reviewStyles.flatlist} data={this.props.order.line_items} renderItem={({ item }) => 
                                     <ReviewItem
                                         data={item} 
                                         currency={currency} 
@@ -189,6 +189,7 @@ class Review extends Component {
                             {/*<Text>{this.props.order.status}</Text>*/}
                         </View>
                         <View style={reviewStyles.item}>
+                            <Text style={reviewStyles.header}>Hintatiedot</Text>
                             <Text style={reviewStyles.row1}>Tuotteet yhteensä: {this.getTotal(this.props.order.line_items)}{currency}</Text>
                             <Text style={reviewStyles.row2}>Alv: {this.getTaxes(this.props.order.line_items)}{currency}</Text>
                             <Text style={reviewStyles.row1}>Toimitus: {this.props.order.shipping_lines[0].total}{currency}</Text>

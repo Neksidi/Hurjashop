@@ -38,11 +38,11 @@ class ReviewItem extends Component {
   render(){
     return(
         <TouchableOpacity  key={ this.props.data.id } style={ reviewStyles.reviewItem } disabled={true}>
-          <View style={{width: 100, height: '100%', justifyContent: 'center', flex: 2,}}>
+          <View style={{width: 100, height: '100%', justifyContent: 'flex-start', flex: 2,}}>
             <Image source={{uri: this.getImage(this.props.data.product_id)}} style={reviewStyles.reviewImage}/>
           </View>
 
-          <View style={{width: 100, height: '100%', flex: 4, justifyContent: 'center'}}>
+          <View style={{width: 100, height: '100%', flex: 4, justifyContent: 'center', alignItems:'flex-start', paddingLeft:2}}>
               <Text style={reviewStyles.reviewItemName}>{this.props.data.name}</Text>
               <Text style={reviewStyles.reviewItemName}>{this.getPrice()} {this.props.currency}</Text>
           </View>     

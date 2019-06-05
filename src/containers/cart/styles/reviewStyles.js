@@ -27,8 +27,11 @@ export const reviewStyles = StyleSheet.create({
     },
     header: {
         fontSize:20,
-        backgroundColor: 'black',
-        color: 'red',
+        backgroundColor: '#b5d8f6',
+        fontWeight: 'bold',
+    },
+    flatlist: {
+
     },
     empty:{
         flex:1,
@@ -36,7 +39,7 @@ export const reviewStyles = StyleSheet.create({
     text: {
         textAlign: 'right',
         marginRight: 20,
-        backgroundColor: '#eae7e4',
+        fontWeight: 'bold',
     },
     row1: {
 
@@ -93,9 +96,10 @@ export const reviewStyles = StyleSheet.create({
       height: 70,
       paddingHorizontal: 20,
       alignSelf: 'flex-start',
+      alignSelf:'flex-start',
     },
     reviewItemName: {
-      fontSize: 20,
-      marginHorizontal: 5,
+      fontSize: 18,
+      marginHorizontal: 2,
     },  
 });
