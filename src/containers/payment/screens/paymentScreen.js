@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, WebView, ActivityIndicator } from 'react-native';
+import { View, Text, WebView, ActivityIndicator, Dimensions } from 'react-native';
 import { newCardPayment, existingCardPayment } from '../controllers/paymentController'
 import { theme } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import { PH_URL } from '../../../app/config'
 import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
+import Success from '../screens/paymentSuccessScreen'
+
+//const WIDTH = Dimensions.get("window").width;
 
 class Payment extends Component {
 	constructor(props) {
@@ -41,7 +44,7 @@ class Payment extends Component {
 		async webviewHandler(data) {
 			var parsed = JSON.parse(data);
 			console.log("Parsed: ",parsed)
-			if(parsed.status === 201) {
+			if(parsed.status == 201) {
 				console.log("Payment done!")
 				this.setState({
 					isCancelled: false,
@@ -50,32 +53,35 @@ class Payment extends Component {
 					orderUpdated: true,
 				})
 				
-			} else if(parsed.status === 402) {
+			} else if(parsed.status == 402) {
+				console.log("Status 402")
 				//TODO: Show modal telling about payment problems. E.g. Contact your bank.
 				this.setState({
 					isCancelled: false,
-					failed: false,
+					failed: true,
 					isPaid: false,
 					orderUpdated: false,
 				})
-			} else if(parsed.status === 500) {
+			} else if(parsed.status == 500) {
+				console.log("Status 500")
 				//TODO: Show modal telling about server error. E.g. Contact our customer support.
 				this.setState({
 					isCancelled: false,
-					failed: false,
+					failed: true,
 					isPaid: false,
 					orderUpdated: false,
 				})
 			} else {
+				console.log("Else")
+				console.log(parsed.status)
 				//TODO: Show modal telling about server error. E.g. Contact our customer support / Report bug.
 				this.setState({
 					isCancelled: false,
-					failed: false,
+					failed: true,
 					isPaid: false,
 					orderUpdated: false,
 				})
 			}
-
 			console.log(parsed)
 			var token = parsed.token;
 			var type = parsed.type;
@@ -125,9 +131,11 @@ class Payment extends Component {
 			console.log("PAYDAY")
 			console.log(this.props)
 			if (this.state.isLoading) {
+				console.log("Pyöritellään")
 				return (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />)
 			} 
 			else if (this.state.isCancelled) {
+				console.log("Peruuntui")
 				return(
 					<View>
 						<Text>
@@ -138,6 +146,7 @@ class Payment extends Component {
 				);
 			} 
 			else if (this.state.failed) {
+				console.log("Feilas")
 				return(
 					<View>
 						<Text>
@@ -149,6 +158,7 @@ class Payment extends Component {
 				);
 			} 
 			else if (!this.state.token) {
+				console.log("No token")
 				return (
 					<View style={{ flex: 1, height: 200, backgroundColor: 'powderblue' }}>
 						<WebView
@@ -178,13 +188,13 @@ class Payment extends Component {
 				)
 			} 
 			else if(this.state.isPaid && this.state.orderUpdated) {
+				console.log("isPaid & orderUpdated")
 				return (
-					<View>
-						<Text>Tilauksesi on suoritettu.</Text>
-					</View>
+					<Success data={this.props}/>
 				)
 			}
 			else {
+				console.log("Something's wrong")
 				return (
 					<View>
 						<Text>Jokin meni vikaan</Text>
