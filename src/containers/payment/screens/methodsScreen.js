@@ -209,6 +209,20 @@ class Methods extends Component {
             this.state.oldcard ? (this.setState({ oldcard: false, newcard: false, isChecked: false })) : (this.setState({ oldcard: true, newcard: false, payment_method: "oCard", payment_method_title: "Korttimaksu" }));
         }
     }
+    handleChange(text){
+
+        if(text.length<5){
+            return;
+        }
+        this.setState(
+            { postcode: text },
+            callback = () => {
+                console.log(this.state.postcode);
+                console.log("Haetaan: " + this.state.postcode)
+                this.getPickUps(this.state.postcode)
+                this.setState({ isLoadingPoints: true })
+            }) 
+    }
 
 
 	render() {
@@ -265,8 +279,10 @@ class Methods extends Component {
                                 maxLength={5}
                                 keyboardType='numeric'
                                 placeholder='00000' 
-                                onChangeText={(text) => this.setState({ postcode: text })} 
-                                onSubmitEditing={(event) => this.postcodeHandler()} />
+                                onChangeText={(text) => this.handleChange(text)}
+                                //onChangeText={(text) => this.setState({ postcode: text })} 
+                                onSubmitEditing={(event) => this.postcodeHandler()} 
+                                />
                             </View>
                             
                             {postiPoints}
