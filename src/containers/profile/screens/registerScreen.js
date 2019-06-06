@@ -11,20 +11,22 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: 'kissa',
+      first_name: '',
       first_nameValidation: false,
-      last_name: 'kissa',
+      last_name: '',
       last_nameValidation: false,
-      email: 'kissa@hurja.fi',
+      email: '',
       emailValidation: false,
-      password: 'kissakissa123',//STRING
+      password: '',//STRING
       passwordValidation: false,
-      password_confirm: 'kissakissa123',//STRING
+      password_confirm: '',//STRING
       password_confirmValidation: false,//BOOL
       checked: false,
       isFilled: true, //
       visiblePassword: false,
-      visibleConfirmation: false
+      visibleConfirmation: false,
+      validation: false,
+      infotext:"",
     }
   }
 
@@ -73,6 +75,7 @@ export default class Register extends Component {
     var text1 = "Olen lukenut ja hyväksyn kaikki "
     var text2 = "käyttöehdot"
     var text3 = "."
+
 
     return (
       <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{ flex: 1, padding: 20, }}>
@@ -200,7 +203,26 @@ export default class Register extends Component {
               <View style={[styles.checkBox,{ width: '100%', marginVertical: 10, justifyContent:'flex-start' }]}>
                 
                 <CheckBox checked={this.state.checked} 
-                onPress={() => { this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true })); }}
+                onPress={() => {
+                  this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true }));
+                  
+                  if (!this.state.emailValidation){
+                    this.state.infotext="Tarkista sähköpostiosoite!";
+                    console.log("Tarkista sähköposti")
+                  }
+                  else if(!this.state.passwordValidation){
+                    this.state.infotext="Tarkista salasana!";
+                    console.log("Tarkista salasana")
+                  }
+                  else if(!this.state.password_confirmValidation){
+                    this.state.infotext="Salasanat eivät täsmää, tarkista salasanat!";
+                    console.log("Salasanat ei täsmää")
+                  }
+                  else{
+                    this.state.infotext="";
+                    console.log("else")
+                  }
+                }}
                 title={<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
 
                   <Text style={{ marginLeft: 5}}>{text1} 
@@ -209,9 +231,11 @@ export default class Register extends Component {
                   </Text>
                 </View>}
                 
-                />
+                />          
+              </View>
 
-              
+              <View>
+                <Text>{this.state.infotext}</Text>
               </View>
 
               <View style={styles.submitButtonContainer}>
@@ -220,7 +244,7 @@ export default class Register extends Component {
                   title='Rekisteröidy' 
                   errorHandler={() => { console.log("Error handle") }} 
                   onPress={() => { register(this) }} 
-                  disabled={!this.state.isFilled} />
+                  disabled={!this.state.checked||!this.state.isFilled} />
               </View>
 
             </View>

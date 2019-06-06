@@ -9,7 +9,7 @@ function validate(type, parent) {
     switch (type) {
       case 'email': {
         //console.log('VALIDOI EMAIL');
-        const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
+        const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if(emailReg.test(parent.state.email) === true){
           parent.setState({emailValidation: true});
@@ -23,7 +23,7 @@ function validate(type, parent) {
       }
       case 'password': {
         console.log('VALIDOI SALIS');
-        if(parent.state.password.length > 0){                 //TODO: Change this to required minimum length
+        if(parent.state.password.length > 7){                 //TODO: Change this to required minimum length
           //parent.setState({passwordValidation: true});
           console.log("true password")
           return true;
@@ -97,27 +97,29 @@ function validateAll(parent) {
 
 async function register(parent) {
   console.log("REGISTERING")
-  var customer = {
-    "email": parent.state.email,
-    "first_name": parent.state.first_name,
-    "last_name": parent.state.last_name,
-    "username": parent.state.email,
-    "password": parent.state.password,
-  }
-  console.log("Sending register request");
-  var response = await Api.post(WEB_URL + "/customers", customer, false);
-
-  console.log(response)
-  if(!response.err) {
-    parent.refs.register_button.success();
-    parent.props.navigation.navigate('Home');
-    //TODO: Launch a modal saying: "Tilisi luotiin. Voit kirjautua sisään, 
-    // vahvistettuasi sähköpostisi sinulle lähettämästämme sähköpostiviestistä."
-  } else {
-    parent.refs.register_button.reset();
-    //TODO: Show error modal. E.g. 
-    //Palvelimeen ei saada tällä hetkellä yhteyttä. Tarkista Internet-yhteytesi.
-  }
+  console.log("Parent: ", parent)
+    var customer = {
+      "email": parent.state.email,
+      "first_name": parent.state.first_name,
+      "last_name": parent.state.last_name,
+      "username": parent.state.email,
+      "password": parent.state.password,
+    }
+    console.log("Sending register request");
+    var response = await Api.post(WEB_URL + "/customers", customer, false);
+  
+    console.log(response)
+    if(!response.err) {
+      parent.refs.register_button.success();
+      parent.props.navigation.navigate('Home');
+      //TODO: Launch a modal saying: "Tilisi luotiin. Voit kirjautua sisään, 
+      // vahvistettuasi sähköpostisi sinulle lähettämästämme sähköpostiviestistä."
+    } else {
+      parent.refs.register_button.reset();
+      //TODO: Show error modal. E.g. 
+      //Palvelimeen ei saada tällä hetkellä yhteyttä. Tarkista Internet-yhteytesi.
+    }
+  
 
   //Handle database stuff on Node side. Probably not required
   // TODO:
