@@ -70,6 +70,10 @@ export default class Register extends Component {
     let visiblePasswordIcon = this.state.visiblePassword ? ('eye-off') : ('eye');
     let visibleConfirmationIcon = this.state.visibleConfirmation ? ('eye-off') : ('eye');
 
+    var text1 = "Olen lukenut ja hyväksyn kaikki "
+    var text2 = "käyttöehdot"
+    var text3 = "."
+
     return (
       <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{ flex: 1, padding: 20, }}>
         <TouchableOpacity style={styles.customBackButton} onPress={() => this.props.navigation.goBack()}>
@@ -193,13 +197,21 @@ export default class Register extends Component {
                 </View>
               </View>
 
-              <View style={{ width: '100%', marginVertical: 10, }}>
-                <CheckBox
-                  title={<View style={{ flex: 1, flexDirection: 'row' }}><Text style={{ marginLeft: 5 }}>Olen lukenut ja hyväksyn kaikki </Text><Text style={{ color: 'blue' }} onPress={() => this.props.navigation.navigate('Terms')}>käyttöehdot</Text><Text>.</Text></View>}
-                  checked={this.state.checked}
-                  onPress={() => { this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true })); }}
-                  containerStyle={styles.checkBox}
+              <View style={[styles.checkBox,{ width: '100%', marginVertical: 10, justifyContent:'flex-start' }]}>
+                
+                <CheckBox checked={this.state.checked} 
+                onPress={() => { this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true })); }}
+                title={<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+
+                  <Text style={{ marginLeft: 5}}>{text1} 
+                  <Text style={{ color: 'blue' }} onPress={() => this.props.navigation.navigate('Terms')}>{text2}</Text> 
+                  {text3}
+                  </Text>
+                </View>}
+                
                 />
+
+              
               </View>
 
               <View style={styles.submitButtonContainer}>

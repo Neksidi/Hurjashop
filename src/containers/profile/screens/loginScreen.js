@@ -293,7 +293,7 @@ class Login extends Component {
                   errorHandler={() => {this._handleLoginErrors()}} 
                   onAnimationFinished={() => {this.setState({isLoggingIn: false})}} 
                   onPress={() => { handleLogin(this) }} 
-                  disabled={!(this.state.emailValidation && this.state.password.length > 0)}/>
+                  disabled={!(this.state.emailValidation && this.state.password.length == 0)}/>
               </View>
 
               <Separator text='TAI'/>
