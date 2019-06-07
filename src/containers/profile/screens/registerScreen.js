@@ -26,7 +26,13 @@ export default class Register extends Component {
       visiblePassword: false,
       visibleConfirmation: false,
       validation: false,
+      //just for info when text input not valid
       infotext:"",
+      firstnametext:"",
+      lastnametext:"",
+      emailtext:"",
+      passwordtext:"",
+      password2text:"",
     }
   }
 
@@ -38,28 +44,33 @@ export default class Register extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState)
+    console.log("prevstate: ",prevState)
     console.log(this.state)
     if (prevState.first_name !== this.state.first_name) {
       console.log("different first bool")
-      this.setState({ first_nameValidation: validate("firstname", this) })
+      this.setState({ first_nameValidation: validate("firstname", this) , firstnametext:''})
     }
     if (prevState.last_name !== this.state.last_name) {
       console.log("different last bool") 
-      this.setState({ last_nameValidation: validate("lastname", this) })
+      this.setState({ last_nameValidation: validate("lastname", this), lastnametext:'' })
     }
     if (prevState.email !== this.state.email) {
       console.log("different email bool")
-      this.setState({ emailValidation: validate("email", this) })
+      this.setState({ emailValidation: validate("email", this),emailtext:'' })
     }
+    /*
     if (prevState.password !== this.state.password) {
       console.log("different password bool")
-      this.setState({ passwordValidation: validate("password", this) })
+      console.log("passu: ",this.state.password)
+      this.setState({ passwordValidation: validate("password", this), checked:false})
+      console.log()
     }
+    
     if (prevState.password_confirm !== this.state.password_confirm) {
       console.log("different confirm bool")
-      this.setState({ password_confirmValidation: validate("password_confirm", this) })
-    }
+      this.setState({password_confirmValidation: validate("password_confirm", this), checked:false })
+    }*/
+
     if (this.state.isFilled != validateAll(this)) {
       console.log("different filled bool " + this.state.isFilled)
       console.log("Setting filled to " + !this.state.isFilled)
@@ -93,6 +104,7 @@ export default class Register extends Component {
 
               <Text style={styles.formTitle}>Rekisteröidy</Text>
               {/*this.state.correctCredentials == false && this.state.displayErrorMessage && invalidCredentials*/}
+
               <View style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Etunimi</Text>
                 <View style={styles.textInputContainer}>
@@ -104,6 +116,7 @@ export default class Register extends Component {
                     value={this.state.first_name}
                     returnKeyType='next'
                     keyboardType='email-address'
+                    ref={(input) => { this.firstNameTextInput = input; }}
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
                       this.lastNameTextInput.focus();
@@ -111,7 +124,10 @@ export default class Register extends Component {
                     }} />
                 </View>
               </View>
-              <View style={styles.inputContainer}>
+              <View>
+                <Text style={{fontSize:18}}>{this.state.firstnametext}</Text>
+              </View>
+              <View  style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Sukunimi</Text>
                 <View style={styles.textInputContainer}>
                   <TextInput
@@ -130,7 +146,10 @@ export default class Register extends Component {
                     }} />
                 </View>
               </View>
-              <View style={styles.inputContainer}>
+              <View>
+                <Text style={{fontSize:18}}>{this.state.lastnametext}</Text>
+              </View>
+              <View  style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Sähköposti</Text>
                 <View style={styles.textInputContainer}>
                   <TextInput
@@ -149,10 +168,12 @@ export default class Register extends Component {
                     }} />
                 </View>
               </View>
-
+              <View>
+                <Text style={{fontSize:18}}>{this.state.emailtext}</Text>
+              </View>
               <View style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Salasana</Text>
-                <View style={styles.textInputContainer}>
+                <View name='pwd' style={styles.textInputContainer}>
                   <TextInput
                     style={styles.textInput}
                     underlineColorAndroid='transparent'
@@ -161,7 +182,14 @@ export default class Register extends Component {
                     autoCapitalize='none'
                     selectionColor={'#fff'}
                     secureTextEntry={!this.state.visiblePassword}
-                    onChangeText={(password) => this.setState({ password: password })}
+                    onChangeText={(password) => {
+                      this.setState(
+                        {password:password},
+                      callback = () => {
+                        this.setState({ passwordValidation: validate("password", this),password_confirmValidation: validate("password_confirm", this), checked:false})
+                        console.log("Password: ",this.state.password)
+                      })
+                    }}
                     blurOnSubmit={false}
                     ref={(input) => { this.passwordTextInput = input; }}
                     onSubmitEditing={() => {
@@ -174,18 +202,28 @@ export default class Register extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
+              <View>
+                <Text style={{fontSize:18}}>{this.state.passwordtext}</Text>
+              </View>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.inputTitle}>Salasanan varmistus</Text>
                 <View style={styles.textInputContainer}>
-                  <TextInput
+                  <TextInput                   
                     style={styles.textInput}
                     underlineColorAndroid='transparent'
                     autoCorrect={false}
                     autoCapitalize='none'
                     selectionColor={'#fff'}
                     secureTextEntry={!this.state.visibleConfirmation}
-                    onChangeText={(password_confirm) => this.setState({ password_confirm: password_confirm })}
+                    onChangeText={(password_confirm) => {
+                      this.setState(
+                        {password_confirm: password_confirm},
+                        callback = () => {
+                          this.setState({passwordValidation: validate("password", this),password_confirmValidation: validate("password_confirm", this), checked:false})
+                          console.log("Password_confirm: ",this.state.password_confirm)
+                        })
+                    }}
                     blurOnSubmit={false}
                     ref={(input) => { this.passwordConfirmTextInput = input; }}
                     onSubmitEditing={() => {
@@ -199,6 +237,9 @@ export default class Register extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
+              <View>
+                <Text style={{fontSize:18}}>{this.state.password2text}</Text>
+              </View>
 
               <View style={[styles.checkBox,{ width: '100%', marginVertical: 10, justifyContent:'flex-start' }]}>
                 
@@ -207,27 +248,37 @@ export default class Register extends Component {
                   this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true }));
 
                   if(!this.state.first_name){
-                    this.state.infotext="Tarkista etunimi";
-                    this.setState({checked : false })
+                    this.state.infotext="Anna etunimi";
+                    this.setState({checked : false, firstnametext:this.state.infotext })
+                    this.firstNameTextInput.focus();
                   }
                   else if(!this.state.last_name){
-                    this.state.infotext="Tarkista sukunimi";
-                    this.setState({checked : false })
+                    this.state.infotext="Anna sukunimi";
+                    this.setState({checked : false, lastnametext: this.state.infotext })
+                    this.lastNameTextInput.focus();
                   }
                   else if (!this.state.emailValidation){
                     this.state.infotext="Tarkista sähköpostiosoite";
-                    this.setState({checked : false })
+                    this.setState({checked : false, emailtext: this.state.infotext })
+                    this.emailTextInput.focus();
                   }
                   else if(!this.state.passwordValidation){
+                    console.log("result!: ", validate("password_confirm", this))
                     this.state.infotext="Salasanan tulee olla vähintään 8 merkkiä pitkä. Tarkista salasana";
-                    this.setState({checked : false , password_confirmValidation: false, passwordValidation:false })
+                    this.setState({password_confirmValidation: validate("password_confirm", this), checked : false , passwordtext:this.state.infotext ,password_confirmValidation: false, passwordValidation:false, password:'',password_confirm:''})
+                    this.passwordTextInput.clear()
+                    this.passwordConfirmTextInput.clear()
+                    this.passwordTextInput.focus();
                   }
                   else if(!this.state.password_confirmValidation){
                     this.state.infotext="Salasanat eivät täsmää, tarkista salasanat";
-                    this.setState({checked : false, password_confirmValidation: false, passwordValidation:false })
+                    this.setState({checked : false, password2text:this.state.infotext,password_confirmValidation: false, passwordValidation:false, password:'',password_confirm:''})
+                    this.passwordTextInput.clear()
+                    this.passwordConfirmTextInput.clear()
+                    this.passwordConfirmTextInput.focus();
                   }
                   else{
-                    this.state.infotext="";            
+                    this.state.infotext="";
                   }
                 }}
                 title={<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -239,10 +290,6 @@ export default class Register extends Component {
                 </View>}
                 
                 />          
-              </View>
-
-              <View>
-                <Text style={{fontSize:18}}>{this.state.infotext}</Text>
               </View>
 
               <View style={styles.submitButtonContainer}>
