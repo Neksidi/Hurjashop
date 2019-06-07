@@ -184,7 +184,7 @@ export default class Register extends Component {
                     secureTextEntry={!this.state.visiblePassword}
                     onChangeText={(password) => {
                       this.setState(
-                        {password:password},
+                        {password:password, passwordtext:''},
                       callback = () => {
                         this.setState({ passwordValidation: validate("password", this),password_confirmValidation: validate("password_confirm", this), checked:false})
                         console.log("Password: ",this.state.password)
@@ -218,7 +218,7 @@ export default class Register extends Component {
                     secureTextEntry={!this.state.visibleConfirmation}
                     onChangeText={(password_confirm) => {
                       this.setState(
-                        {password_confirm: password_confirm},
+                        {password_confirm: password_confirm, password2text:''},
                         callback = () => {
                           this.setState({passwordValidation: validate("password", this),password_confirmValidation: validate("password_confirm", this), checked:false})
                           console.log("Password_confirm: ",this.state.password_confirm)
@@ -236,9 +236,6 @@ export default class Register extends Component {
                     <FeatherIcon name={visibleConfirmationIcon} size={20} color='#fff' />
                   </TouchableOpacity>
                 </View>
-              </View>
-              <View>
-                <Text style={{fontSize:18}}>{this.state.password2text}</Text>
               </View>
 
               <View style={[styles.checkBox,{ width: '100%', marginVertical: 10, justifyContent:'flex-start' }]}>
@@ -272,10 +269,10 @@ export default class Register extends Component {
                   }
                   else if(!this.state.password_confirmValidation){
                     this.state.infotext="Salasanat eivät täsmää, tarkista salasanat";
-                    this.setState({checked : false, password2text:this.state.infotext,password_confirmValidation: false, passwordValidation:false, password:'',password_confirm:''})
+                    this.setState({checked : false, passwordtext:this.state.infotext,password_confirmValidation: false, passwordValidation:false, password:'',password_confirm:''})
                     this.passwordTextInput.clear()
                     this.passwordConfirmTextInput.clear()
-                    this.passwordConfirmTextInput.focus();
+                    this.passwordTextInput.focus();
                   }
                   else{
                     this.state.infotext="";
