@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Keyboard, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, Keyboard, ScrollView, Modal, Button} from 'react-native';
 
 import FeatherIcon from 'react-native-vector-icons/dist/Feather'
 import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
+
+import Modal from '../../../app/components/common/modal'
 
 export default class Register extends Component {
 
@@ -33,8 +35,13 @@ export default class Register extends Component {
       emailtext:"",
       passwordtext:"",
       password2text:"",
+      modalVisible: false,
     }
   }
+
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
 
   //Header
   static navigationOptions = ({ navigation }) => {
@@ -294,7 +301,16 @@ export default class Register extends Component {
                   ref='register_button' 
                   title='Rekisteröidy' 
                   errorHandler={() => { console.log("Error handle") }} 
-                  onPress={() => { register(this) }} 
+                  onPress={() => { 
+                    console.log("THIS ======== ",this)
+                    register(this) 
+
+                    //JATKA MODALIN HIEROMISTA 
+                    
+                    //this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
+                    //this.refs.modal.setContent("Lisätty kpl tuotetta ostoskoriin.");
+                    //this.refs.modal.show(); 
+                  }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
               </View>
 

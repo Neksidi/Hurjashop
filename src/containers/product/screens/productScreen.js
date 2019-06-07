@@ -230,6 +230,7 @@ class Product extends Component {
                 </View>
                 {/* ADD TO CART BUTTON */}
                 <TouchableOpacity disabled={disableAddToCart} onPress={() => {
+                  console.log("modal: ",this.refs.modal)
                   this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
                   this.refs.modal.setContent("Lisätty "+this.state.count+" kpl tuotetta "+item.name+ " ostoskoriin.");
                   this.refs.modal.show();
