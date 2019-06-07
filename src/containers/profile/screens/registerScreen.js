@@ -205,22 +205,29 @@ export default class Register extends Component {
                 <CheckBox checked={this.state.checked} 
                 onPress={() => {
                   this.state.checked ? (this.setState({ checked: false })) : (this.setState({ checked: true }));
-                  
-                  if (!this.state.emailValidation){
-                    this.state.infotext="Tarkista sähköpostiosoite!";
-                    console.log("Tarkista sähköposti")
+
+                  if(!this.state.first_name){
+                    this.state.infotext="Tarkista etunimi";
+                    this.setState({checked : false })
+                  }
+                  else if(!this.state.last_name){
+                    this.state.infotext="Tarkista sukunimi";
+                    this.setState({checked : false })
+                  }
+                  else if (!this.state.emailValidation){
+                    this.state.infotext="Tarkista sähköpostiosoite";
+                    this.setState({checked : false })
                   }
                   else if(!this.state.passwordValidation){
-                    this.state.infotext="Tarkista salasana!";
-                    console.log("Tarkista salasana")
+                    this.state.infotext="Salasanan tulee olla vähintään 8 merkkiä pitkä. Tarkista salasana";
+                    this.setState({checked : false , password_confirmValidation: false, passwordValidation:false })
                   }
                   else if(!this.state.password_confirmValidation){
-                    this.state.infotext="Salasanat eivät täsmää, tarkista salasanat!";
-                    console.log("Salasanat ei täsmää")
+                    this.state.infotext="Salasanat eivät täsmää, tarkista salasanat";
+                    this.setState({checked : false, password_confirmValidation: false, passwordValidation:false })
                   }
                   else{
-                    this.state.infotext="";
-                    console.log("else")
+                    this.state.infotext="";            
                   }
                 }}
                 title={<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -235,7 +242,7 @@ export default class Register extends Component {
               </View>
 
               <View>
-                <Text>{this.state.infotext}</Text>
+                <Text style={{fontSize:18}}>{this.state.infotext}</Text>
               </View>
 
               <View style={styles.submitButtonContainer}>
