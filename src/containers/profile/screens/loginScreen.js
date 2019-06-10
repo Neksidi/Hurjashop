@@ -341,7 +341,12 @@ const map_dispatch_props = (dispatch) => ({
 });
 */
 
+const mapStateToProps = (state) => {
+  const user = state.user
+	return { user }
+};
+
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({ setLoginStatus, addContact }, dispatch));
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

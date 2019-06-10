@@ -45,6 +45,7 @@ class Product extends Component {
   }
   
   componentDidMount() {
+    console.log("THISSI ",this.props)
     this.setState({item: this.props.navigation.getParam('item', null)});
 
   }
@@ -163,8 +164,6 @@ class Product extends Component {
         );
 
         let addCartText = (disableAddToCart == true) ? (('EI VARASTOSSA')) : (('LISÄÄ OSTOSKORIIN'));
-
-
       return (
         <LinearGradient 
 				  start={{x: 0, y: 0}} end={{x: 1, y: 1}}
@@ -266,10 +265,12 @@ class Product extends Component {
 
 
 const mapStateToProps = (state) => {
+  console.log("STATE: ",state)
   const product = state.product
   const products = state.products.all
   const cart = state.cart.cart
-	return { product, products, cart }
+  const user = state.user.contact
+	return { product, products, cart , user}
 };
 
 const mapDispatchToProps = dispatch => (

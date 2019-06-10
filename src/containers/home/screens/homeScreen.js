@@ -17,7 +17,7 @@ import Header from '../../../app/components/header/header'
 import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
-//import { setLoginStatus } from '../../../containers/profile/redux/userActions'		//TODO: Remove this Debug
+import { setLoginStatus } from '../../../containers/profile/redux/userActions'		//TODO: Remove this Debug
 
 class Home extends Component {
 	constructor(props) {
@@ -266,7 +266,6 @@ class Home extends Component {
 	}
 }
 
-
 const mapStateToProps = (state) => {
 	const products = state.products.all
 	const categories = state.categories.all;
@@ -274,6 +273,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ setProducts, setCategories, getCategories, /*setLoginStatus*/ }, dispatch));		//TODO: Remove setLoginStatus Debug
+	bindActionCreators({ setProducts, setCategories, getCategories, setLoginStatus}, dispatch));		//TODO: Remove setLoginStatus Debug
 	
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

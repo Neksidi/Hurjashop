@@ -13,7 +13,7 @@ class Cart extends Component {
   render(){
     return(
       <TouchableOpacity style={styles.container}>
-        <FAIcon name={ 'shopping-cart' } size={ icon_size } color={ icon_color } style={ styles.icon }></FAIcon>
+<Text>dfl</Text>
       </TouchableOpacity>
     );
   }

@@ -1,6 +1,7 @@
 
 
 
+
 function getQuantity(props, id) {
     if(props.cart.length) {
         for(i in props.cart){
