@@ -112,13 +112,14 @@ async function register(parent) {
   
     console.log(response)
     if(!response.err) {
-      /*parent.props.refs.modal.setTitle("Tilisi luotu onnistuneesti") 
-      parent.props.refs.modal.setContent("Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä")
-      parent.props.refs.modal.Show();*/
+     
       parent.refs.register_button.success();
-      //parent.props.navigation.navigate('Home');
-      //TODO: Launch a modal saying: "Tilisi luotiin. Voit kirjautua sisään, 
-      // vahvistettuasi sähköpostisi sinulle lähettämästämme sähköpostiviestistä."
+      parent.refs.modal.setTitle("Tilisi luotu onnistuneesti");
+      parent.refs.modal.setContent("Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä");
+      parent.refs.modal.show(); 
+
+      parent.props.navigation.navigate('Home');
+      
     } else {
      /* parent.props.refs.modal.setTitle("Palvelimeen ei saada yhteyttä") 
       parent.props.refs.modal.setContent("Palvelimeen ei saada yhteyttä tarkista internet-yhteytesi tai yritä hetken päästä uudelleen")

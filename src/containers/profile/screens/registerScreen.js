@@ -298,11 +298,7 @@ export default class Register extends Component {
                   errorHandler={() => { console.log("Error handle") }} 
                   onPress={() => { 
                     register(this) 
-                    
-                    //
-                    this.refs.modal.setTitle("Rekisteröinti suoritettu!");
-                    this.refs.modal.setContent("Käyttäjän "+this.state.first_name+" "+this.state.last_name+" rekisteröinti suoritettu onnistuneesti. Vahvistaaksesi rekisteröitymisen vahvista käyttäjätunnuksesi antamastasi sähköpostiosoitteesta.");
-                    this.refs.modal.show(); 
+
                   }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
               </View>
