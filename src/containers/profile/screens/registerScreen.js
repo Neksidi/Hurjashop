@@ -298,7 +298,6 @@ export default class Register extends Component {
                   errorHandler={() => { console.log("Error handle") }} 
                   onPress={() => { 
                     register(this) 
-
                   }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
               </View>

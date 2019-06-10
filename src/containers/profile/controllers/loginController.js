@@ -114,20 +114,21 @@ async function register(parent) {
     if(!response.err) {
      
       parent.refs.register_button.success();
+
       parent.refs.modal.setTitle("Tilisi luotu onnistuneesti");
       parent.refs.modal.setContent("Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä");
       parent.refs.modal.show(); 
-
       parent.props.navigation.navigate('Home');
-      
+
     } else {
-     /* parent.props.refs.modal.setTitle("Palvelimeen ei saada yhteyttä") 
-      parent.props.refs.modal.setContent("Palvelimeen ei saada yhteyttä tarkista internet-yhteytesi tai yritä hetken päästä uudelleen")
-      parent.props.refs.modal.Show();*/
+
       parent.refs.register_button.reset();
+      parent.refs.modal.setTitle("Palvelimeen ei saada yhteyttä") 
+      parent.refs.modal.setContent("Palvelimeen ei saada yhteyttä tarkista internet-yhteytesi tai yritä hetken päästä uudelleen")
+      parent.refs.modal.show(); 
+
+      parent.props.navigation.navigate('Register');
       
-      //TODO: Show error modal. E.g. 
-      //Palvelimeen ei saada tällä hetkellä yhteyttä. Tarkista Internet-yhteytesi.
     }
   
 

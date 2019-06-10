@@ -130,7 +130,7 @@ class Payment extends Component {
 			if(paysWithNewCard || !token) {
 				console.log("Pays with new card")
 				console.log("Getting new token prompt html")
-				var html = await newCardPayment(this.props.payment)
+				var html = await newCardPayment(this)
 				this.setState({cardFormHtml: html, isLoading: false, paysWithNewCard: paysWithNewCard});
 			} else {
 				this.setState({token: token});
