@@ -8,6 +8,7 @@ import { PH_URL } from '../../../app/config'
 import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
 import Success from '../screens/paymentSuccessScreen'
+import Modal1 from '../../../app/components/common/modal'
 
 //const WIDTH = Dimensions.get("window").width;
 
@@ -55,7 +56,10 @@ class Payment extends Component {
 				
 			} else if(parsed.status == 402) {
 				console.log("Status 402")
-				//TODO: Show modal telling about payment problems. E.g. Contact your bank.
+				this.refs.modal.setTitle("Ongelma maksussa");
+				this.refs.modal.setContent("Maksussa ongelma. Ota yhteyttä pankkiisi");
+				this.refs.modal.show();
+
 				this.setState({
 					isCancelled: false,
 					failed: true,
@@ -64,7 +68,10 @@ class Payment extends Component {
 				})
 			} else if(parsed.status == 500) {
 				console.log("Status 500")
-				//TODO: Show modal telling about server error. E.g. Contact our customer support.
+				this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
+				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
+				this.refs.modal.show();
+
 				this.setState({
 					isCancelled: false,
 					failed: true,
@@ -74,7 +81,10 @@ class Payment extends Component {
 			} else {
 				console.log("Else")
 				console.log(parsed.status)
-				//TODO: Show modal telling about server error. E.g. Contact our customer support / Report bug.
+				this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
+				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
+				this.refs.modal.show();
+
 				this.setState({
 					isCancelled: false,
 					failed: true,
@@ -87,8 +97,9 @@ class Payment extends Component {
 			var type = parsed.type;
 			var partialPan = parsed.partial_pan;
 
+			var info=true;
 			//Saving into phone memory
-			await setCardToken(token);
+			info=await setCardToken(token)
 			await setCardType(type);
 			await setCardPartial(partialPan);
 			var test = await getCardToken();
@@ -142,6 +153,7 @@ class Payment extends Component {
 							Maksu peruuntui, tähän voisi tehdä asioita!
 						</Text>
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Yritä uudestaan' onPress={() => {this.reset()}} />
+						<Modal1 ref='modal'/>
 					</View>
 				);
 			} 
@@ -154,6 +166,7 @@ class Payment extends Component {
 						</Text>
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Yritä uudestaan' onPress={() => {this.reset()}} />
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Vaihda maksutapaa' onPress={() => {this.props.navigation.pop(3)}} />
+						<Modal1 ref='modal'/>
 					</View>
 				);
 			} 
@@ -172,6 +185,7 @@ class Payment extends Component {
 							onMessage={(event) => {
 								this.webviewHandler(event.nativeEvent.data)
 							}} />
+							<Modal1 ref='modal'/>
 					</View>
 	
 				)
@@ -190,7 +204,10 @@ class Payment extends Component {
 			else if(this.state.isPaid && this.state.orderUpdated) {
 				console.log("isPaid & orderUpdated")
 				return (
-					<Success data={this.props}/>
+					<View>
+						<Success data={this.props}/>
+					</View>
+
 				)
 			}
 			else {
@@ -198,6 +215,7 @@ class Payment extends Component {
 				return (
 					<View>
 						<Text>Jokin meni vikaan</Text>
+						<Modal1 ref='modal'/>
 					</View>
 				)
 			}

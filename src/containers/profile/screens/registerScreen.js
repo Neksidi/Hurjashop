@@ -6,7 +6,7 @@ import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
 
-import Modal from '../../../app/components/common/modal'
+import Modal_ from '../../../app/components/common/modal'
 
 export default class Register extends Component {
 
@@ -28,20 +28,16 @@ export default class Register extends Component {
       visiblePassword: false,
       visibleConfirmation: false,
       validation: false,
-      //just for info when text input not valid
+
+      //just for info when text inputs not valid
       infotext:"",
       firstnametext:"",
       lastnametext:"",
       emailtext:"",
       passwordtext:"",
       password2text:"",
-      modalVisible: false,
     }
   }
-
-  toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
 
   //Header
   static navigationOptions = ({ navigation }) => {
@@ -93,7 +89,6 @@ export default class Register extends Component {
     var text1 = "Olen lukenut ja hyväksyn kaikki "
     var text2 = "käyttöehdot"
     var text3 = "."
-
 
     return (
       <ImageBackground source={require('../../../assets/images/bg_gradientV2.png')} style={{ flex: 1, padding: 20, }}>
@@ -302,14 +297,12 @@ export default class Register extends Component {
                   title='Rekisteröidy' 
                   errorHandler={() => { console.log("Error handle") }} 
                   onPress={() => { 
-                    console.log("THIS ======== ",this)
                     register(this) 
-
-                    //JATKA MODALIN HIEROMISTA 
                     
-                    //this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
-                    //this.refs.modal.setContent("Lisätty kpl tuotetta ostoskoriin.");
-                    //this.refs.modal.show(); 
+                    //
+                    this.refs.modal.setTitle("Rekisteröinti suoritettu!");
+                    this.refs.modal.setContent("Käyttäjän "+this.state.first_name+" "+this.state.last_name+" rekisteröinti suoritettu onnistuneesti. Vahvistaaksesi rekisteröitymisen vahvista käyttäjätunnuksesi antamastasi sähköpostiosoitteesta.");
+                    this.refs.modal.show(); 
                   }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
               </View>
@@ -318,6 +311,7 @@ export default class Register extends Component {
           </ScrollView>
         </View>
 
+        <Modal_ ref='modal'/>
       </ImageBackground>
     );
   }

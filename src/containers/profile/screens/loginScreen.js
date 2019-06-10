@@ -322,7 +322,9 @@ class Login extends Component {
             </View>
           </View>
         </ImageBackground>
+ 
       </ScrollView>
+      
 );
 }
 }

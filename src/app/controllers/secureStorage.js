@@ -1,4 +1,5 @@
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
+import Modal2 from '../../app/components/common/modal'
 
 async function getCardToken() {
   return await RNSecureStorage.get("cardToken").then((value) => {
@@ -51,12 +52,16 @@ async function getSessionUser() {
   });
 }
 
+//Return for modal errors
 async function setCardToken(token) {
   await RNSecureStorage.set("cardToken", token, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
+    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -66,6 +71,9 @@ async function setCardType(type) {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
+    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -75,6 +83,9 @@ async function setCardPartial(partial) {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
+    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -84,6 +95,9 @@ async function setSessionId(id) {
       console.log(res);     //TODO: error messages && alerts?
     }, (err) => {
       console.log(err);
+      this.refs.modal.setTitle("Ongelma viedessä käyttäjän ID:tä");
+      this.refs.modal.setContent("Yritä uudelleen");
+      this.refs.modal.show();
     });
 }
 
@@ -93,6 +107,9 @@ async function setSessionUser(username) {
       console.log(res);     //TODO: error messages && alerts?
     }, (err) => {
       console.log(err);
+      this.refs.modal.setTitle("Ongelma viedessä käyttäjätunnusta");
+      this.refs.modal.setContent("Yritä uudelleen");
+      this.refs.modal.show();
     })
 }
 
@@ -102,6 +119,9 @@ async function removeCardToken() {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
+    this.refs.modal.setContent("Yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -111,6 +131,9 @@ async function removeCardType() {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
+    this.refs.modal.setContent("Yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -120,6 +143,9 @@ async function removeCardPartial() {
     console.log(res);     //TODO: error messages && alerts?
   }, (err) => {
     console.log(err);
+    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
+    this.refs.modal.setContent("Yritä uudelleen");
+    this.refs.modal.show();
   })
 }
 
@@ -129,6 +155,9 @@ async function removeSessionId() {
       console.log(res);     //TODO: error messages && alerts?
     }, (err) => {
       console.log(err);
+      this.refs.modal.setTitle("Ongelma poistettaessa istuntoa");
+      this.refs.modal.setContent("Yritä uudelleen");
+      this.refs.modal.show();
     });
 }
 
@@ -138,7 +167,18 @@ async function removeSessionUser() {
       console.log(res);     //TODO: error messages && alerts?
     }, (err) => {
       console.log(err);
+      this.refs.modal.setTitle("Ongelma poistettaessa istuntoa");
+      this.refs.modal.setContent("Yritä uudelleen");
+      this.refs.modal.show();
     })
+}
+
+const Message = () =>{
+  return(
+    <View>
+      <Modal2 ref='modal'/>
+    </View>
+  );
 }
 
 export {
@@ -157,4 +197,5 @@ export {
   removeCardPartial,
   removeSessionId,
   removeSessionUser,
+  Message,
 }
