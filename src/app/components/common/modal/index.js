@@ -17,8 +17,8 @@ export default class Index extends Component {
             title:"",
             content:"",
             type:"info",
-          // parent: null,
-           // text: null,
+            parent: null,
+            text: null,
 		  }
     }
     
@@ -29,8 +29,10 @@ setButtonAction(text,parent){
 }
 
 buttonAction(){ 
+  console.log("inside buttonaction")
   if(this.state.text){
-    this.state.parent.navigate(text)
+    this.state.parent.navigate(this.state.text)
+    this.hide();
   }
   else{
     this.hide();
@@ -48,7 +50,7 @@ buttonAction(){
   
   renderOkButton = () => (
     <TouchableOpacity
-        onPress={() => {this.buttonAction}}>
+        onPress={() => {this.buttonAction()}}>
         <LinearGradient colors={primaryGradientColorsButton} style={[
             theme.linearGradient, {
             postion:"absolute",
