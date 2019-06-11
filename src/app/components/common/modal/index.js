@@ -31,7 +31,7 @@ export default class Index extends Component {
   
   renderOkButton = () => (
     <TouchableOpacity
-        onPress={() => {this.hide();}}>
+        onPress={() => { console.log("PROPS IN MODAL: ",this.props)}}>
         <LinearGradient colors={primaryGradientColorsButton} style={[
             theme.linearGradient, {
             postion:"absolute",
@@ -94,6 +94,7 @@ export default class Index extends Component {
   }
 
   render() {
+    console.log("PROPS IN MODAL: ",this.props)
     return(
         <Modal
           isVisible={this.state.visible}
