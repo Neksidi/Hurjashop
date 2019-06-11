@@ -21,13 +21,13 @@ export default class Index extends Component {
            // text: null,
 		  }
     }
-    /*
+    
 setButtonAction(text,parent){
   console.log("SetButton action start")
- // this.setState({parent:parent, text:text});
+  this.setState({parent:parent, text:text});
   console.log("STATE:",this.state)
 }
-/*
+
 buttonAction(){ 
   if(this.state.text){
     this.state.parent.navigate(text)
@@ -35,7 +35,7 @@ buttonAction(){
   else{
     this.hide();
   }
-}*/
+}
 
     componentDidMount() {
 		this.setState({
@@ -48,7 +48,7 @@ buttonAction(){
   
   renderOkButton = () => (
     <TouchableOpacity
-        onPress={() => {console.log("Click")}}>
+        onPress={() => {this.buttonAction}}>
         <LinearGradient colors={primaryGradientColorsButton} style={[
             theme.linearGradient, {
             postion:"absolute",

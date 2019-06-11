@@ -113,11 +113,11 @@ async function register(parent) {
   
     console.log(response)
     if(!response.err) {     
-      //parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
-      console.log("after")
-      parent.refs.registermodal.props.visible=true;
+      parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
+      console.log("after");
+      parent.refs.registermodal.state.visible=true;
       parent.forceUpdate();
-      console.log("MODAL SHOWED")
+      console.log("MODAL SHOWED");
       parent.refs.register_button.success();
 
     } 
