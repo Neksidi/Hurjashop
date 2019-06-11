@@ -6,7 +6,7 @@ import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
 
-import Modal_ from '../../../app/components/common/modal'
+import Modal from '../../../app/components/common/modal'
 
 export default class Register extends Component {
 
@@ -36,6 +36,7 @@ export default class Register extends Component {
       emailtext:"",
       passwordtext:"",
       password2text:"",
+      info:false,
     }
   }
 
@@ -297,16 +298,18 @@ export default class Register extends Component {
                   title='Rekisteröidy' 
                   errorHandler={() => { console.log("Error handle") }} 
                   onPress={() => { 
-                    register(this) 
+                    this.setState({info: register(this)})
                   }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
+                  <View>
+                    {this.state.info ? <Modal title="dasdasdas" content="dasdasdassdas" visible={true}/> : <Modal title="dasdasdas" content="dasdasdassdas" visible={true}/> }
+                  </View>
               </View>
 
             </View>
           </ScrollView>
         </View>
 
-        <Modal_ ref='modal'/>
       </ImageBackground>
     );
   }

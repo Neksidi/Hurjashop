@@ -112,23 +112,13 @@ async function register(parent) {
   
     console.log(response)
     if(!response.err) {
-     
       parent.refs.register_button.success();
-
-      parent.refs.modal.setTitle("Tilisi luotu onnistuneesti");
-      parent.refs.modal.setContent("Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä");
-      parent.refs.modal.show(); 
       parent.props.navigation.navigate('Home');
-
+      return true;
     } else {
-
       parent.refs.register_button.reset();
-      parent.refs.modal.setTitle("Palvelimeen ei saada yhteyttä") 
-      parent.refs.modal.setContent("Palvelimeen ei saada yhteyttä tarkista internet-yhteytesi tai yritä hetken päästä uudelleen")
-      parent.refs.modal.show(); 
-
       parent.props.navigation.navigate('Register');
-      
+      return false;
     }
   
 

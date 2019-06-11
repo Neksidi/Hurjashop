@@ -1,6 +1,6 @@
 import  { WEB_URL } from '../../../app/config/index'
 import Api from '../../../app/controllers/api'
-import Modal from '../../../app/components/common/modal/'
+import Modal from '../../../app/components/common/modal'
 
 async function updateOrderStatus(id, body) {
   const response = await Api.put(WEB_URL + `/order/update${id}`, body, true);  
@@ -26,7 +26,7 @@ async function createOrder(order) {
   } else {
     return (
       <View>
-        <Modal title= "Tilauksen tekeminen epäonnitui" content="Tilauksen tekeminen epäonnistui" visible={true}/>
+        <Modal title="Tilauksen tekeminen epäonnistui" content="Tilauksen tekeminen epäonnistui" visible={true}/>
       </View>
     )
   }
@@ -41,7 +41,7 @@ async function getOrders(userId) {
   } else {
     return (
       <View>
-        <Modal title= "Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={true}/>
+        <Modal title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={true}/>
       </View>
     )
   }
@@ -57,7 +57,7 @@ async function updateOrder(newOrder, order) {
   } else {
     return (
       <View>
-        <Modal title= "Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={true}/>
+        <Modal title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={true}/>
       </View>
     )
   }
