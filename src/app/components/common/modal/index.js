@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const boxWidth = Dimensions.get('window').width * 0.9;
 
-export default class Index extends Component {
+export default class Modal extends Component {
 	constructor(props) {
         super(props);
         
@@ -23,6 +23,7 @@ export default class Index extends Component {
 		this.setState({
             title:this.props.title,
             content:this.props.content,
+            visible: this.props.visible
         });
 
   }
@@ -53,8 +54,8 @@ export default class Index extends Component {
             style={[styles.modalBox, styles.linearGradient, {width:boxWidth}]}>
             
             <View styles={styles.modalContent}>
-                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.state.title ? ((this.state.title)) : ((""))}</Text>
-                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.state.content ? ((this.state.content)) : ((""))}</Text>
+                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.props.title ? ((this.props.title)) : ((""))}</Text>
+                <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.props.content ? ((this.props.content)) : ((""))}</Text>
                 {this.renderOkButton()}
             </View>
     
