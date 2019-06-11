@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import LinearGradient from 'react-native-linear-gradient';
 
 
+
 const boxWidth = Dimensions.get('window').width * 0.9;
 
 export default class Index extends Component {
@@ -16,9 +17,25 @@ export default class Index extends Component {
             title:"",
             content:"",
             type:"info",
+          // parent: null,
+           // text: null,
 		  }
     }
-    
+    /*
+setButtonAction(text,parent){
+  console.log("SetButton action start")
+ // this.setState({parent:parent, text:text});
+  console.log("STATE:",this.state)
+}
+/*
+buttonAction(){ 
+  if(this.state.text){
+    this.state.parent.navigate(text)
+  }
+  else{
+    this.hide();
+  }
+}*/
 
     componentDidMount() {
 		this.setState({
@@ -31,7 +48,7 @@ export default class Index extends Component {
   
   renderOkButton = () => (
     <TouchableOpacity
-        onPress={() => { console.log("PROPS IN MODAL: ",this.props)}}>
+        onPress={() => {console.log("Click")}}>
         <LinearGradient colors={primaryGradientColorsButton} style={[
             theme.linearGradient, {
             postion:"absolute",
@@ -53,7 +70,7 @@ export default class Index extends Component {
             start={{x: 0, y: 0}} end={{x: 1, y: 1}}
             colors={modalColors} 
             style={[styles.modalBox, styles.linearGradient, {width:boxWidth}]}>
-            
+             
             <View styles={styles.modalContent}>
                 <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.props.title ? ((this.props.title)) : ((this.state.title))}</Text>
                 <Text style={{fontFamily: 'BarlowCondensed-Bold', fontSize: 20}}>{this.props.content ? ((this.props.content)) : ((this.state.title))}</Text>

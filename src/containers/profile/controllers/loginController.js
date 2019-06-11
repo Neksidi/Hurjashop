@@ -2,6 +2,7 @@ import Api from '../../../app/controllers/api'
 import { AUTH_URL, WEB_URL } from '../../../app/config'
 import { setSessionId, setSessionUser, removeSessionId, removeSessionUser } from '../../../app/controllers/secureStorage';
 import { Alert } from 'react-native';
+import Modal6 from '../../../app/components/common/modal'
 
 import {
   LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
@@ -111,14 +112,20 @@ async function register(parent) {
     var response = await Api.post(WEB_URL + "/customers", customer, false);
   
     console.log(response)
-    if(!response.err) {
+    if(!response.err) {     
+      //parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
+      console.log("after")
+      parent.refs.registermodal.props.visible=true;
+      parent.forceUpdate();
+      console.log("MODAL SHOWED")
       parent.refs.register_button.success();
-      parent.props.navigation.navigate('Home');
-      return true;
-    } else {
+
+    } 
+    else {
+      parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
+      parent.refs.registermodal.props.visible=true;
+      parent.forceUpdate();
       parent.refs.register_button.reset();
-      parent.props.navigation.navigate('Register');
-      return false;
     }
   
 

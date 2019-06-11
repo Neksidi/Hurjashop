@@ -6,7 +6,7 @@ import ButtonWithAnimatedLoader from '../components/animatedLoginButton'
 import { validate, validateAll, register } from '../controllers/loginController'
 import { CheckBox } from 'react-native-elements'
 
-import Modal_ from '../../../app/components/common/modal'
+import CustomModal from '../../../app/components/common/modal'
 
 export default class Register extends Component {
 
@@ -291,25 +291,16 @@ export default class Register extends Component {
                 
                 />          
               </View>
-
+              <CustomModal ref='registermodal' title="Success" content="Yritä uudelleen hetken päästä" visible={false} /> 
               <View style={styles.submitButtonContainer}>
                 <ButtonWithAnimatedLoader 
                   ref='register_button' 
                   title='Rekisteröidy' 
                   errorHandler={() => { <Modal_ title="Ongelma rekisteröitymisessä" content="Yritä uudelleen hetken päästä" visible={true}/> }} 
                   onPress={() => { 
-                    this.setState({info: register(this)})
+                    register(this)
                   }} 
                   disabled={!this.state.checked||!this.state.isFilled} />
-                  {
-                    //Renders modal with title & and content 
-                  }
-                  <View>
-                    {//MIETI TÄHÄN TOTEUTUS LOGIIKKA TOIMII MUTTA EI SAA STATEEN ARVOA ENNEN TÄTÄ
-                    }
-                    {this.state.info==true ? <Modal_ title="success" content="dasdasdassdas" visible={true}/> : <Text></Text> }
-                    {this.state.info==false ? <Modal_ title="fail" content="dasdasdassdas" visible={true}/> : <Text></Text> }
-                  </View>
               </View>
 
             </View>
