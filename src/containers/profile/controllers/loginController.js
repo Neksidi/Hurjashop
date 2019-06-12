@@ -189,7 +189,9 @@ async function logInFb(access_token,parent) {
     return response.user.body;
   }
   else {
-    //TODO: Show error modal.
+    parent.refs.login.setButtonAction("Login", parent.props.navigation);
+    parent.refs.login.state.visible=true;
+    parent.forceUpdate();
   }
 }
 
@@ -218,7 +220,9 @@ console.log("Body in login google: ",body)
     return response.user.body;
   }
   else {
-    //TODO: Show error modal.
+    parent.refs.login.setButtonAction("Login", parent.props.navigation);
+    parent.refs.login.state.visible=true;
+    parent.forceUpdate();
   }
   console.log("own google login success?");
 }
@@ -279,7 +283,9 @@ async function fetchUser(username, parent) {
         parent.props.addContact(contactData)
         parent.props.setLoginStatus(true)     // Todo: Possibly replace with setContactStatus?
     } else {
-      // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
+      parent.refs.login.setButtonAction("Home", parent.props.navigation);
+      parent.refs.login.state.visible=true;
+      parent.forceUpdate();
       console.log("Error fetching user")
     }  
 }
@@ -291,7 +297,9 @@ async function fetchUserDetails(username) {
   if(!response.error) {
     return response;
   } else {
-    // show error modal saying: "Käyttäjätietojen haussa tapahtui ongelma." and redirect to home?
+    parent.refs.fetch.setButtonAction("Home", parent.props.navigation);
+    parent.refs.fetch.state.visible=true;
+    parent.forceUpdate();
     console.log("Error fetching user")
   }  
 }
@@ -337,7 +345,9 @@ async function logOut(props,parent) {
   }
   else {
     console.log("Logout error")
-    // TODO: show error modal: (Esim. "Ulos kirjautuminen epäonnistui")
+    parent.refs.logout.setButtonAction("Home", parent.props.navigation);
+    parent.refs.logout.state.visible=true;
+    parent.forceUpdate();
   }
 }
 

@@ -325,6 +325,10 @@ class Login extends Component {
         </ImageBackground>
         <CustomModal ref='setsessionid' title="Ongelma viedessä käyttäjän ID:tä" content="Yritä uudelleen" visible={false} /> 
         <CustomModal ref='setsessionuser' title="Ongelma viedessä käyttäjätunnusta" content="Yritä uudelleen" visible={false} /> 
+        <CustomModal ref='login' title="Kirjautuminen epäonnistui" content="Yritä uudelleen" visible={false} /> 
+        <CustomModal ref='logout' title="Ulos kirjautuminen epäonnistui" content="Yritä uudelleen" visible={false} /> 
+        <CustomModal ref='fetch' title="Käyttäjätietojen haussa tapahtui virhe" content="Yritä uudelleen" visible={false} /> 
+
       </ScrollView>
       
 );

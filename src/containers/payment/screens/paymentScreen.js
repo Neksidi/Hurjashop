@@ -8,7 +8,6 @@ import { PH_URL } from '../../../app/config'
 import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
 import Success from '../screens/paymentSuccessScreen'
-import Modal1 from '../../../app/components/common/modal'
 import CustomModal from '../../../app/components/common/modal'
 
 //const WIDTH = Dimensions.get("window").width;
@@ -57,9 +56,8 @@ class Payment extends Component {
 				
 			} else if(parsed.status == 402) {
 				console.log("Status 402")
-				/*this.refs.modal.setTitle("Ongelma maksussa");
-				this.refs.modal.setContent("Maksussa ongelma. Ota yhteyttä pankkiisi");
-				this.refs.modal.show();*/
+				this.refs.contactbank.state.visible=true;
+				this.forceUpdate(); 
 
 				this.setState({
 					isCancelled: false,
@@ -67,11 +65,12 @@ class Payment extends Component {
 					isPaid: false,
 					orderUpdated: false,
 				})
-			} else if(parsed.status == 500) {
+			} 
+			else if(parsed.status == 500) {
 				console.log("Status 500")
-			/*	this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
-				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
-				this.refs.modal.show();*/
+				this.refs.problems.state.visible=true;
+				this.forceUpdate(); 
+				
 				this.setState({
 					isCancelled: false,
 					failed: true,
@@ -81,9 +80,9 @@ class Payment extends Component {
 			} else {
 				console.log("Else")
 				console.log(parsed.status)
-			/*	this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
-				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
-				this.refs.modal.show();*/
+
+				this.refs.problems.state.visible=true;
+				this.forceUpdate(); 
 
 				this.setState({
 					isCancelled: false,
@@ -151,7 +150,7 @@ class Payment extends Component {
 							Maksu peruuntui, tähän voisi tehdä asioita!
 						</Text>
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Yritä uudestaan' onPress={() => {this.reset()}} />
-						<Modal1 ref='modal'/>
+						<CustomModal ref='cancelled' title="Maksu peruuntui" content="Yritä tarvittaessa uudelleen" visible={true} /> 
 					</View>
 				);
 			} 
@@ -162,9 +161,10 @@ class Payment extends Component {
 						<Text>
 							Maksu epäonnistui, tähän voisi tehdä asioita! (Eri maksutavan ehdottaminen?)
 						</Text>
+						<CustomModal ref='failed' title="Maksu epäonnistui" content="Yritä uudelleen" visible={false} /> 
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Yritä uudestaan' onPress={() => {this.reset()}} />
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Vaihda maksutapaa' onPress={() => {this.props.navigation.pop(3)}} />
-						<Modal1 ref='modal'/>
+						<CustomModal ref='failed' title="Maksu epäonnitui" content="Yritä uudelleen" visible={true} /> 
 					</View>
 				);
 			} 
@@ -186,6 +186,8 @@ class Payment extends Component {
 						<CustomModal ref='setcardtoken' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
 						<CustomModal ref='setcardtype' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
 						<CustomModal ref='setcardpartial' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
+						<CustomModal ref='problems' title="Palvelimeen ei saada yhteyttä" content="Ota yhteys asiakaspalveluumme" visible={false} /> 
+						<CustomModal ref='contactbank' title="Ongelma maksussa" content="Ota yhteys pankkiisi" visible={false} /> 
 
 					</View>
 	
@@ -204,6 +206,7 @@ class Payment extends Component {
 			} 
 			else if(this.state.isPaid && this.state.orderUpdated) {
 				console.log("isPaid & orderUpdated")
+				//mieti
 				return (
 					<View>
 						<Success data={this.props}/>
@@ -215,8 +218,7 @@ class Payment extends Component {
 				console.log("Something's wrong")
 				return (
 					<View>
-						<Text>Jokin meni vikaan</Text>
-						<Modal1 ref='modal'/>
+						<CustomModal ref='wrong' title="Jotain meni pieleen" content="Yritä uudelleen" visible={true} /> 
 					</View>
 				)
 			}
