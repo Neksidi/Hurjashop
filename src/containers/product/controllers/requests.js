@@ -1,12 +1,15 @@
 import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
-async function getProducts(props) {  
+async function getProducts(props,parent) {  
   var response = await Api.get(WEB_URL + '/products', false);  
   console.log(response)
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      // NAVIGATE parent.refs.getproducts.setButtonAction("Home", parent.props.navigation);
+      parent.refs.getproducts.state.visible=true;
+      parent.forceUpdate();
+      return;  
     }
     else {
       props.setProducts(response);
@@ -14,12 +17,16 @@ async function getProducts(props) {
   } 
 }
 
-async function getProduct(id) {
+async function getProduct(id,parent) {
   var response = await Api.get(WEB_URL + '/product/'+id, false);  
+  console.log("GETTING PRODUCTS!!!!!!!!")
 
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      // NAVIGATE parent.refs.getproducts.setButtonAction("Home", parent.props.navigation);
+      parent.refs.getproducts.state.visible=true;
+      parent.forceUpdate();
+      return; 
     }
     else {
       return response;
@@ -27,7 +34,7 @@ async function getProduct(id) {
   } 
 }
 
-async function getProductsByCategory(props, id) {
+async function getProductsByCategory(props, id, parent) {
   var response = await Api.get(WEB_URL + '/products/'+id);  
 
   if(response){

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
 import { getProducts } from '../controllers/requests'
 import {  theme } from '../../../app/styles/global'
+import CustomModal from '../../../app/components/common/modal'
 //import CustomHeader from '../../../app/components/header/customHeader'
 class AllProducts extends Component {
 	constructor(props) {
@@ -33,7 +34,7 @@ class AllProducts extends Component {
 
 	componentDidMount() {
 		if(!this.props.products.length) {
-			getProducts(this.props);
+			getProducts(this.props,this);
 		}
 	}
 
@@ -56,6 +57,7 @@ class AllProducts extends Component {
 							return <Text key={product.id}>{product.name}</Text>
 						})
 					}
+					<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 				</View>
 			);
 		}

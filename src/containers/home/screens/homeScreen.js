@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight } from 'react-native';
 import { bindActionCreators } from 'redux';
-
+import CustomModal from '../../../app/components/common/modal'
 import { Loader } from '../../../app/components/common/loader/loader';
 import Carousel from 'react-native-snap-carousel';
 import Item from '../../../app/components/list/horizontal/item';
@@ -51,7 +51,7 @@ class Home extends Component {
 	componentDidMount() {
 		//this.props.setLoginStatus(true);		//TODO: REMOVE THIS DEBUG
 		if (!this.props.products.length) {
-			getProducts(this.props);		
+			getProducts(this.props,this);		
 		}
 
 		if(!this.props.categories.length) {
@@ -81,6 +81,7 @@ class Home extends Component {
 			  <TouchableHighlight underlayColor="#ffffff00" key={index} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {height : boxHeight, backgroundColor: theme.color.bg.main}]}>
 				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height : boxHeight}}>
 						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.image.src}} />
+						<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 				</View>
 				</TouchableHighlight>
 		  );	
