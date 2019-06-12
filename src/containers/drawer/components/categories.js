@@ -11,6 +11,8 @@ import { setLoginStatus } from '../../profile/redux/userActions'
 import { bindActionCreators } from 'redux';
 import { getCategories } from '../../category/controller/requests'
 import { setCategories } from '../../category/redux/categoryActions'
+import CustomModal from '../../../app/components/common/modal'
+
 
 class Categories extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class Categories extends Component {
 
   componentDidMount() {
 		if(!this.props.categories.length) {
-			getCategories(this.props);
+			getCategories(this.props,this);
 		}
 	}
 
@@ -50,6 +52,7 @@ class Categories extends Component {
             {categories}        
           </ScrollView>
         </View>
+        <CustomModal ref='getcategories' title="Virhe haettassa kategorioita" content="Yritä uudelleen" visible={false} /> 
       </View>
     );
   }

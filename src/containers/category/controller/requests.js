@@ -2,12 +2,15 @@
 import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
-async function getCategories(props) {
+async function getCategories(props,parent) {
     var response = await Api.get(WEB_URL + '/categories', false);  
   
-    if(response){
+    if(response,parent){
       if(response.error) {
-        return;  //TODO: return modal with the custom error msg or don't return the error at all.
+        // NAVIGATE parent.refs.getcategories.setButtonAction("Home", parent.props.navigation);
+        parent.refs.getcategories.state.visible=true;
+        parent.forceUpdate();
+        return;  
       }
       else {
         props.setCategories(response);

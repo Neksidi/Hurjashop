@@ -17,7 +17,7 @@ async function newCardPayment(par) {
 
 }
 
-async function existingCardPayment(orderId, cardToken) {
+async function existingCardPayment(orderId, cardToken,parent) {
     var body = {
         "token": cardToken, //this.state.token,
         "total": this.props.order.total,//this.props.order.total,
@@ -29,7 +29,10 @@ async function existingCardPayment(orderId, cardToken) {
         console.log(response)
         // Set paid true?
     } else {
-        //TODO: Show error modal?
+        //Not been using this function yet
+        // NAVIGATE parent.refs.getcategories.setButtonAction("Home", parent.props.navigation);
+        parent.refs.existingcardpayment.state.visible=true;
+        parent.forceUpdate();
     }
 
 }

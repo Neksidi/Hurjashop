@@ -12,6 +12,8 @@ import { getPickUps } from '../controllers/postiController'
 import { methodsStyles } from '../styles/methods' 
 import LinearGradient from 'react-native-linear-gradient';
 import { addMethods } from '../../profile/redux/userActions'
+import CustomModal from '../../../app/components/common/modal'
+
 
 class Methods extends Component {
 	constructor(props) {
@@ -135,7 +137,7 @@ class Methods extends Component {
     async getPickUps(postcode) {
         console.log("Getting pickups, code: " + postcode);
         this.state.postiBools = [];
-        var result = await getPickUps(postcode)
+        var result = await getPickUps(postcode,this)
         console.log(result);
 
         this.setState({
@@ -300,6 +302,7 @@ class Methods extends Component {
                                     Jatka
                                 </Text>
                             </LinearGradient>
+                            <CustomModal ref='getpickups' title="Virhe haettaessa postiosoitetta" content="Yritä uudelleen" visible={false} /> 
                         </View>
                     </ScrollView>
                 </LinearGradient>

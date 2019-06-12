@@ -81,7 +81,6 @@ class Home extends Component {
 			  <TouchableHighlight underlayColor="#ffffff00" key={index} onPress={() => this.props.navigation.navigate('Category', { category: item })} style={[grid.item, {height : boxHeight, backgroundColor: theme.color.bg.main}]}>
 				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height : boxHeight}}>
 						<Image style={{flex: 1, justifyContent: 'center', alignItems: 'center', width: boxWidth, height: boxHeight, resizeMode: 'cover'}} source={{uri: item.image.src}} />
-						<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 				</View>
 				</TouchableHighlight>
 		  );	
@@ -237,6 +236,7 @@ class Home extends Component {
 								<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
 									{all}
 								</ScrollView>
+								<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 						</View>
 
 						<View style={app_style.sliderContainer}>

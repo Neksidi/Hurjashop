@@ -39,7 +39,10 @@ async function getProductsByCategory(props, id, parent) {
 
   if(response){
     if(response.error) {
-      return;  //TODO: return modal with the custom error msg or don't return the error at all.
+      // NAVIGATE parent.refs.getproductsbycategory.setButtonAction("Home", parent.props.navigation);
+      parent.refs.getproductsbycategory.state.visible=true;
+      parent.forceUpdate();
+      return; 
     }
     else {
       props.setCategoryProducts(response);

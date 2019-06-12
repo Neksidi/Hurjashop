@@ -26,7 +26,7 @@ function validate(type, parent) {
       case 'password': {
         console.log('VALIDOI SALIS');
         console.log("pituus: ", parent.state.password.length)
-        if(parent.state.password.length > 7){                 //TODO: Change this to required minimum length
+        if(parent.state.password.length > 7){
           //parent.setState({passwordValidation: true});
           console.log("true password")
           return true;

@@ -17,8 +17,9 @@ import { addToCart } from '../../cart/redux/cartActions'
 import Badge from '../../../app/components/common/badge/index'
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
+import CustomModal from '../../../app/components/common/modal'
 
-import Modal from '../../../app/components/common/modal'
+
 
 let { width, height } = Dimensions.get('screen');
 
@@ -40,7 +41,8 @@ class Product extends Component {
     this.state = {
       item: null,
       count: 1,
-      cartCount: 0
+      cartCount: 0,
+      content:""
     }
   }
   
@@ -229,10 +231,9 @@ class Product extends Component {
                 </View>
                 {/* ADD TO CART BUTTON */}
                 <TouchableOpacity disabled={disableAddToCart} onPress={() => {
-                  console.log("modal: ",this.refs.modal)
-                  this.refs.modal.setTitle("Tuote lisätty ostoskoriin!");
-                  this.refs.modal.setContent("Lisätty "+this.state.count+" kpl tuotetta "+item.name+ " ostoskoriin.");
-                  this.refs.modal.show();
+                  this.setState({content: "Lisätty "+this.state.count+" kpl tuotetta "+item.name+ " ostoskoriin."})  
+                  this.refs.success.state.visible=true;
+                  this.forceUpdate(); 
 
                   this.handleAddToCart();
                 }}
@@ -255,7 +256,7 @@ class Product extends Component {
               <Gallery images={this.state.item.images} ref='gallery'/>
             </ScrollView>
           </View>
-          <Modal ref='modal'/>
+          <CustomModal ref='success' title="Tuote lisätty ostoskoriin!" content={this.state.content} visible={false} /> 
 
         </LinearGradient>
       );

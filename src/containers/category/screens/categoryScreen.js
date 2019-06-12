@@ -9,6 +9,7 @@ import { theme, grid, app_style, styles, primaryGradientColors,  boxHeight, boxW
 import CustomHeader from '../../../app/components/header/customHeader'
 import { withTheme } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomModal from '../../../app/components/common/modal'
 
 class Category extends Component {
 	constructor(props) {
@@ -43,7 +44,7 @@ class Category extends Component {
 
 		if(currentCategory != undefined) {
 			this.setState({ category : currentCategory });
-			getProductsByCategory(this.props, currentCategory.id);	
+			getProductsByCategory(this.props, currentCategory.id,this);	
 		}
 	}
 
@@ -144,6 +145,7 @@ class Category extends Component {
 									{productByCategory}
 							</View>
 						</ScrollView>
+						<CustomModal ref='getproductsbycategory' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 						</View>
 				</LinearGradient>
 		);
