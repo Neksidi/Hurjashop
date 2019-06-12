@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HurjaShopClient</string>
+    <string name="app_name">Hurja-Shop</string>
     <string name="facebook_app_id">604982996671806</string>
     <string name="fb_login_protocol_scheme">fb604982996671806</string>
 </resources>

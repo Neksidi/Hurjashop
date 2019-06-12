@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import Navigation from './navigation'
 import Reducers from './app/redux/reducers'
 import NavigationService from './navigation/navigators/NavigationService';
+import SplashScreen from 'react-native-splash-screen';
 
 //import fetchMiddleware from './redux/middleware/fetchMiddleware'
 
@@ -15,9 +16,12 @@ const store = createStore(Reducers);
  */
 
 export default class App extends Component {
+  componentDidMount(){
+    console.log("DidMount")
+    SplashScreen.hide();
+  }
   render() {
     return (
-      <View>
       <StatusBar backgroundColor="blue" barStyle="light-content">
         <Provider store={store}>
           <Navigation 
@@ -26,10 +30,7 @@ export default class App extends Component {
             }}
           />
         </Provider>
-      </StatusBar>
-      </View>
-
-	  
+      </StatusBar>  
     );
   }
 }
