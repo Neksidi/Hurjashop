@@ -110,14 +110,21 @@ async function register(parent) {
     }
     console.log("Sending register request");
     var response = await Api.post(WEB_URL + "/customers", customer, false);
+
   
     console.log(response)
-    if(!response.err) { 
+    if(response.status==200||response.status==201||response.status==202) { 
       parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
       parent.refs.registermodal.state.visible=true;
       parent.forceUpdate();
       parent.refs.register_button.success();
     } 
+    else if(response.status==400){
+      parent.refs.registerfailure.setButtonAction("Home", parent.props.navigation);
+      parent.refs.registerfailure.state.visible=true;
+      parent.forceUpdate();
+      parent.refs.register_button.success();
+    }
     else {
       parent.refs.registermodalfail.setButtonAction("Register", parent.props.navigation);
       parent.refs.registermodalfail.props.visible=true;
@@ -132,8 +139,6 @@ async function register(parent) {
   //E.g. this.refs.register_button.success();
   // this.props.navigation.pop();
   // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
-  //If register failed show custom error modal and return to register screen.
-  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
 }
 
 async function registerFb(user) {

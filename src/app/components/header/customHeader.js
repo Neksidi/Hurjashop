@@ -61,7 +61,6 @@ class CustomHeader extends Component {
 	
 };
 const mapStateToProps = (state) => {
-  console.log("STATE CH: ",state)
   const products = state.products.all
   const cart = state.cart.cart
   const user = state.user.contact

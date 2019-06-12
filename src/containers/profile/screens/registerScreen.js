@@ -293,6 +293,8 @@ export default class Register extends Component {
               </View>
               <CustomModal ref='registermodal' title="Tilisi luotu onnistuneesti" content="Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä" visible={false} /> 
               <CustomModal ref='registermodalfail' title="Ongelma tilin luonnissa" content="Yritä uudelleen hetken kuluttua" visible={false} /> 
+              <CustomModal ref='registerfailure' title="Ongelma tilin luonnissa" content="Samalle sähköpostiosoitteelle on jo rekisteröity tili. Ole hyvä, kirjaudu sisään." visible={false} /> 
+
               <View style={styles.submitButtonContainer}>
                 <ButtonWithAnimatedLoader 
                   ref='register_button' 
