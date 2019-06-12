@@ -291,12 +291,13 @@ export default class Register extends Component {
                 
                 />          
               </View>
-              <CustomModal ref='registermodal' title="Success" content="Yritä uudelleen hetken päästä" visible={false} /> 
+              <CustomModal ref='registermodal' title="Tilisi luotu onnistuneesti" content="Tilisi luotiin voit kirjautua sisään vahvistettuasi sähköpostisti sinulle lähettämästämme sähköpostiviestistä" visible={false} /> 
+              <CustomModal ref='registermodalfail' title="Ongelma tilin luonnissa" content="Yritä uudelleen hetken kuluttua" visible={false} /> 
               <View style={styles.submitButtonContainer}>
                 <ButtonWithAnimatedLoader 
                   ref='register_button' 
                   title='Rekisteröidy' 
-                  errorHandler={() => { <Modal_ title="Ongelma rekisteröitymisessä" content="Yritä uudelleen hetken päästä" visible={true}/> }} 
+                  errorHandler={() => { <CustomModal title="Ongelma rekisteröitymisessä" content="Yritä uudelleen hetken päästä" visible={true}/> }} 
                   onPress={() => { 
                     register(this)
                   }} 

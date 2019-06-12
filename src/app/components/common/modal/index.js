@@ -113,7 +113,6 @@ buttonAction(){
   }
 
   render() {
-    console.log("PROPS IN MODAL: ",this.props)
     return(
         <Modal
           isVisible={this.state.visible}

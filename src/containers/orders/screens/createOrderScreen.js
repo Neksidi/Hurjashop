@@ -7,6 +7,7 @@ import { createOrder, updateOrder } from '../controllers/orderController'
 import { bindActionCreators } from 'redux';
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
+import CustomModal from '../../../app/components/common/modal'
 
 class Order extends Component {
     constructor(props) {
@@ -116,12 +117,13 @@ class Order extends Component {
                         }
                     ]
             }
-            console.log(order)
-            var newOrder = await createOrder(order);
+            console.log(order)            
+            var newOrder = await createOrder(order,this);
+
             console.log("NewOrder: ",newOrder)
             //Update order to set customer_id into order
             console.log("Lähdetään päivittelemään tilausta")
-            var updatedOrder = await updateOrder(newOrder,order)
+            var updatedOrder = await updateOrder(newOrder,order,this)
             console.log("Updated order: ",updatedOrder)
             
             console.log("Addind this order:")
@@ -199,8 +201,9 @@ class Order extends Component {
                              <Text style={styles.orderText}>Tilausta luodaan</Text> 
                             
                         </Animated.View>
-
                     </View>
+                    <CustomModal ref='createorder' title="Tilauksen tekeminen epäonnistui" content="Tilauksen tekeminen epäonnistui" visible={false} /> 
+                    <CustomModal ref='updateorder' title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={false} /> 
                 </LinearGradient>
         );
     }

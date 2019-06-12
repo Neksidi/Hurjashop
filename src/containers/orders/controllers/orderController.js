@@ -1,22 +1,20 @@
 import  { WEB_URL } from '../../../app/config/index'
 import Api from '../../../app/controllers/api'
-import Modal from '../../../app/components/common/modal'
 
-async function updateOrderStatus(id, body) {
+
+async function updateOrderStatus(id, body,parent) {
   const response = await Api.put(WEB_URL + `/order/update${id}`, body, true);  
   if(!response.error) {
     console.log(response);
     return response;
   } else {
-    return (
-      <View>
-        <Modal title= "Tilauksen statuksen päivitys epäonnistui" content="Statuksen päivitys epäonnistui yritä uudelleen" visible={true}/>
-      </View>
-    )
+    // NAVIGATION parent.refs.updateorderstatus.setButtonAction("Home", parent.props.navigation);
+    parent.refs.updateorderstatus.state.visible=true;
+    parent.forceUpdate();
   }
 }
  
-async function createOrder(order) {
+async function createOrder(order,parent) {
   console.log("Attempting to create new order:")
   console.log(order);
   const response = await Api.post(WEB_URL + '/orders', order, false);
@@ -24,30 +22,26 @@ async function createOrder(order) {
       console.log(response);
       return response.body;
   } else {
-    return (
-      <View>
-        <Modal title="Tilauksen tekeminen epäonnistui" content="Tilauksen tekeminen epäonnistui" visible={true}/>
-      </View>
-    )
+    // NAVIGATION parent.refs.createorder.setButtonAction("Home", parent.props.navigation);
+    parent.refs.createorder.state.visible=true;
+    parent.forceUpdate();
   }
 }
 
-async function getOrders(userId) {
+async function getOrders(userId,parent) {
   console.log("Getting orders for:" + userId)
   const response = await Api.get(WEB_URL + '/orders/' + userId, false);
   if(!response.error) {
       console.log(response);
       return response;
   } else {
-    return (
-      <View>
-        <Modal title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={true}/>
-      </View>
-    )
+      // NAVIGATION parent.refs.getorders.setButtonAction("Home", parent.props.navigation);
+      parent.refs.getorders.state.visible=true;
+      parent.forceUpdate();
   }
 }
  
-async function updateOrder(newOrder, order) {
+async function updateOrder(newOrder, order,parent) {
   console.log("Attempting to update order:")
   console.log(order);
   const response = await Api.put(WEB_URL + '/order/update/'+newOrder.id, order, false);
@@ -55,11 +49,9 @@ async function updateOrder(newOrder, order) {
       console.log("Updateorder response: ",response);
       return response;
   } else {
-    return (
-      <View>
-        <Modal title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={true}/>
-      </View>
-    )
+      // NAVIGATION parent.refs.updateorder.setButtonAction("Home", parent.props.navigation);
+      parent.refs.updateorder.state.visible=true;
+      parent.forceUpdate();
   }
 }
 

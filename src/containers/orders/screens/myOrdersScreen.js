@@ -9,6 +9,7 @@ import { theme } from '../../../app/styles/global'
 import { Loader } from '../../../app/components/common/loader/loader'
 import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
+import CustomModal from '../../../app/components/common/modal'
 
 class CustomerOrders extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ class CustomerOrders extends Component {
 		console.log("User: " + user)
 		var user_details = await fetchUserDetails(user)
 		console.log("Details: ",user_details)
-		var fetchedOrders = await getOrders(user_details.id);
+		var fetchedOrders = await getOrders(user_details.id,this);
 		console.log("Orders fetched")
 		console.log(fetchedOrders)
 		await this.props.setOrders(fetchedOrders);
@@ -64,7 +65,8 @@ class CustomerOrders extends Component {
 		  if (this.props.orders) {
 			return (
 			  <View style={styles.container}>
-				<FlatList data={this.props.orders} renderItem={({item}) => this.renderItem(item)}></FlatList>
+					<CustomModal ref='getorders' title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={false} /> 
+					<FlatList data={this.props.orders} renderItem={({item}) => this.renderItem(item)}></FlatList>
 			  </View>
 			);
 		  } 

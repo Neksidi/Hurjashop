@@ -11,6 +11,7 @@ import { WEB_URL } from '../../../app/config'
 import { orderStyles } from '../styles/orderStyles'
 import { setVariations } from '../../../containers/product/redux/productActions'
 
+
 class Order extends Component {
   constructor(props) {
     super(props);

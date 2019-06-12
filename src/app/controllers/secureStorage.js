@@ -1,5 +1,4 @@
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
-import Modal2 from '../../app/components/common/modal'
 
 async function getCardToken() {
   return await RNSecureStorage.get("cardToken").then((value) => {
@@ -53,132 +52,124 @@ async function getSessionUser() {
 }
 
 //Return for modal errors
-async function setCardToken(token) {
+async function setCardToken(token,parent) {
   await RNSecureStorage.set("cardToken", token, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);  
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
-    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
-    this.refs.modal.show();
+    // NAVIGATE parent.refs.setcardtoken.setButtonAction("Home", parent.props.navigation);
+    parent.refs.setcardtoken.state.visible=true;
+    parent.forceUpdate();
   })
 }
 
-async function setCardType(type) {
+async function setCardType(type,parent) {
   await RNSecureStorage.set("cardType", type, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
-    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
-    this.refs.modal.show();
+    // NAVIGATE parent.refs.setcardtoken.setButtonAction("Home", parent.props.navigation);
+    parent.refs.setcardtoken.state.visible=true;
+    parent.forceUpdate();
   })
 }
 
-async function setCardPartial(partial) {
+async function setCardPartial(partial,parent) {
   await RNSecureStorage.set("cardPartial", partial, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Kortin syöttämisessä ongelma");
-    this.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
-    this.refs.modal.show();
+    // NAVIGATE parent.refs.setcardpartial.setButtonAction("Home", parent.props.navigation);
+    parent.refs.setcardpartial.state.visible=true;
+    parent.forceUpdate();
   })
 }
 
-async function setSessionId(id) {
+async function setSessionId(id,parent) {
     await RNSecureStorage.set("sessionId", id, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
-      this.refs.modal.setTitle("Ongelma viedessä käyttäjän ID:tä");
-      this.refs.modal.setContent("Yritä uudelleen");
-      this.refs.modal.show();
+      // NAVIGATE parent.refs.setsessionid.setButtonAction("Home", parent.props.navigation);
+      parent.refs.setsessionid.state.visible=true;
+      parent.forceUpdate();
     });
 }
 
-async function setSessionUser(username) {
+async function setSessionUser(username,parent) {
     await RNSecureStorage.set("sessionUser", username, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);     
     }, (err) => {
       console.log(err);
-      this.refs.modal.setTitle("Ongelma viedessä käyttäjätunnusta");
-      this.refs.modal.setContent("Yritä uudelleen");
-      this.refs.modal.show();
+      // NAVIGATE parent.refs.setsessionuser.setButtonAction("Home", parent.props.navigation);
+      parent.refs.setsessionuser.state.visible=true;
+      parent.forceUpdate();
     })
 }
 
-async function removeCardToken() {
+async function removeCardToken(parent) {
   await RNSecureStorage.remove("cardToken")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
-    this.refs.modal.setContent("Yritä uudelleen");
-    this.refs.modal.show();
+      // NAVIGATE parent.refs.removecartoken.setButtonAction("Home", parent.props.navigation);
+      parent.refs.removecarttoken.state.visible=true;
+      parent.forceUpdate();
   })
 }
 
-async function removeCardType() {
+async function removeCardType(parent) {
   await RNSecureStorage.remove("cardType")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);   
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
-    this.refs.modal.setContent("Yritä uudelleen");
-    this.refs.modal.show();
+      // NAVIGATE parent.refs.removecarttype.setButtonAction("Home", parent.props.navigation);
+      parent.refs.removecarttype.state.visible=true;
+      parent.forceUpdate();
   })
 }
 
-async function removeCardPartial() {
+async function removeCardPartial(parent) {
   await RNSecureStorage.remove("cardPartial")
   .then((res) => {
-    console.log(res);     //TODO: error messages && alerts?
+    console.log(res);     
   }, (err) => {
     console.log(err);
-    this.refs.modal.setTitle("Ongelma poistettaessa korttia");
-    this.refs.modal.setContent("Yritä uudelleen");
-    this.refs.modal.show();
+      // NAVIGATE parent.refs.removecartpartial.setButtonAction("Home", parent.props.navigation);
+      parent.refs.removecartpartial.state.visible=true;
+      parent.forceUpdate();
   })
 }
 
-async function removeSessionId() {
+async function removeSessionId(parent) {
     await RNSecureStorage.remove("sessionId")
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
-      this.refs.modal.setTitle("Ongelma poistettaessa istuntoa");
-      this.refs.modal.setContent("Yritä uudelleen");
-      this.refs.modal.show();
+      // NAVIGATE parent.refs.removesessionid.setButtonAction("Home", parent.props.navigation);
+      parent.refs.removesessionid.state.visible=true;
+      parent.forceUpdate();
     });
 }
 
-async function removeSessionUser() {
+async function removeSessionUser(parent) {
     await RNSecureStorage.remove("sessionUser")
     .then((res) => {
-      console.log(res);     //TODO: error messages && alerts?
+      console.log(res);    
     }, (err) => {
       console.log(err);
-      this.refs.modal.setTitle("Ongelma poistettaessa istuntoa");
-      this.refs.modal.setContent("Yritä uudelleen");
-      this.refs.modal.show();
+      // NAVIGATE parent.refs.removesessionuser.setButtonAction("Home", parent.props.navigation);
+      parent.refs.removesessionuser.state.visible=true;
+      parent.forceUpdate();
     })
-}
-
-const Message = () =>{
-  return(
-    <View>
-      <Modal2 ref='modal'/>
-    </View>
-  );
 }
 
 export {
@@ -197,5 +188,4 @@ export {
   removeCardPartial,
   removeSessionId,
   removeSessionUser,
-  Message,
 }

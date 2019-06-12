@@ -112,18 +112,15 @@ async function register(parent) {
     var response = await Api.post(WEB_URL + "/customers", customer, false);
   
     console.log(response)
-    if(!response.err) {     
+    if(!response.err) { 
       parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
-      console.log("after");
       parent.refs.registermodal.state.visible=true;
       parent.forceUpdate();
-      console.log("MODAL SHOWED");
       parent.refs.register_button.success();
-
     } 
     else {
-      parent.refs.registermodal.setButtonAction("Home", parent.props.navigation);
-      parent.refs.registermodal.props.visible=true;
+      parent.refs.registermodalfail.setButtonAction("Register", parent.props.navigation);
+      parent.refs.registermodalfail.props.visible=true;
       parent.forceUpdate();
       parent.refs.register_button.reset();
     }
@@ -162,7 +159,7 @@ async function registerFb(user) {
   //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
 }
 
-async function logInFb(access_token) {
+async function logInFb(access_token,parent) {
   //FB.login(function(response) {
     // Original FB.login code
   //}, { auth_type: 'reauthorize' })
@@ -186,18 +183,17 @@ async function logInFb(access_token) {
     
     //Save session
     
-    setSessionId(id);
-    setSessionUser(username);
+    setSessionId(id,parent);
+    setSessionUser(username,parent);
 
     return response.user.body;
   }
   else {
     //TODO: Show error modal.
-    console.log("error!")
   }
 }
 
-async function logInGoogle(code, user) {
+async function logInGoogle(code, user, parent) {
   console.log("Connecting to own Google login");
   console.log(code);
 
@@ -217,9 +213,8 @@ console.log("Body in login google: ",body)
     console.log("Saving " + id + " and " + username)
     
     //Save session
-    
-    setSessionId(id);
-    setSessionUser(username);
+    setSessionId(id,parent);
+    setSessionUser(username,parent);
     return response.user.body;
   }
   else {
@@ -252,8 +247,8 @@ async function handleLogin(parent) {
       
       //Save session
       
-      setSessionId(id);
-      setSessionUser(username);
+      setSessionId(id,parent);
+      setSessionUser(username,parent);
 
       await fetchUser(username, parent)
       parent.onLoginSuccess();
@@ -312,7 +307,7 @@ async function logIn(props){
   }
 }
 
-function logOutPopup(props){
+function logOutPopup(props,parent){
   /*
   * TODO: handle logout with back-end
   */
@@ -323,21 +318,21 @@ function logOutPopup(props){
       'Haluatko varmasti kirjautua ulos?',
       [
         {text: 'Peruuta', onPress:()=> props.navigation.openDrawer()},
-        {text: 'Kyllä', onPress: () => logOut(props)}
+        {text: 'Kyllä', onPress: () => logOut(props,parent)}
       ],
       {cancellable: true}
     );
 }
 
-async function logOut(props) {
+async function logOut(props,parent) {
   console.log ("LOgging out serverside")
   var response = await Api.get(AUTH_URL + "/logout", true);
 
   if(!response.error) {
     console.log("clearing storage")
     props.setLoginStatus(false);
-    removeSessionId();
-    removeSessionUser();
+    removeSessionId(parent);
+    removeSessionUser(parent);
     // TODO: clear contact data
   }
   else {

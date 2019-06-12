@@ -9,6 +9,7 @@ import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
 import Success from '../screens/paymentSuccessScreen'
 import Modal1 from '../../../app/components/common/modal'
+import CustomModal from '../../../app/components/common/modal'
 
 //const WIDTH = Dimensions.get("window").width;
 
@@ -56,9 +57,9 @@ class Payment extends Component {
 				
 			} else if(parsed.status == 402) {
 				console.log("Status 402")
-				this.refs.modal.setTitle("Ongelma maksussa");
+				/*this.refs.modal.setTitle("Ongelma maksussa");
 				this.refs.modal.setContent("Maksussa ongelma. Ota yhteyttä pankkiisi");
-				this.refs.modal.show();
+				this.refs.modal.show();*/
 
 				this.setState({
 					isCancelled: false,
@@ -68,10 +69,9 @@ class Payment extends Component {
 				})
 			} else if(parsed.status == 500) {
 				console.log("Status 500")
-				this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
+			/*	this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
 				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
-				this.refs.modal.show();
-
+				this.refs.modal.show();*/
 				this.setState({
 					isCancelled: false,
 					failed: true,
@@ -81,9 +81,9 @@ class Payment extends Component {
 			} else {
 				console.log("Else")
 				console.log(parsed.status)
-				this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
+			/*	this.refs.modal.setTitle("Palvelimeen ei saada yhteyttä");
 				this.refs.modal.setContent("Ota yhteys asiakaspalveluumme");
-				this.refs.modal.show();
+				this.refs.modal.show();*/
 
 				this.setState({
 					isCancelled: false,
@@ -97,11 +97,10 @@ class Payment extends Component {
 			var type = parsed.type;
 			var partialPan = parsed.partial_pan;
 
-			var info=true;
 			//Saving into phone memory
-			info=await setCardToken(token)
-			await setCardType(type);
-			await setCardPartial(partialPan);
+			await setCardToken(token,this)
+			await setCardType(type, this);
+			await setCardPartial(partialPan,this);
 			var test = await getCardToken();
 			var test2 = await getCardType();
 			var test3 = await getCardPartial();
@@ -142,7 +141,6 @@ class Payment extends Component {
 			console.log("PAYDAY")
 			console.log(this.props)
 			if (this.state.isLoading) {
-				console.log("Pyöritellään")
 				return (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />)
 			} 
 			else if (this.state.isCancelled) {
@@ -185,7 +183,10 @@ class Payment extends Component {
 							onMessage={(event) => {
 								this.webviewHandler(event.nativeEvent.data)
 							}} />
-							<Modal1 ref='modal'/>
+						<CustomModal ref='setcardtoken' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
+						<CustomModal ref='setcardtype' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
+						<CustomModal ref='setcardpartial' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
+
 					</View>
 	
 				)

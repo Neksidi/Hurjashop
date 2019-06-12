@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { app_style } from '../../../app/styles/global';
 import { logIn, logOutPopup, fetchUser } from '../../profile/controllers/loginController';
 import { getSessionUser } from '../../../app/controllers/secureStorage';
+import CustomModal from '../../../app/components/common/modal'
 
 class UserButtons extends Component {
   constructor(props){
@@ -45,7 +46,7 @@ class UserButtons extends Component {
                           <Text style={app_style.drawer_contact}>Hei {this.props.contact.first_name} {this.props.contact.last_name}!</Text>
                           <Item title='Profiili' icon='user-o' onPress={() => this.props.navigation.navigate('Profile')}/>
                           <Item title='Omat tilaukset' icon='list-alt' onPress={() => this.props.navigation.navigate('CustomerOrders')}/>
-                          <Item title='Kirjaudu ulos' icon='sign-out' onPress={() => logOutPopup(this.props)}/>
+                          <Item title='Kirjaudu ulos' icon='sign-out' onPress={() => logOutPopup(this.props,this)}/>
                         </View>
                     ) : (
                         <View style={{ borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10}}>
@@ -54,6 +55,8 @@ class UserButtons extends Component {
                       </View>
                     )
                 }
+            <CustomModal ref='removesessionid' title="Ongelma poistettaessa istuntoa" content="Yritä uudelleen" visible={false} /> 
+            <CustomModal ref='removesessionuser' title="Ongelma poistettaessa istuntoa" content="Yritä uudelleen" visible={false} /> 
             </View>
     );
   }

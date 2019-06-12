@@ -20,6 +20,7 @@ import { styles } from '../styles/loginStyles'
 import { validate, handleLogin, fetchUser, registerFb } from '../controllers/loginController'
 import { setLoginStatus, addContact } from '../redux/userActions'
 import { bindActionCreators } from 'redux';
+import CustomModal from '../../../app/components/common/modal'
 //Facebook login
 import {
   LoginManager,
@@ -100,7 +101,7 @@ class Login extends Component {
   //Handles the Facebook profile data after succesful login.
   async afterFbLoginComplete(token) {
     console.log("afterFbLoginComplete")
-    var user= await logInFb(token);
+    var user= await logInFb(token,this);
     console.log("After Fblogin user: ",user)
     this.props.setLoginStatus(true);
     await this.props.addContact(user);
@@ -142,7 +143,7 @@ class Login extends Component {
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo);
       console.log("Google login success!");
-      var user = await logInGoogle(userInfo.serverAuthCode, userInfo.user);
+      var user = await logInGoogle(userInfo.serverAuthCode, userInfo.user,this);
       console.log("user is: ",user)
       this.props.setLoginStatus(true);
       await this.props.addContact(user);
@@ -322,7 +323,8 @@ class Login extends Component {
             </View>
           </View>
         </ImageBackground>
- 
+        <CustomModal ref='setsessionid' title="Ongelma viedessä käyttäjän ID:tä" content="Yritä uudelleen" visible={false} /> 
+        <CustomModal ref='setsessionuser' title="Ongelma viedessä käyttäjätunnusta" content="Yritä uudelleen" visible={false} /> 
       </ScrollView>
       
 );
