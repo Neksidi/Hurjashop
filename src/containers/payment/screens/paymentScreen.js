@@ -158,13 +158,10 @@ class Payment extends Component {
 				console.log("Feilas")
 				return(
 					<View>
-						<Text>
-							Maksu epäonnistui, tähän voisi tehdä asioita! (Eri maksutavan ehdottaminen?)
-						</Text>
 						<CustomModal ref='failed' title="Maksu epäonnistui" content="Yritä uudelleen" visible={false} /> 
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Yritä uudestaan' onPress={() => {this.reset()}} />
 						<Button buttonStyle={{backgroundColor: "#e84b48"}} title='Vaihda maksutapaa' onPress={() => {this.props.navigation.pop(3)}} />
-						<CustomModal ref='failed' title="Maksu epäonnitui" content="Yritä uudelleen" visible={true} /> 
+						<CustomModal ref='failed' title="Maksu epäonnistui" content="Yritä uudelleen" visible={true} /> 
 					</View>
 				);
 			} 

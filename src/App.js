@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, StatusBar} from 'react-native';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import Navigation from './navigation'
@@ -17,13 +17,18 @@ const store = createStore(Reducers);
 export default class App extends Component {
   render() {
     return (
-    <Provider store={store}>
-      <Navigation 
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }}
-      />
-	  </Provider>
+      <View>
+      <StatusBar backgroundColor="blue" barStyle="light-content">
+        <Provider store={store}>
+          <Navigation 
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+        </Provider>
+      </StatusBar>
+      </View>
+
 	  
     );
   }

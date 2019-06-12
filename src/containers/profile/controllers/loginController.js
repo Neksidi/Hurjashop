@@ -161,7 +161,7 @@ async function registerFb(user) {
   // this.props.navigation.pop();
   // this.props.navigation.navigate('RegisterSuccess', {name: this.state.firstname});
   //If register failed show custom error modal and return to register screen.
-  //Remember to show error messages. Esim. samalle sähköpostiosoitteelle on rekisteröity tili.
+  
 }
 
 async function logInFb(access_token,parent) {

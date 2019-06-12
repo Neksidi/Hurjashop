@@ -51,7 +51,6 @@ async function getSessionUser() {
   });
 }
 
-//Return for modal errors
 async function setCardToken(token,parent) {
   await RNSecureStorage.set("cardToken", token, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
   .then((res) => {
