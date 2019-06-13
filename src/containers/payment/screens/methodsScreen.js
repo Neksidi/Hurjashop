@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, Button, TouchableOpacity, TextInput } from 'react-native';
+import {  View, StyleSheet, Text, AsyncStorage, ActivityIndicator, ScrollView, Button, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { theme, styles, primaryGradientColors, primaryGradientColorsButton, app_style } from '../../../app/styles/global'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
@@ -17,7 +17,7 @@ import CustomModal from '../../../app/components/common/modal'
 
 class Methods extends Component {
 	constructor(props) {
-		super(props);
+        super(props);
 		this.state = {
             //Postitustavat
             isLoading: true,
@@ -38,6 +38,7 @@ class Methods extends Component {
             postiBools: [],
             postcode: null,
             infotext: null,
+            TextInputDisableStatus:true,
 		};
 		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
@@ -84,12 +85,13 @@ class Methods extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+
         if (this.state.isChecked && this.state.postDelivery && !this.postIsSelected()) {
-            this.setState({ isChecked: false })
+            this.setState({ isChecked: false ,TextInputDisableStatus:true})
         }
         if (!this.state.isChecked && ((this.state.postDelivery && this.postIsSelected()) || this.state.homeDelivery) && (this.state.newcard || this.state.oldcard)) {
             console.log("Nice")
-            this.setState({ isChecked: true });
+            this.setState({ isChecked: true , TextInputDisableStatus:true});
         }
         if (prevState.postDelivery === false && this.state.postDelivery === true) {
             console.log("WHY")
@@ -216,12 +218,12 @@ class Methods extends Component {
             return;
         }
         this.setState(
-            { postcode: text },
+            { postcode: text, TextInputDisableStatus:false },
             callback = () => {
                 console.log(this.state.postcode);
                 console.log("Haetaan: " + this.state.postcode)
                 this.getPickUps(this.state.postcode)
-                this.setState({ isLoadingPoints: true })
+                this.setState({ isLoadingPoints: true, TextInputDisableStatus:true })
             }) 
     }
 
@@ -276,9 +278,10 @@ class Methods extends Component {
                                 <Text>Noutopisteiden haku postinumerolla: </Text>
                                 <TextInput 
                                 style={methodsStyles.postcodeInput} 
+                                editable={this.state.TextInputDisableStatus}
                                 maxLength={5}
                                 keyboardType='numeric'
-                                placeholder='00000' 
+                                placeholder='00000'                          
                                 onChangeText={(text) => this.handleChange(text)}
                                 //onChangeText={(text) => this.setState({ postcode: text })} 
                                 onSubmitEditing={(event) => this.postcodeHandler()} 
