@@ -17,20 +17,20 @@ const store = createStore(Reducers);
 
 export default class App extends Component {
   componentDidMount(){
-    console.log("DidMount")
     SplashScreen.hide();
   }
+
+
+
   render() {
-    return (
-      <StatusBar backgroundColor="blue" barStyle="light-content">
-        <Provider store={store}>
-          <Navigation 
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-        </Provider>
-      </StatusBar>  
+    return ( 
+      <Provider store={store}>
+      <Navigation 
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+	  </Provider>
     );
   }
 }
