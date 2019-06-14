@@ -7,23 +7,88 @@ import { theme , primaryGradientColors, styles} from '../../../app/styles/global
 import ReviewItem from '../components/reviewItem'
 //import { Logo, Drawer, Cart, } from '../navigation/options/Items'
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
-//import { WEB_URL, DB_URL } from '../redux/actiontypes'
+import { WEB_URL } from '../../../app/config'
 import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
 import { emptyCart } from '../../cart/redux/cartActions'
+import {returnPopUp} from '../controllers/helper'
+
+const icon_size = 25;
+const icon_color = theme.color.navigation.main;
 
 class Review extends Component {
-    static navigationOptions = {
-		headerStyle: {
-            backgroundColor: theme.color.navigation.background,
-        },
-        headerTitle: "Yhteenveto",
-        headerTintColor: 'white',
+    
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        console.log("INSIDE NAVIGATIONOPTIONS")
+        return{
+		    headerStyle: {
+                backgroundColor: theme.color.navigation.background,
+            },
+            headerTitle: (<Text size={icon_size} color={icon_color} style={styles.headertext}>Yhteenveto</Text>),
+            headerLeft: (<TouchableOpacity onPress={() => { returnPopUp(this.props,this) }} style={{ paddingHorizontal: 20, }}>
+                            <FAIcon name={'arrow-left'} size={icon_size} color={icon_color} style={styles.icon}></FAIcon>
+                        </TouchableOpacity>
+            ),
+        }
     };
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            data:null,
+            remove:null,
+            removed:false,
+        }
+      }
 
     componentDidMount(){
-        console.log("Review screen")
+        console.log("ReviewScree componentdidmount 1.st")
+        this.props.navigation.setParams({
+            handleBack: this.removeOrder
+          });
+        this.setState({removed:false});
+          console.log("COMPONENT DID MOUNT: ",this)
+    }
+//TODO toteuta controllerissa
+    removeOrder = () => {
+        this.setState({order:this.props})
+        console.log("remove alku")
+        return fetch(WEB_URL + "/orders/" + this.props.order.id, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(WEB_URL + "/products");
+                this.setState({
+                    data: responseJson, removed:true
+                }, function () {
+                    console.log("order removed",this.state.data)
+                    this.responseParser();
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    responseParser() {
+        if (this.state.removed) {
+            return (
+                  this.props.navigation.navigate("Home")
+            );
+        } else {
+            return (
+                <View>
+                    <Text>EI MENNY IHAN PUTKEEN</Text>
+                </View>
+            );
+        }
     }
 
     /*removeOrder = () => {

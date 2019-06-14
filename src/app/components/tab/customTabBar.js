@@ -20,8 +20,8 @@ const TabBar = props => {
   } = props;
 
   const { routes, index: activeRouteIndex } = navigation.state;
-
   return (
+
     <View style={S.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;

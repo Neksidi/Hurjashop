@@ -480,6 +480,11 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 15
   },
+  headertext:{
+    marginLeft:30,
+    fontSize: 20,
+    color: "white"
+  },
   icon: {
     marginLeft:20
 
