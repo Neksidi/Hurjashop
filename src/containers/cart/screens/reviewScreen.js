@@ -27,7 +27,7 @@ class Review extends Component {
                 backgroundColor: theme.color.navigation.background,
             },
             headerTitle: (<Text size={icon_size} color={icon_color} style={styles.headertext}>Yhteenveto</Text>),
-            headerLeft: (<TouchableOpacity onPress={() => { returnPopUp(this.props,this) }} style={{ paddingHorizontal: 20, }}>
+            headerLeft: (<TouchableOpacity onPress={() => { params.handleBack() }} style={{ paddingHorizontal: 20, }}>
                             <FAIcon name={'arrow-left'} size={icon_size} color={icon_color} style={styles.icon}></FAIcon>
                         </TouchableOpacity>
             ),
@@ -80,7 +80,7 @@ class Review extends Component {
     responseParser() {
         if (this.state.removed) {
             return (
-                  this.props.navigation.navigate("Home")
+                this.props.navigation.pop(2)
             );
         } else {
             return (

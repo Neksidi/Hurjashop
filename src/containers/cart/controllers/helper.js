@@ -24,24 +24,7 @@ function getCartQuantity(props) {
     return 0;
 }
 
-function returnPopUp (props,parent) {
-    console.log("returnpopuppi")
-    console.log(props)
-    console.log(parent)
-    props.navigation.closeDrawer();
-      Alert.alert(
-        'Poistetaan tilaus',
-        'Haluatko varmasti poistaa luodun tilauksen, ja palata alkuun?',
-        [
-          {text: 'Peruuta', onPress:()=> props.navigation.openDrawer()},
-          {text: 'Kyllä', onPress: () => parent.params.handleBack()}
-        ],
-        {cancellable: true}
-      );
-}
-
 export { 
     getQuantity,
-    getCartQuantity,
-    returnPopUp,
+    getCartQuantity, 
 }
