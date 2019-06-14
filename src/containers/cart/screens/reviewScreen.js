@@ -12,7 +12,6 @@ import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
 import { emptyCart } from '../../cart/redux/cartActions'
-import {returnPopUp} from '../controllers/helper'
 
 const icon_size = 25;
 const icon_color = theme.color.navigation.main;
@@ -44,12 +43,10 @@ class Review extends Component {
       }
 
     componentDidMount(){
-        console.log("ReviewScree componentdidmount 1.st")
         this.props.navigation.setParams({
             handleBack: this.removeOrder
           });
         this.setState({removed:false});
-          console.log("COMPONENT DID MOUNT: ",this)
     }
 //TODO toteuta controllerissa
     removeOrder = () => {
@@ -90,74 +87,6 @@ class Review extends Component {
             );
         }
     }
-
-    /*removeOrder = () => {
-        console.log("remove alku")
-        return fetch(WEB_URL + "/orders/" + this.props.order.id, {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(WEB_URL + "/products");
-                this.setState({
-                    data: responseJson
-                }, function () {
-                    console.log("order removed")
-                    this.removeFromDatabase()
-
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
-
-    /*removeFromDatabase(){
-        return fetch(DB_URL + "/order/remove", {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: this.props.order.id,
-                customer: this.props.contact.id,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(DB_URL + "/order/remove");
-                this.setState({
-                    remove: responseJson
-                }, function () {
-                    console.log("order removed")
-                    this.responseParser()
-
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
-
-    /*responseParser() {
-        console.log('remove status',this.state.remove)
-        if (this.state.data == 200 && this.state.remove.status == 200) {
-            return (
-                  this.props.navigation.pop(2)
-            );
-        } else {
-            return (
-                <View>
-                    <Text>EI MENNY IHAN PUTKEEN</Text>
-                </View>
-            );
-        }
-    }*/
 
     async handleSubmit() {
     //TODO
@@ -202,9 +131,6 @@ class Review extends Component {
 
 
     render() {
-        console.log(this.props)
-        console.log("Review render");
-        console.log(this.props.order);
         var currency = "";
         switch (this.props.order.currency) {
             case "EUR": {
