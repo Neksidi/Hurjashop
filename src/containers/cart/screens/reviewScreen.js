@@ -77,7 +77,7 @@ class Review extends Component {
     responseParser() {
         if (this.state.removed) {
             return (
-                this.props.navigation.pop(2)
+                this.props.navigation.navigate('Methods')
             );
         } else {
             return (
