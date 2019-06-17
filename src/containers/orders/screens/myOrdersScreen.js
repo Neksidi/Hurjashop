@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
 import { Item } from '../components/item' 
 import { bindActionCreators } from 'redux';
 import { getOrders } from '../controllers/orderController'
@@ -11,7 +11,11 @@ import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
 import CustomModal from '../../../app/components/common/modal'
 
+var user_details=""
+var fetchedOrders=""
+
 class CustomerOrders extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,6 +23,8 @@ class CustomerOrders extends Component {
 			isLoading: true,
 			data: null,
 			orders: null,
+			page:1,
+			isLoading: false,
 		};
 	}
 	
@@ -30,18 +36,38 @@ class CustomerOrders extends Component {
         headerTintColor: 'white',
 	};
 
-	async componentDidMount() {
+	handleLoad() {
+		console.log("handleLoad")
+		this.setState(
+			{page: this.state.page + 1, isLoading:true},
+		)
+		this.getData();
+	}
+
+	async componentDidMount(){
+		this.setState({isLoading:true})
 		var user = await getSessionUser();
 		console.log("User: " + user)
-		var user_details = await fetchUserDetails(user)
+		user_details = await fetchUserDetails(user)
 		console.log("Details: ",user_details)
-		var fetchedOrders = await getOrders(user_details.id,this);
-		console.log("Orders fetched")
-		console.log(fetchedOrders)
-		await this.props.setOrders(fetchedOrders);
+		await this.getData();
 		console.log("orders set")
-		this.setState({isLoading: false});
+		await this.props.setOrders(fetchedOrders);
+		console.log("RESPONSE: ",fetchedOrders)
+		this.setState({data: fetchedOrders, isLoading: false})
 	}
+
+	getData = async () => {
+		try{
+			fetchedOrders = await getOrders(user_details.id,this,this.state.page)
+		}
+		catch(e){
+			console.log("ERROR",e)
+			this.setState({isLoading:false})
+		}
+
+	}
+
 
 	showOrder(item){
 		this.props.navigation.navigate('Order', {item: item});
@@ -51,6 +77,15 @@ class CustomerOrders extends Component {
 		return(
 		  <Item data={item} onPress={() => {this.showOrder(item)}}/>
 		);
+	}
+	renderFooter = () => {
+		return(
+			this.state.isLoading?
+			<View>
+				<ActivityIndicator size="large"></ActivityIndicator>
+			</View>
+			: null
+		) 
 	}
 
     render() {
@@ -63,10 +98,20 @@ class CustomerOrders extends Component {
 		}
 		else {
 		  if (this.props.orders) {
-			return (
+			return (				
 			  <View style={styles.container}>
+					
+					<FlatList 
+						data={this.props.orders} 
+						renderItem={({item}) => this.renderItem(item)} 
+						keyExtractor={(item,index)=>index.toString()} 
+						onEndReached={this.handleLoad}
+						onEndReachedThreshold={0}
+						ListFooterComponent={this.renderFooter}
+						>
+
+						</FlatList>
 					<CustomModal ref='getorders' title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={false} /> 
-					<FlatList data={this.props.orders} renderItem={({item}) => this.renderItem(item)}></FlatList>
 			  </View>
 			);
 		  } 
@@ -87,7 +132,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-	return {
+	return {	
 		orders: state.orders.all
 	}
 }

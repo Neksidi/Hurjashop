@@ -186,6 +186,7 @@ class Payment extends Component {
 						<CustomModal ref='setcardpartial' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
 						<CustomModal ref='problems' title="Palvelimeen ei saada yhteyttä" content="Ota yhteys asiakaspalveluumme" visible={false} /> 
 						<CustomModal ref='contactbank' title="Ongelma maksussa" content="Ota yhteys pankkiisi" visible={false} /> 
+						<CustomModal ref='newcardpayment' title="Kortin syöttämisessä ongelma" content="Kortin syöttämisessä ongelma yritä uudelleen" visible={false} /> 
 
 					</View>
 	

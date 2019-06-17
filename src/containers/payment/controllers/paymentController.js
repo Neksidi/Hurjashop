@@ -10,9 +10,8 @@ async function newCardPayment(par) {
     } else {
         console.log("payment error")
         console.log(response);
-        /*par.refs.modal.setTitle("Kortin syöttämisessä ongelma");
-        par.refs.modal.setContent("Kortin syöttämisessä ongelma yritä uudelleen");
-        par.refs.modal.show();*/
+        par.refs.newcardpayment.state.visible=true;
+        par.forceUpdate();
     }
 
 }

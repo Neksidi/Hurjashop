@@ -28,9 +28,9 @@ async function createOrder(order,parent) {
   }
 }
 
-async function getOrders(userId,parent) {
+async function getOrders(userId,parent,page) {
   console.log("Getting orders for:" + userId)
-  const response = await Api.get(WEB_URL + '/orders/' + userId, false);
+  const response = await Api.get(WEB_URL + '/orders/' + userId+'/'+page, false);
   if(!response.error) {
       console.log(response);
       return response;
