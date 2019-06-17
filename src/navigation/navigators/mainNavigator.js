@@ -13,7 +13,7 @@ const MainNavigator = createDrawerNavigator({
 	Tab: { screen: Tab },
 	PaymentProcess: { screen: PaymentStack },
 	LoginProcess: { screen: LoginStack },
-	Info: { screen: infoStack }
+	Info: { screen: infoStack },
 },{
 	defaultNavigationOptions: {
 		headerTitle: <CustomHeader/>,

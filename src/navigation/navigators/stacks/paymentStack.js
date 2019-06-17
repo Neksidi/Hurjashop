@@ -1,6 +1,8 @@
 import {createStackNavigator} from 'react-navigation';
 import { Easing, Animated } from 'react-native'
 import PaymentScreen from '../../../containers/payment/screens/paymentScreen'
+import OrderCreationScreen from '../../../containers/orders/screens/createOrderScreen'
+import OrderReviewScreen from  '../../../containers/cart/screens/reviewScreen'
 
 const transitionConfig = () => {
     return {
@@ -28,6 +30,8 @@ const transitionConfig = () => {
 
 const MainNavigator = createStackNavigator({
   Payment: {screen: PaymentScreen},
+  OrderReview : { screen: OrderReviewScreen},
+  OrderCreation: {screen: OrderCreationScreen},
 }, 
 {
   navigationOptions: ({ navigation }) => ({

@@ -10,6 +10,7 @@ import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, g
 import Success from '../screens/paymentSuccessScreen'
 import CustomModal from '../../../app/components/common/modal'
 
+
 //const WIDTH = Dimensions.get("window").width;
 
 class Payment extends Component {
@@ -19,7 +20,7 @@ class Payment extends Component {
 			//TODO: change to true when loading function is working
 			data: null,
 			isPaid: false, //false
-			isCancelled: false,
+			isCancelled: false, //false
 			failed: false,
 			isLoading: false,
 			token: null, //null

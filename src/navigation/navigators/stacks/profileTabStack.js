@@ -31,7 +31,7 @@ const transitionConfig = () => {
 const MainNavigator = createStackNavigator({
   Profile: { screen: ProfileScreen },
   CustomerOrders: { screen: CustomerOrdersScreen },
-  Order: { screen: OrderScreen }
+  Order: { screen: OrderScreen },
 }, {
   navigationOptions: ({ navigation }) => ({
     transitionConfig,
