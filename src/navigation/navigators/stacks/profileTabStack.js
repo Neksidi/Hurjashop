@@ -33,13 +33,17 @@ const MainNavigator = createStackNavigator({
   CustomerOrders: { screen: CustomerOrdersScreen },
   Order: { screen: OrderScreen }
 }, {
+  navigationOptions: ({ navigation }) => ({
     transitionConfig,
     initialRouteName: 'Profile',
+    tabBarVisible: true,
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#e94641',
       },
     },
+  }),
+
   }
 );
 

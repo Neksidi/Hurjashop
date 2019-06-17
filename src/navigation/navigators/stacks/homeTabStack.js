@@ -48,14 +48,11 @@ const MainNavigator = createStackNavigator({
   OrderReview: {screen: OrderReviewScreen}
 
 }, {
-    transitionConfig,
-    initialRouteName: 'Home',
-    /*
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#e94641',
-      },
-    },*/
+    navigationOptions: ({ navigation }) => ({
+      transitionConfig,
+      initialRouteName: 'Home',
+      tabBarVisible: true,
+    }),
     defaultNavigationOptions: {
       //headerTitle: <CustomHeader/>,
       headerStyle: {

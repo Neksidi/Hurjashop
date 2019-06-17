@@ -28,14 +28,18 @@ const transitionConfig = () => {
 
 const MainNavigator = createStackNavigator({
   Payment: {screen: PaymentScreen},
-}, {
+}, 
+{
+  navigationOptions: ({ navigation }) => ({
     transitionConfig,
     initialRouteName: 'Payment',
+    tabBarVisible: false,
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#e94641',
       },
     },
+  }),
   }
 );
 

@@ -26,7 +26,7 @@ const TabBar = props => {
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? activeTintColor : inactiveTintColor;
-        //console.log(route)        DEBUG route
+        //console.log("ROUTE: ",route)    
         return (
         <CustomTabButton key={routeIndex} route={route.routeName}/>
           /*<TouchableOpacity
