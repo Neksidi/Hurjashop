@@ -11,13 +11,11 @@ import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
 import CustomModal from '../../../app/components/common/modal'
 
-var user_details=""
-var fetchedOrders=""
-
 class CustomerOrders extends Component {
 
 	constructor(props) {
 		super(props);
+		//this.onEndReachedCalledDuringMomentum = true;
 		this.state = {
 			//TODO: change to true when loading function is working
 			isLoading: true,
@@ -25,6 +23,7 @@ class CustomerOrders extends Component {
 			orders: null,
 			page:1,
 			isLoading: false,
+			user_details:"",
 		};
 	}
 	
@@ -36,36 +35,36 @@ class CustomerOrders extends Component {
         headerTintColor: 'white',
 	};
 
-	handleLoad() {
+	handleLoad = () => {
 		console.log("handleLoad")
 		this.setState(
 			{page: this.state.page + 1, isLoading:true},
-		)
-		this.getData();
+		callback = () => {
+			console.log("PAGE: ",this.state.page)
+			this.getData();
+		})
 	}
 
 	async componentDidMount(){
+		console.log("ComponentDidMount")
 		this.setState({isLoading:true})
 		var user = await getSessionUser();
 		console.log("User: " + user)
-		user_details = await fetchUserDetails(user)
-		console.log("Details: ",user_details)
+		this.state.user_details = await fetchUserDetails(user)
+		console.log("Details: ",this.state.user_details)
 		await this.getData();
 		console.log("orders set")
-		await this.props.setOrders(fetchedOrders);
-		console.log("RESPONSE: ",fetchedOrders)
-		this.setState({data: fetchedOrders, isLoading: false})
+		await this.props.setOrders(this.state.data);
+		console.log("RESPONSE: ",this.state.data)
+		this.setState({ isLoading: false})
 	}
 
 	getData = async () => {
-		try{
-			fetchedOrders = await getOrders(user_details.id,this,this.state.page)
-		}
-		catch(e){
-			console.log("ERROR",e)
-			this.setState({isLoading:false})
-		}
-
+		console.log("GETTING DATA")
+		this.state.data = await getOrders(this.state.user_details.id,this,this.state.page)
+		await this.setState({isLoading:false})
+		await this.props.setOrders(this.state.data);
+		console.log("RESPONSE: ",this.state.data)
 	}
 
 
@@ -102,11 +101,11 @@ class CustomerOrders extends Component {
 			  <View style={styles.container}>
 					
 					<FlatList 
-						data={this.props.orders} 
+						data={this.state.data} 
 						renderItem={({item}) => this.renderItem(item)} 
 						keyExtractor={(item,index)=>index.toString()} 
 						onEndReached={this.handleLoad}
-						onEndReachedThreshold={0}
+						onEndReachedThreshold={0.5}
 						ListFooterComponent={this.renderFooter}
 						>
 
