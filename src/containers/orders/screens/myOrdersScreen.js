@@ -24,6 +24,7 @@ class CustomerOrders extends Component {
 			page:1,
 			isLoading: false,
 			user_details:"",
+			refreshing: false,
 		};
 	}
 	
@@ -38,7 +39,7 @@ class CustomerOrders extends Component {
 	handleLoad = () => {
 		console.log("handleLoad")
 		this.setState(
-			{page: this.state.page + 1, isLoading:true},
+			{page: this.state.page + 1, refreshing:true},
 		callback = () => {
 			console.log("PAGE: ",this.state.page)
 			this.getData();
@@ -47,7 +48,6 @@ class CustomerOrders extends Component {
 
 	async componentDidMount(){
 		console.log("ComponentDidMount")
-		this.setState({isLoading:true})
 		var user = await getSessionUser();
 		console.log("User: " + user)
 		this.state.user_details = await fetchUserDetails(user)
@@ -56,13 +56,14 @@ class CustomerOrders extends Component {
 		console.log("orders set")
 		await this.props.setOrders(this.state.data);
 		console.log("RESPONSE: ",this.state.data)
-		this.setState({ isLoading: false})
+		this.setState({ isLoading: false, refreshing:false})
 	}
 
 	getData = async () => {
 		console.log("GETTING DATA")
-		this.state.data = await getOrders(this.state.user_details.id,this,this.state.page)
-		await this.setState({isLoading:false})
+		await this.setState({isLoading:true})
+		await this.setState({data:await getOrders(this.state.user_details.id,this,this.state.page)})
+		await this.setState({isLoading:false, refreshing:false})
 		await this.props.setOrders(this.state.data);
 		console.log("RESPONSE: ",this.state.data)
 	}
@@ -78,14 +79,24 @@ class CustomerOrders extends Component {
 		);
 	}
 	renderFooter = () => {
+		console.log("Footer load")
 		return(
-			this.state.isLoading?
-			<View>
-				<ActivityIndicator size="large"></ActivityIndicator>
-			</View>
+			this.state.refreshing?
+				<ActivityIndicator animating size="large"></ActivityIndicator>
 			: null
 		) 
 	}
+	renderSeparator = () => {
+    return (
+      <View
+        style={{
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+  };
 
     render() {
 		console.log("Render orders")
@@ -101,12 +112,20 @@ class CustomerOrders extends Component {
 			  <View style={styles.container}>
 					
 					<FlatList 
-						data={this.state.data} 
+						data={this.state.data}
+						extraData={this.state} 
 						renderItem={({item}) => this.renderItem(item)} 
+						ItemSeparatorComponent={}
 						keyExtractor={(item,index)=>index.toString()} 
+						ListFooterComponent={this.renderFooter}
 						onEndReached={this.handleLoad}
 						onEndReachedThreshold={0.5}
-						ListFooterComponent={this.renderFooter}
+						refreshControl={
+							<RefreshControl
+								refreshing={this.state.refreshing}
+								onRefresh={this.this.handleLoad.bind(this)}
+							/>
+						}
 						>
 
 						</FlatList>
