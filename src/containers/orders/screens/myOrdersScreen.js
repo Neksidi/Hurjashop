@@ -18,8 +18,6 @@ class CustomerOrders extends Component {
 		super(props);
 		//this.onEndReachedCalledDuringMomentum = true;
 		this.state = {
-			//TODO: change to true when loading function is working
-			isLoading: true,
 			data: null,
 			orders: null,
 			page:1,
@@ -54,6 +52,7 @@ class CustomerOrders extends Component {
 			callback = () => {
 				console.log("PAGE: ",this.state.page)
 				this.getData();
+				this.upstate.focus();
 			})
 		}
 		else{
@@ -113,7 +112,7 @@ class CustomerOrders extends Component {
 		else {
 		  if (this.props.orders) {
 			return (				
-			  <View style={styles.container}>
+			  <View style={styles.container}  ref={(input) => { this.upstate = input; }}>
 					<ScrollView
 						contentContainerStyle={{
 							flexDirection: 'row',
@@ -123,7 +122,7 @@ class CustomerOrders extends Component {
 						}}
 						refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoadUp()} />}
 					>
-									<FlatList 
+							<FlatList 
 							data={this.state.data}
 							extraData={this.state} 
 							//inverted data={this.state.data}

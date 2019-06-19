@@ -1,8 +1,8 @@
 import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
-async function getProducts(props,parent) {  
-  var response = await Api.get(WEB_URL + '/products', false);  
+async function getProducts(props,parent,page) {  
+  var response = await Api.get(WEB_URL + '/products/'+page, false);  
   console.log(response)
   if(response){
     if(response.error) {
@@ -34,8 +34,8 @@ async function getProduct(id,parent) {
   } 
 }
 
-async function getProductsByCategory(props, id, parent) {
-  var response = await Api.get(WEB_URL + '/products/'+id);  
+async function getProductsByCategory(props, id, parent,page) {
+  var response = await Api.get(WEB_URL + '/products/'+id+'/'+page);  
 
   if(response){
     if(response.error) {

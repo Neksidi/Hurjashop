@@ -3,7 +3,7 @@ import { WEB_URL } from '../../../app/config'
 import Api from '../../../app/controllers/api'
 
 async function getCategories(props,parent) {
-    var response = await Api.get(WEB_URL + '/categories', false);  
+    var response = await Api.get(WEB_URL + '/categories/', false);  
   
     if(response,parent){
       if(response.error) {

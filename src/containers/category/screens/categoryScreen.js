@@ -16,7 +16,8 @@ class Category extends Component {
 		super(props);
 
     this.state = {
-      category_id: null,
+			category_id: null,
+			page:1,
 		}	
 
 		
@@ -44,7 +45,7 @@ class Category extends Component {
 
 		if(currentCategory != undefined) {
 			this.setState({ category : currentCategory });
-			getProductsByCategory(this.props, currentCategory.id,this);	
+			getProductsByCategory(this.props, currentCategory.id,this,this.state.page);	
 		}
 	}
 

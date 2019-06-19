@@ -26,6 +26,7 @@ class Home extends Component {
 			allProducts: [],
 			saleProducts: [],
 			newProducts: [],
+			page:1,
 		}
 	}
 
@@ -51,7 +52,7 @@ class Home extends Component {
 	componentDidMount() {
 		//this.props.setLoginStatus(true);		//TODO: REMOVE THIS DEBUG
 		if (!this.props.products.length) {
-			getProducts(this.props,this);		
+			getProducts(this.props,this,this.state.page);		
 		}
 
 		if(!this.props.categories.length) {
@@ -95,6 +96,7 @@ class Home extends Component {
 		}
 		return data;
 	}
+
 
 	renderPrice(item){
 		const priceStyle = {
