@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ActivityIndicator,RefreshControl } from 'react-native';
 import { Item } from '../components/item' 
 import { bindActionCreators } from 'redux';
 import { getOrders } from '../controllers/orderController'
@@ -10,6 +10,7 @@ import { Loader } from '../../../app/components/common/loader/loader'
 import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
 import CustomModal from '../../../app/components/common/modal'
+import { ScrollView } from 'react-native-gesture-handler';
 
 class CustomerOrders extends Component {
 
@@ -44,6 +45,20 @@ class CustomerOrders extends Component {
 			console.log("PAGE: ",this.state.page)
 			this.getData();
 		})
+	}
+	handleLoadUp = () => {
+		console.log("handleLoadUp")
+		if(this.state.page>1){
+			this.setState(
+				{page: this.state.page - 1, refreshing:true},
+			callback = () => {
+				console.log("PAGE: ",this.state.page)
+				this.getData();
+			})
+		}
+		else{
+			return;
+		}
 	}
 
 	async componentDidMount(){
@@ -82,21 +97,10 @@ class CustomerOrders extends Component {
 		console.log("Footer load")
 		return(
 			this.state.refreshing?
-				<ActivityIndicator animating size="large"></ActivityIndicator>
-			: null
+				<ActivityIndicator></ActivityIndicator>
+			: <View style={styles.container}><Text>Sinulla ei ole enempää tilauksia</Text></View>
 		) 
 	}
-	renderSeparator = () => {
-    return (
-      <View
-        style={{
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
-      />
-    );
-  };
 
     render() {
 		console.log("Render orders")
@@ -110,25 +114,30 @@ class CustomerOrders extends Component {
 		  if (this.props.orders) {
 			return (				
 			  <View style={styles.container}>
-					
-					<FlatList 
-						data={this.state.data}
-						extraData={this.state} 
-						renderItem={({item}) => this.renderItem(item)} 
-						ItemSeparatorComponent={}
-						keyExtractor={(item,index)=>index.toString()} 
-						ListFooterComponent={this.renderFooter}
-						onEndReached={this.handleLoad}
-						onEndReachedThreshold={0.5}
-						refreshControl={
-							<RefreshControl
-								refreshing={this.state.refreshing}
-								onRefresh={this.this.handleLoad.bind(this)}
-							/>
-						}
-						>
-
+					<ScrollView
+						contentContainerStyle={{
+							flexDirection: 'row',
+							alignSelf: 'flex-end',
+							flexGrow: 1,
+							flex:1
+						}}
+						refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoadUp()} />}
+					>
+									<FlatList 
+							data={this.state.data}
+							extraData={this.state} 
+							//inverted data={this.state.data}
+							renderItem={({item}) => this.renderItem(item)} 
+							keyExtractor={(item,index)=>index.toString()} 
+							ListFooterComponent={this.renderFooter}
+							onEndReached={() => this.handleLoad()}
+							onEndReachedThreshold={0.01}
+							//onRefresh={() => this.handleLoad()}
+							//refreshing={this.state.refreshing}						
+							>
 						</FlatList>
+					</ScrollView>
+
 					<CustomModal ref='getorders' title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={false} /> 
 			  </View>
 			);
