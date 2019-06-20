@@ -19,6 +19,7 @@ class CustomHeader extends Component {
 		//this.props.navigation.navigate('Cart')
 		console.log("Cart")
 		console.log("propsit",this.props)
+		this.props.navigation.navigate('Cart')
 	}
 
 

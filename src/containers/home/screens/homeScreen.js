@@ -27,7 +27,6 @@ class Home extends Component {
 			saleProducts: [],
 			newProducts: [],
 			page:1,
-			buttons:[]
 		}
 	}
 
@@ -99,11 +98,13 @@ class Home extends Component {
 		return data;
 	}
 //TODO continue
-	handleLoad(page,some){
+async	handleLoad(page,some){
 		console.log("THIS: ",some)
 		getProducts(this.props,this,page);
 		if(this.props.products.length==0){
-			getProducts(this.props,this,(page-1));
+			console.log("EIPÄ LÖYTYNYNNÄ MITTÄÄN")
+
+			await this.setState({page:page-1})
 		}
 	}
 
@@ -244,17 +245,11 @@ class Home extends Component {
 						colors={primaryGradientColors} 
 						style={styles.linearGradient}>
 						<View style={app_style.sliderContainer}>
-							<Text style={app_style.front_item_title}>Kaikki tuotteet:</Text>
+							<Text style={app_style.front_item_title}>Suosituimmat tuotteet:</Text>
 								<ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
 									{all}
 								</ScrollView>
-								<View style={{flex:5, flexDirection:'row', height:15, alignItems:'center'}}>
-									<Button style={{flex:1,width:2, height:2}} title="[1]" ref="1" onPress={ () => {this.handleLoad(1,this)}}></Button>
-									<Button style={{flex:1,width:2, height:2}} title="[2]" ref="2" onPress={ () => {this.handleLoad(2,this)}}></Button>
-									<Button style={{flex:1,width:2, height:2}} title="[3]" ref="3" onPress={ () => {this.handleLoad(3,this)}}></Button>
-									<Button style={{flex:1,width:2, height:2}} title="[4]" ref="4" onPress={ () => {this.handleLoad(4,this)}}></Button>
-									<Button style={{flex:1,width:2, height:2}} title="[5]" ref="5" onPress={ () => {this.handleLoad(5,this)}}></Button>
-								</View>
+
 								<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 						</View>
 

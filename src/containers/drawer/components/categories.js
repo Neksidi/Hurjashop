@@ -29,9 +29,19 @@ class Categories extends Component {
     console.log("clicketi click")
   }
 
+  //TODO TOTEUTA KAIKKI TUOTTEET SIVU JA NAVIGOI
+
   render() {
-		let categories =
+
+    let allProductsCategory = 
 		this.props.categories ? (
+      <Item title="Kaikki tuotteet" arrow onPress={() => this.props.navigation.navigate('AllProducts')} />
+      ) : (
+          <Loader />
+      );
+
+		let categories =
+		  this.props.categories ? (
       this.props.categories.map((category, index) => {
         if(category.name != undefined) {
           return (
@@ -41,14 +51,14 @@ class Categories extends Component {
       })
 		) : (
 			<Loader />
-		);
-
+    );
 
     return (
       <View style={{ width: '100%', borderBottomWidth: 1, borderColor: '#ffffff50', paddingBottom: 10 }}>
         <View>
           <Item title='Kategoriat' icon='cubes' onPress={this.categoryButtonHandler} />
           <ScrollView style={{ height: 200 }}>
+            {allProductsCategory}
             {categories}        
           </ScrollView>
         </View>

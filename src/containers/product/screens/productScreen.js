@@ -266,7 +266,6 @@ class Product extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log("STATE: ",state)
   const product = state.product
   const products = state.products.all
   const cart = state.cart.cart

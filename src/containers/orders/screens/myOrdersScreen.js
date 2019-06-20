@@ -61,7 +61,6 @@ class CustomerOrders extends Component {
 	}
 
 	async componentDidMount(){
-		console.log("ComponentDidMount")
 		var user = await getSessionUser();
 		console.log("User: " + user)
 		this.state.user_details = await fetchUserDetails(user)
