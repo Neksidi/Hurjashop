@@ -5,13 +5,14 @@ import { Item } from '../components/item'
 import { bindActionCreators } from 'redux';
 import { getOrders } from '../controllers/orderController'
 import { setOrders } from '../redux/orderActions'
-import { primaryGradientColors, primaryGradientColorsButton, theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
+import { primaryGradientColors, primaryGradientColorsButton, theme, grid, app_style, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import { Loader } from '../../../app/components/common/loader/loader'
 import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
 import CustomModal from '../../../app/components/common/modal'
 import { ScrollView } from 'react-native-gesture-handler';
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
+import LinearGradient from 'react-native-linear-gradient';
 
 
 class CustomerOrders extends Component {
@@ -26,6 +27,7 @@ class CustomerOrders extends Component {
 			isLoading: false,
 			user_details:"",
 			refreshing: true,
+			info: "Lataa lisää"
 		};
 	}
 	
@@ -44,7 +46,6 @@ class CustomerOrders extends Component {
 		callback = () => {
 			console.log("PAGE: ",this.state.page)
 			this.getData();
-			//this.upstate.focus();
 		})
 	}
 	handleLoadUp = () => {
@@ -55,7 +56,6 @@ class CustomerOrders extends Component {
 			callback = () => {
 				console.log("PAGE: ",this.state.page)
 				this.getData();
-				//this.upstate.focus();
 			})
 		}
 		else{
@@ -70,19 +70,30 @@ class CustomerOrders extends Component {
 		console.log("Details: ",this.state.user_details)
 		await this.getData();
 		console.log("orders set")
-		await this.props.setOrders(this.state.data);
-		console.log("RESPONSE: ",this.state.data)
-		this.setState({ isLoading: false, refreshing:false})
-		//this.upstate.focus();
 	}
 
 	getData = async () => {
 		console.log("GETTING DATA")
 		await this.setState({isLoading:true})
-		await this.setState({data:await getOrders(this.state.user_details.id,this,this.state.page)})
+		this.setState({data: await getOrders(this.state.user_details.id,this,this.state.page)})
 		await this.setState({isLoading:false, refreshing:false})
-		await this.props.setOrders(this.state.data);
-		console.log("RESPONSE: ",this.state.data)
+		console.log("1: ",this.props.orders)
+		console.log("2: ",this.state.data)
+		console.log(this.state.data.lenght)
+		if(this.state.data.lenght!=0){
+			await this.props.setOrders(this.state.data);
+			console.log("RESPONSE: ",this.state.data)
+		}
+		else{
+			console.log("No data today")
+			await this.setState({info:"Ei enempää tilauksia"})
+		}
+		if(this.state.data==null){
+			console.log("NULL")
+		}
+		if(this.state.data.lenght==0){
+			console.log("Lenght = 0")
+		}
 	}
 
 
@@ -103,10 +114,8 @@ class CustomerOrders extends Component {
 			: <View style={styles.container}>
 					<TouchableOpacity
 						onPress={() => this.handleLoad()}>
-						<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>
-												
-							<FAIcon name='search' size={20} color='#fff' />
-							<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Lataa lisää</Text>
+						<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>												
+							<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>{this.state.info}</Text>
 						</LinearGradient>
 					</TouchableOpacity>
 				</View>
@@ -135,14 +144,14 @@ class CustomerOrders extends Component {
 						refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoadUp()} />}
 					>
 							<FlatList 
-							data={this.state.data}
+							data={this.props.orders}
 							extraData={this.state} 
-							//inverted data={this.state.data}
+							//inverted data={this.props.orders}
 							renderItem={({item}) => this.renderItem(item)} 
 							keyExtractor={(item,index)=>index.toString()} 
 							ListFooterComponent={this.renderFooter}
-							onEndReached={() => this.handleLoad()}
-							onEndReachedThreshold={0}
+							//onEndReached={() => this.handleLoad()}
+							//onEndReachedThreshold={0}
 							//onRefresh={() => this.handleLoad()}
 							//refreshing={this.state.refreshing}						
 							>
