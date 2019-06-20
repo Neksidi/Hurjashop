@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight, RefreshControl } from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight, RefreshControl, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
 import { getProducts } from '../controllers/requests'
@@ -50,24 +50,24 @@ async	componentDidMount() {
 			this.getData();
 		})
 	}
-	handleLoadUp = () => {
-		console.log("handleLoadUp")
-		if(this.state.page>1){
-			this.setState(
-				{page: this.state.page - 1, refreshing:true},
-			callback = () => {
-				console.log("PAGE: ",this.state.page)
-				this.getData();
-				this.upstate.focus();
-			})
-		}
-		else{
-			return;
+	
+	getData = async () => {
+		console.log("GETTING DATA")
+		await this.setState({isLoading:true})
+		//datan haku
+		await getProducts(this.props,this,this.state.page);
+		await this.setState({data : this.props.products})
+		await this.setState({isLoading:false, refreshing:false})
+		console.log("RESPONSE: ",this.state.data)
+		
+		if(this.state.data.length==0&&this.state.page!=1){
+			console.log("Tyhjä o")
+			this.getDataNull()
 		}
 	}
 
-	getData = async () => {
-		console.log("GETTING DATA")
+	getDataNull(){
+		await this.setState({page:this.state.page-1})
 		await this.setState({isLoading:true})
 		//datan haku
 		await getProducts(this.props,this,this.state.page);
@@ -97,6 +97,23 @@ async	componentDidMount() {
 
 	}
 
+	renderFooter() {
+    return (
+    //Footer View with Load More button
+      <View >
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={this.getData}
+          //On Click of button calling loadMoreData function to load more data
+        >
+          <Text>Load More</Text>
+          {this.state.isLoading ? (
+            <ActivityIndicator color="white" style={{ marginLeft: 8 }} />
+          ) : null}
+        </TouchableOpacity>
+      </View>
+    );
+	}
 
 	renderPrice(item){
 		const priceStyle = {
@@ -163,8 +180,8 @@ async	componentDidMount() {
 				style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
 				
 				<ScrollView
-
-					>
+				refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoad()} />}
+				>
 					<View>
 							<View>
 									{results}
