@@ -41,6 +41,8 @@ async	componentDidMount() {
 	console.log("orders set")
 }
 
+
+
 	handleLoad = () => {
 		console.log("handleLoad")
 		this.setState(
@@ -66,7 +68,7 @@ async	componentDidMount() {
 		}
 	}
 
-	getDataNull(){
+	async getDataNull(){
 		await this.setState({page:this.state.page-1})
 		await this.setState({isLoading:true})
 		//datan haku
@@ -93,26 +95,15 @@ async	componentDidMount() {
 						</View>
 					</TouchableHighlight>
 		);
-
-
 	}
 
-	renderFooter() {
-    return (
-    //Footer View with Load More button
-      <View >
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={this.getData}
-          //On Click of button calling loadMoreData function to load more data
-        >
-          <Text>Load More</Text>
-          {this.state.isLoading ? (
-            <ActivityIndicator color="white" style={{ marginLeft: 8 }} />
-          ) : null}
-        </TouchableOpacity>
-      </View>
-    );
+	renderFooter = () => {
+		console.log("Footer load")
+		return(
+			this.state.refreshing?
+				<ActivityIndicator></ActivityIndicator>
+			: <View style={styles.container}><Text>Sinulla ei ole enempää tilauksia</Text></View>
+		) 
 	}
 
 	renderPrice(item){
@@ -162,6 +153,8 @@ async	componentDidMount() {
 						style={grid.container}
 						renderItem={this.renderItem}
 						numColumns={2}
+						refreshing={this.state.refreshing} 
+						onRefresh={() => this.handleLoad()}
 					/>
 				</View>
 
@@ -182,6 +175,18 @@ async	componentDidMount() {
 				<ScrollView
 				refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoad()} />}
 				>
+					<FlatList>
+						inverted data={this.state.data}
+						extraData={this.state} 
+						style={grid.container}
+						keyExtractor={(item,index)=>index.toString()} 
+						ListFooterComponent={this.renderFooter}
+						onEndReached={() => this.handleLoad()}
+						onEndReachedThreshold={0.5}
+						renderItem={this.renderItem}
+						refreshing={this.state.refreshing} 
+						onRefresh={() => this.handleLoad()}
+					</FlatList>
 					<View>
 							<View>
 									{results}

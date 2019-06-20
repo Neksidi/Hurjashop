@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, StyleSheet, Text, FlatList, ActivityIndicator,RefreshControl } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ActivityIndicator,RefreshControl, Button, TouchableOpacity} from 'react-native';
 import { Item } from '../components/item' 
 import { bindActionCreators } from 'redux';
 import { getOrders } from '../controllers/orderController'
 import { setOrders } from '../redux/orderActions'
-import { theme } from '../../../app/styles/global'
+import { primaryGradientColors, primaryGradientColorsButton, theme, grid, app_style, styles, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import { Loader } from '../../../app/components/common/loader/loader'
 import { getSessionUser } from '../../../app/controllers/secureStorage';
 import { fetchUserDetails } from '../../profile/controllers/loginController';
 import CustomModal from '../../../app/components/common/modal'
 import { ScrollView } from 'react-native-gesture-handler';
+import FAIcon from 'react-native-vector-icons/dist/FontAwesome'
+
 
 class CustomerOrders extends Component {
 
@@ -23,7 +25,7 @@ class CustomerOrders extends Component {
 			page:1,
 			isLoading: false,
 			user_details:"",
-			refreshing: false,
+			refreshing: true,
 		};
 	}
 	
@@ -38,21 +40,22 @@ class CustomerOrders extends Component {
 	handleLoad = () => {
 		console.log("handleLoad")
 		this.setState(
-			{page: this.state.page + 1, refreshing:true},
+			{page: this.state.page + 1, isLoading:true},
 		callback = () => {
 			console.log("PAGE: ",this.state.page)
 			this.getData();
+			//this.upstate.focus();
 		})
 	}
 	handleLoadUp = () => {
 		console.log("handleLoadUp")
 		if(this.state.page>1){
 			this.setState(
-				{page: this.state.page - 1, refreshing:true},
+				{page: this.state.page - 1, isLoading:true},
 			callback = () => {
 				console.log("PAGE: ",this.state.page)
 				this.getData();
-				this.upstate.focus();
+				//this.upstate.focus();
 			})
 		}
 		else{
@@ -70,6 +73,7 @@ class CustomerOrders extends Component {
 		await this.props.setOrders(this.state.data);
 		console.log("RESPONSE: ",this.state.data)
 		this.setState({ isLoading: false, refreshing:false})
+		//this.upstate.focus();
 	}
 
 	getData = async () => {
@@ -96,7 +100,16 @@ class CustomerOrders extends Component {
 		return(
 			this.state.refreshing?
 				<ActivityIndicator></ActivityIndicator>
-			: <View style={styles.container}><Text>Sinulla ei ole enempää tilauksia</Text></View>
+			: <View style={styles.container}>
+					<TouchableOpacity
+						onPress={() => this.handleLoad()}>
+						<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>
+												
+							<FAIcon name='search' size={20} color='#fff' />
+							<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Lataa lisää</Text>
+						</LinearGradient>
+					</TouchableOpacity>
+				</View>
 		) 
 	}
 
@@ -110,8 +123,8 @@ class CustomerOrders extends Component {
 		}
 		else {
 		  if (this.props.orders) {
-			return (				
-			  <View style={styles.container}  ref={(input) => { this.upstate = input; }}>
+			return (	
+			  <View style={styles.container}>
 					<ScrollView
 						contentContainerStyle={{
 							flexDirection: 'row',
@@ -129,7 +142,7 @@ class CustomerOrders extends Component {
 							keyExtractor={(item,index)=>index.toString()} 
 							ListFooterComponent={this.renderFooter}
 							onEndReached={() => this.handleLoad()}
-							onEndReachedThreshold={0.01}
+							onEndReachedThreshold={0}
 							//onRefresh={() => this.handleLoad()}
 							//refreshing={this.state.refreshing}						
 							>
@@ -137,7 +150,7 @@ class CustomerOrders extends Component {
 					</ScrollView>
 
 					<CustomModal ref='getorders' title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={false} /> 
-			  </View>
+				</View>
 			);
 		  } 
 		  else {
