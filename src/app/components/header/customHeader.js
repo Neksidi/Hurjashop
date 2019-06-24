@@ -18,10 +18,9 @@ class CustomHeader extends Component {
 	_onPress(){
 		//this.props.navigation.navigate('Cart')
 		console.log("Cart")
-		console.log("propsit",this.props)
-		this.props.navigation.navigate('Cart')
+		console.log("propsit",this)
+		this.props.goToCart();
 	}
-
 
     render() {
 
@@ -64,7 +63,7 @@ class CustomHeader extends Component {
 const mapStateToProps = (state) => {
   const products = state.products.all
   const cart = state.cart.cart
-  const user = state.user.contact
+	const user = state.user.contact
 	return { products, cart , user}
 };
 

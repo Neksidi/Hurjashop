@@ -30,18 +30,18 @@ class Home extends Component {
 		}
 	}
 
-	static navigationOptions = {
+	static navigationOptions = ({navigation}) => ({
 		headerStyle: {
 			backgroundColor: theme.color.navigation.background,
 			height: theme.navigation.height,
 		},
-		headerTitle: <CustomHeader/>,
+		headerTitle: <CustomHeader goToCart={() => navigation.navigate("Cart")}/>,
 		headerLeft: (
 			<View></View> //needed to justify logo in center
 		
 		),
 		
-	};
+	});
 
 	componentWillMount() {
 	}
