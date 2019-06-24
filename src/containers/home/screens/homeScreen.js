@@ -35,7 +35,7 @@ class Home extends Component {
 			backgroundColor: theme.color.navigation.background,
 			height: theme.navigation.height,
 		},
-		headerTitle: <CustomHeader goToCart={() => navigation.navigate("Cart")}/>,
+		headerTitle: <CustomHeader/>,
 		headerLeft: (
 			<View></View> //needed to justify logo in center
 		
@@ -143,9 +143,16 @@ async	handleLoad(page,some){
 
 	render() {
 
+		let products = [];
+		for(let i = 0; i<this.props.products.length; i++){
+			if (this.props.products[i].featured === true){
+				products.push(this.props.products[i])
+			}
+		}
+
 		let all =
 		this.props.products ? (
-			this.props.products.map((item, i) => {
+			products.map((item, i, items) => {
 				return (
 					<TouchableHighlight underlayColor="#ffffff00" key={i} onPress={() => this.props.navigation.navigate('Product', { item: item })} style={[grid.item, {height : boxHeight + textBoxHeight}]}>
 					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
