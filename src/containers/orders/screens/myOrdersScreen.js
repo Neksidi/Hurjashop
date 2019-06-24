@@ -21,7 +21,7 @@ class CustomerOrders extends Component {
 		super(props);
 		//this.onEndReachedCalledDuringMomentum = true;
 		this.state = {
-			data: null,
+			data: [],
 			orders: null,
 			page:1,
 			isLoading: false,
@@ -77,25 +77,26 @@ class CustomerOrders extends Component {
 		await this.setState({isLoading:true})
 		this.setState({data: await getOrders(this.state.user_details.id,this,this.state.page)})
 		await this.setState({isLoading:false, refreshing:false})
-		console.log("1: ",this.props.orders)
-		console.log("2: ",this.state.data)
-		console.log(this.state.data.lenght)
 		if(this.state.data.lenght!=0){
+			console.log("NOT NULL")
 			await this.props.setOrders(this.state.data);
 			console.log("RESPONSE: ",this.state.data)
 		}
-		else{
-			console.log("No data today")
-			await this.setState({info:"Ei enempää tilauksia"})
-		}
-		if(this.state.data==null){
+		if(this.state.data.length==0&&this.state.page!=1){
 			console.log("NULL")
-		}
-		if(this.state.data.lenght==0){
-			console.log("Lenght = 0")
+			this.getDataNull();
 		}
 	}
 
+	async getDataNull(){
+		await this.setState({page:this.state.page-1})
+		await this.setState({isLoading:true})
+		//datan haku
+		await this.setState({data: await getOrders(this.state.user_details.id,this,this.state.page)})
+		await this.setState({isLoading:false, refreshing:false})
+		console.log("RESPONSE: ",this.state.data)
+		await this.props.setOrders(this.state.data);
+	}
 
 	showOrder(item){
 		this.props.navigation.navigate('Order', {item: item});
@@ -106,6 +107,7 @@ class CustomerOrders extends Component {
 		  <Item data={item} onPress={() => {this.showOrder(item)}}/>
 		);
 	}
+
 	renderFooter = () => {
 		console.log("Footer load")
 		return(
