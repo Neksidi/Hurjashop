@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight, RefreshControl, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Dimensions, ScrollView, He, Image, ImageBackground,  FlatList, TouchableHighlight, RefreshControl, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { setProducts } from '../redux/productActions'
 import { getProducts } from '../controllers/requests'
-import { app_style, theme, grid, styles, primaryGradientColors , boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
+import { app_style, theme, grid, styles, primaryGradientColors, primaryGradientColorsButton, boxHeight, boxWidth, textBoxHeight } from '../../../app/styles/global'
 import LinearGradient from 'react-native-linear-gradient';
 import CustomModal from '../../../app/components/common/modal'
 import CustomHeader from '../../../app/components/header/customHeader'
@@ -20,6 +20,7 @@ class AllProducts extends Component {
 			data: [],
 			isLoading: false,
 			refreshing: false,
+			info: "Lataa lisää"
 		}
 	}
 	static navigationOptions = {
@@ -52,6 +53,18 @@ async	componentDidMount() {
 			this.getData();
 		})
 	}
+
+	handleLoadUp = () => {
+		if(this.state.page>1){
+			this.setState(
+				{page: this.state.page - 1, refreshing:true},
+			callback = () => {
+				console.log("PAGE: ",this.state.page)
+				this.getData();
+			})
+		}
+	}
+
 	
 	getData = async () => {
 		console.log("GETTING DATA")
@@ -102,7 +115,14 @@ async	componentDidMount() {
 		return(
 			this.state.refreshing?
 				<ActivityIndicator></ActivityIndicator>
-			: <View style={styles.container}><Text>Sinulla ei ole enempää tilauksia</Text></View>
+			: <View style={styles.container}>
+					<TouchableOpacity
+						onPress={() => this.handleLoad()}>
+						<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>												
+							<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>{this.state.info}</Text>
+						</LinearGradient>
+					</TouchableOpacity>
+				</View>
 		) 
 	}
 
@@ -151,7 +171,9 @@ async	componentDidMount() {
 					<FlatList 
 						data={this.state.data}
 						style={grid.container}
+						keyExtractor={(item,index)=>index.toString()} 
 						renderItem={this.renderItem}
+						ListFooterComponent={this.renderFooter}
 						numColumns={2}
 						refreshing={this.state.refreshing} 
 						onRefresh={() => this.handleLoad()}
@@ -165,38 +187,25 @@ async	componentDidMount() {
 		if(this.state.isLoading){
 		  return (<Loader />);
 		}
-
-		return (
-			<LinearGradient 
+		else{
+			return (
+<LinearGradient 
 				start={{x: 0, y: 0}} end={{x: 1, y: 1}}
 				colors={primaryGradientColors} 
 				style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
 				
 				<ScrollView
-				refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoad()} />}
+				refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.handleLoadUp()} />}
 				>
-					<FlatList>
-						inverted data={this.state.data}
-						extraData={this.state} 
-						style={grid.container}
-						keyExtractor={(item,index)=>index.toString()} 
-						ListFooterComponent={this.renderFooter}
-						onEndReached={() => this.handleLoad()}
-						onEndReachedThreshold={0.5}
-						renderItem={this.renderItem}
-						refreshing={this.state.refreshing} 
-						onRefresh={() => this.handleLoad()}
-					</FlatList>
 					<View>
-							<View>
-									{results}
-							</View>
-						</View>
+						{results}
+					</View>
 						<CustomModal ref='getproducts' title="Virhe haettassa tuotteita" content="Yritä uudelleen" visible={false} /> 
 					</ScrollView>
 			</LinearGradient>
 
-		);
+			);
+		}
 	}
 }
 

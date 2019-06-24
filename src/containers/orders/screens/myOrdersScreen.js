@@ -26,7 +26,7 @@ class CustomerOrders extends Component {
 			page:1,
 			isLoading: false,
 			user_details:"",
-			refreshing: true,
+			refreshing: false,
 			info: "Lataa lisää"
 		};
 	}
@@ -42,7 +42,7 @@ class CustomerOrders extends Component {
 	handleLoad = () => {
 		console.log("handleLoad")
 		this.setState(
-			{page: this.state.page + 1, isLoading:true},
+			{page: this.state.page + 1, isLoading:true, refreshing:true},
 		callback = () => {
 			console.log("PAGE: ",this.state.page)
 			this.getData();
@@ -52,7 +52,7 @@ class CustomerOrders extends Component {
 		console.log("handleLoadUp")
 		if(this.state.page>1){
 			this.setState(
-				{page: this.state.page - 1, isLoading:true},
+				{page: this.state.page - 1, isLoading:true, info:"Lataa lisää"},
 			callback = () => {
 				console.log("PAGE: ",this.state.page)
 				this.getData();
@@ -78,12 +78,11 @@ class CustomerOrders extends Component {
 		this.setState({data: await getOrders(this.state.user_details.id,this,this.state.page)})
 		await this.setState({isLoading:false, refreshing:false})
 		if(this.state.data.lenght!=0){
-			console.log("NOT NULL")
 			await this.props.setOrders(this.state.data);
 			console.log("RESPONSE: ",this.state.data)
 		}
 		if(this.state.data.length==0&&this.state.page!=1){
-			console.log("NULL")
+			await this.setState({info:"Ei enempää tilauksia"})
 			this.getDataNull();
 		}
 	}
@@ -147,7 +146,6 @@ class CustomerOrders extends Component {
 					>
 							<FlatList 
 							data={this.props.orders}
-							extraData={this.state} 
 							//inverted data={this.props.orders}
 							renderItem={({item}) => this.renderItem(item)} 
 							keyExtractor={(item,index)=>index.toString()} 
@@ -159,7 +157,7 @@ class CustomerOrders extends Component {
 							>
 						</FlatList>
 					</ScrollView>
-
+					<CustomModal ref='nomore' title="Ei enempää tilauksia" content="Näytetään edellisen sivun tilaukset" visible={false} /> 
 					<CustomModal ref='getorders' title="Tilausten hakeminen epäonnistui" content="Tilausten hakeminen epäonnistui yritä uudelleen" visible={false} /> 
 				</View>
 			);
