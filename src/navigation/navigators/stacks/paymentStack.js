@@ -29,9 +29,9 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-  Payment: {screen: PaymentScreen},
-  OrderReview : { screen: OrderReviewScreen},
   OrderCreation: {screen: OrderCreationScreen},
+  OrderReview : { screen: OrderReviewScreen},
+  Payment: {screen: PaymentScreen}, 
 }, 
 {
   navigationOptions: ({ navigation }) => ({
