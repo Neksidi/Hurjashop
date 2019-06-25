@@ -71,6 +71,10 @@ class CustomerOrders extends Component {
 		await this.getData();
 		console.log("orders set")
 	}
+	
+	componentWillUnmount(){
+		console.log("UNMOUNT")
+	}
 
 	getData = async () => {
 		console.log("GETTING DATA")

@@ -3,6 +3,7 @@ import { Easing, Animated } from 'react-native'
 import PaymentScreen from '../../../containers/payment/screens/paymentScreen'
 import OrderCreationScreen from '../../../containers/orders/screens/createOrderScreen'
 import OrderReviewScreen from  '../../../containers/cart/screens/reviewScreen'
+import MethodsScreen from '../../../containers/payment/screens/methodsScreen'
 
 const transitionConfig = () => {
     return {
@@ -29,6 +30,7 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
+  Methods: {screen: MethodsScreen},
   OrderCreation: {screen: OrderCreationScreen},
   OrderReview : { screen: OrderReviewScreen},
   Payment: {screen: PaymentScreen}, 

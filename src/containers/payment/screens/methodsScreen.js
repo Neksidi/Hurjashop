@@ -13,6 +13,7 @@ import { methodsStyles } from '../styles/methods'
 import LinearGradient from 'react-native-linear-gradient';
 import { addMethods } from '../../profile/redux/userActions'
 import CustomModal from '../../../app/components/common/modal'
+import { StackActions } from 'react-navigation';
 
 
 class Methods extends Component {
@@ -39,6 +40,7 @@ class Methods extends Component {
             postcode: null,
             infotext: null,
             TextInputDisableStatus:true,
+            show:false,
 		};
 		  //this.retrieveToken = this.retrieveToken.bind(this)
 		  this.retrieveToken()
@@ -211,6 +213,7 @@ class Methods extends Component {
         } else if (card === "oldcard") {
             this.state.oldcard ? (this.setState({ oldcard: false, newcard: false, isChecked: false })) : (this.setState({ oldcard: true, newcard: false, payment_method: "oCard", payment_method_title: "Korttimaksu" }));
         }
+
     }
     handleChange(text){
 
@@ -228,6 +231,9 @@ class Methods extends Component {
     }
 
 	render() {
+        const pushAction = StackActions.push({
+            routeName: 'OrderCreation',
+          });
         let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
         let continueButtonStyle = !this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
         
@@ -298,12 +304,12 @@ class Methods extends Component {
                             <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
                                 <Text 
                                     disabled={!this.state.isChecked}
-                                    onPress={() => { this.handleSubmit(); this.props.navigation.navigate('OrderCreation'); }} 
+                                    onPress={() => { this.handleSubmit();this.props.navigation.dispatch(pushAction); }} 
                                     style={continueButtonStyle}
                                 >
                                     Jatka
                                 </Text>
-                            </LinearGradient>
+                            </LinearGradient>}
                             <CustomModal ref='getpickups' title="Virhe haettaessa postiosoitetta" content="Yritä uudelleen" visible={false} /> 
                         </View>
                     </ScrollView>
@@ -354,7 +360,7 @@ class Methods extends Component {
 
                         <TouchableOpacity
                             disabled={!this.state.isChecked}
-							onPress={() =>{this.handleSubmit(); this.props.navigation.navigate('OrderCreation');}}>
+							onPress={() =>{this.handleSubmit(); this.props.navigation.dispatch(pushAction);}}>
 							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
 								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
 							</LinearGradient>

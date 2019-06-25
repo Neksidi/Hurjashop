@@ -12,6 +12,8 @@ import { reviewStyles } from '../styles/reviewStyles'
 import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
 import { emptyCart } from '../../cart/redux/cartActions'
+import { StackActions, NavigationActions } from 'react-navigation';
+
 
 const icon_size = 25;
 const icon_color = theme.color.navigation.main;
@@ -48,6 +50,9 @@ class Review extends Component {
           });
         this.setState({removed:false});
     }
+    componentWillUnmount(){
+        console.log("RW UNMOUNTsadfjdksfjdklsfjldks")
+    }
 //TODO toteuta controllerissa
     removeOrder = () => {
         this.setState({order:this.props})
@@ -76,9 +81,13 @@ class Review extends Component {
 
     responseParser() {
         if (this.state.removed) {
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Methods' })],
+              });   
             return (
-                this.props.navigation.navigate('Methods')
-            );
+                this.props.navigation.pop(2)
+            )
         } else {
             return (
                 <View>
@@ -131,6 +140,7 @@ class Review extends Component {
 
 
     render() {
+        console.log("reviewScreen render")
         var currency = "";
         switch (this.props.order.currency) {
             case "EUR": {
@@ -152,6 +162,7 @@ class Review extends Component {
                                     <ReviewItem
                                         data={item} 
                                         currency={currency} 
+                                        //TODO check this                                    
                                         onPress={() => this._onPress(item)} 
                                         parentFlatList={this} />}>
                                 </FlatList>
@@ -209,6 +220,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => (
-	bindActionCreators({ addPayment , emptyCart }, dispatch));
-
+    bindActionCreators({ addPayment , emptyCart }, dispatch));
+    
 export default connect(mapStateToProps, mapDispatchToProps)(Review);

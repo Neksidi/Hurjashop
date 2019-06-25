@@ -8,13 +8,15 @@ import { bindActionCreators } from 'redux';
 import CustomHeader from '../../../app/components/header/customHeader'
 import LinearGradient from 'react-native-linear-gradient';
 import CustomModal from '../../../app/components/common/modal'
+import { StackActions } from 'react-navigation';
 
 class Order extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fadeAnim: new Animated.Value(0)
-
+            fadeAnim: new Animated.Value(0),
+            value: "",
+            text:"Tilausta luodaan"
         }
     }
 
@@ -60,7 +62,9 @@ class Order extends Component {
             this.createOrder()
         }
     }*/
-    async componentDidMount() {
+    async componentDidMount(){
+        console.log("Creating new order from WillMount");
+        this.setState({text:"Luodaan tilausta"})
         Animated.timing(
             this.state.fadeAnim,
             {
@@ -68,13 +72,16 @@ class Order extends Component {
                 duration:1500,
                 delay: 500,
                 useNativeDriver: true,
+                timerOn:true
             }
         ).start()
-        await this.formOrder();
-
-      
+        await this.formOrder();  
+        this.setState({value:1})
     }
 
+    componentWillUnmount(){
+        console.log("UNMOUNTPLEASE CREATEORDER")
+    }
 
     async formOrder() {
         console.log("Luomma tilauksen: ")
@@ -130,84 +137,40 @@ class Order extends Component {
             console.log(newOrder);
             this.props.addOrder(newOrder);
             console.log("Navigating")
-            this.props.navigation.navigate('OrderReview')
-    }
-    
-    /*
-        componentWillUnmount() {
-            this.props.navigation.pop()
-        }*/
 
-        /*
-    saveToDatabase(order) {
-        return fetch(DB_URL + "/order/add", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                auth: this.state.auth
-            },
-            body: JSON.stringify(
-                {
-                    "customer": this.props.contact.id,
-                    "id": order.id,
-                }
-            )
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(WEB_URL + "/products");
-                console.log("UUSI TILAUS LÄHETETTY")
-                console.log(responseJson)
-                this.setState({
-                    database: responseJson,
-                }, function () {
-                    console.log(responseJson.status)
-                    if (responseJson.status === 200) {
-                        this.setState({
-                            isLoading: false,
-                        })
-
-                        //Varoitus?: return ja pop hax
-                        console.log("Jaa")
-                        this.props.navigation.navigate('Review')
-                    } else {
-                        console.log("Virhe tilauksen tallennuksessa")
-                    }
-
-                });
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-    */
-
-    render() {
+            const pushAction = StackActions.push({
+                routeName: 'OrderReview',
+              });
+            this.props.navigation.dispatch(pushAction);
         
-        let {fadeAnim}=this.state
-        let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
+        }
+    
 
-        return (
-                <LinearGradient 
-                    start={{x: 0, y: 0}} end={{x: 1, y: 1}}
-                    colors={primaryGradientColors} 
-                    style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
-                    <View style={styles.container}>
-                        <Animated.View style={{opacity: fadeAnim}}>
-                           
-                             {output}
-                             <Text style={styles.orderText}>Tilausta luodaan</Text> 
-                            
-                        </Animated.View>
-                    </View>
-                    <CustomModal ref='createorder' title="Tilauksen tekeminen epäonnistui" content="Tilauksen tekeminen epäonnistui" visible={false} /> 
-                    <CustomModal ref='updateorder' title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={false} /> 
-                </LinearGradient>
-        );
-    }
+   render() {
+    console.log("Create order render")
+    let {fadeAnim}=this.state
+    let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
+
+    return (
+            <LinearGradient 
+                start={{x: 0, y: 0}} end={{x: 1, y: 1}}
+                colors={primaryGradientColors} 
+                style={[styles.linearGradient, theme.inputScreenContainer, {height:'100%'}]}>
+                <View style={styles.container}>
+                    <Animated.View style={{opacity: fadeAnim}}>
+                       
+                         {output}
+                         <Text style={styles.orderText}>{this.state.text}</Text> 
+                        
+                    </Animated.View>
+                </View>
+                <CustomModal ref='createorder' title="Tilauksen tekeminen epäonnistui" content="Tilauksen tekeminen epäonnistui" visible={false} /> 
+                <CustomModal ref='updateorder' title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={false} /> 
+            </LinearGradient>
+    );
 }
+}
+
 
 
 const mapStateToProps = (state) => {

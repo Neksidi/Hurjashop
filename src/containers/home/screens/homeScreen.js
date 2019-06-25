@@ -109,6 +109,7 @@ async	handleLoad(page,some){
 	}
 
 
+
 	renderPrice(item){
 		const priceStyle = {
 		  fontFamily: 'BarlowCondensed-Regular',
