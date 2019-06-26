@@ -15,7 +15,6 @@ import { emptyCart } from '../../cart/redux/cartActions'
 import { StackActions, NavigationActions } from 'react-navigation';
 import { deleteOrder } from '../../orders/redux/orderActions'
 
-
 const icon_size = 25;
 const icon_color = theme.color.navigation.main;
 
@@ -83,16 +82,11 @@ class Review extends Component {
     async responseParser() {
         console.log(this)
         console.log("DELETE FROM REDUX PLEASE")
-        await this.props.emptyCart();
         await this.props.deleteOrder()
         console.log(this.props)
-        if (this.state.removed) {
-            const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'Methods' })],
-              });   
+        if (this.state.removed) { 
             return (
-                this.props.navigation.pop(2)
+                this.props.navigation.navigate('Home')
             )
         } else {
             return (

@@ -231,6 +231,7 @@ class Methods extends Component {
     }
 
 	render() {
+        console.log("PROPSIT OVAT: ",this)
         const pushAction = StackActions.push({
             routeName: 'OrderCreation',
           });
