@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { addPayment } from '../../payment/redux/paymentActions'
 import { emptyCart } from '../../cart/redux/cartActions'
 import { StackActions, NavigationActions } from 'react-navigation';
+import { deleteOrder } from '../../orders/redux/orderActions'
 
 
 const icon_size = 25;
@@ -79,7 +80,12 @@ class Review extends Component {
             });
     }
 
-    responseParser() {
+    async responseParser() {
+        console.log(this)
+        console.log("DELETE FROM REDUX PLEASE")
+        await this.props.emptyCart();
+        await this.props.deleteOrder()
+        console.log(this.props)
         if (this.state.removed) {
             const resetAction = StackActions.reset({
                 index: 0,
@@ -220,6 +226,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({ addPayment , emptyCart }, dispatch));
+    bindActionCreators({ addPayment , emptyCart, deleteOrder }, dispatch));
     
 export default connect(mapStateToProps, mapDispatchToProps)(Review);
