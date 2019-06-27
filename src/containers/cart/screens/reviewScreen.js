@@ -91,13 +91,6 @@ class Review extends Component {
         console.log("DELETE FROM REDUX PLEASE")
         //await this.props.deleteOrder()
         //console.log("AFTER REMOVE")
-        const resetAction = StackActions.reset({
-            index: 0,
-            actions: [//NavigationActions.navigate('Tab', {}, 
-                        NavigationActions.navigate({routeName: 'Cart'}),
-                 
-                    ],
-          });
          
         if (this.state.removed) { 
             return (
@@ -226,7 +219,6 @@ class Review extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("STATE IN REVIEWSCREEN: ",state)
     return {
         shipping: state.user.shipping,
         methods: state.user.methods,

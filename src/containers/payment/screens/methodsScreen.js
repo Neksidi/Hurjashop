@@ -126,7 +126,10 @@ class Methods extends Component {
             shipping_total: total
         };
         this.props.addMethods(this.state.methods);
-
+        const pushAction = StackActions.push({
+            routeName: 'OrderCreation',
+          });
+        this.props.navigation.dispatch(pushAction)
 	};
 	
     async postcodeHandler() {
@@ -232,9 +235,7 @@ class Methods extends Component {
 
 	render() {
         console.log("PROPSIT OVAT: ",this)
-        const pushAction = StackActions.push({
-            routeName: 'OrderCreation',
-          });
+
         let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
         let continueButtonStyle = !this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
         
@@ -305,7 +306,7 @@ class Methods extends Component {
                             <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
                                 <Text 
                                     disabled={!this.state.isChecked}
-                                    onPress={() => { this.handleSubmit();this.props.navigation.dispatch(pushAction); }} 
+                                    onPress={() => { this.handleSubmit(); }} 
                                     style={continueButtonStyle}
                                 >
                                     Jatka
@@ -361,7 +362,7 @@ class Methods extends Component {
 
                         <TouchableOpacity
                             disabled={!this.state.isChecked}
-							onPress={() =>{this.handleSubmit(); this.props.navigation.dispatch(pushAction);}}>
+							onPress={() =>{this.handleSubmit();}}>
 							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
 								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
 							</LinearGradient>

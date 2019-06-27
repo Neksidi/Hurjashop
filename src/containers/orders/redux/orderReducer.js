@@ -20,10 +20,8 @@ const INITIAL_STATE = {
         return {...state};
       }
       case DELETE_ORDER: {
-        console.log("STATE BEFORE: ",state)
         state.order = []
         console.log("INSIDE DELETE_ORDER")
-        console.log("STATE: ",state)
         return {...state};
       }
       default:

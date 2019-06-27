@@ -16,7 +16,8 @@ class Order extends Component {
         this.state = {
             fadeAnim: new Animated.Value(0),
             value: "",
-            text:"Tilausta luodaan"
+            text:"Tilausta luodaan",
+            luku:0,
         }
     }
 
@@ -29,7 +30,8 @@ class Order extends Component {
 		headerLeft: (
 			<View></View> //needed to justify logo in center		
 		),
-	};
+    };
+
 
 /*
     authenticate() {
@@ -62,9 +64,13 @@ class Order extends Component {
             this.createOrder()
         }
     }*/
+
+
     async componentDidMount(){
         console.log("Creating new order from DidMount");
         this.setState({text:"Luodaan tilausta"})
+        await this.formOrder();
+        console.log("formOrder Done")  
         Animated.timing(
             this.state.fadeAnim,
             {
@@ -75,8 +81,11 @@ class Order extends Component {
                 timerOn:true
             }
         ).start()
-        await this.formOrder();  
-        this.setState({value:1})
+        //this.setState({value:1})
+    }
+
+    componentWillMount(){
+        console.log("WILLMOUNTTI")
     }
 
     componentWillUnmount(){
@@ -134,20 +143,17 @@ class Order extends Component {
             //console.log("Updated order: ",updatedOrder)
             
             console.log("Addind this order:")
-            console.log(newOrder);
-            this.props.addOrder(newOrder);
+
+            //TÄÄ SAIS TAPAHTUA VAIN KERRAN KOSKA AIHEUTTAA UUDELLEEN RENDERÖINNIN
+            await this.props.addOrder(newOrder);
             console.log("Navigating")
 
-            const pushAction = StackActions.push({
-                routeName: 'OrderReview',
-              });
-            this.props.navigation.dispatch(pushAction);
+            this.props.navigation.navigate('OrderReview')
         
         }
     
 
    render() {
-    console.log("Create order render")
     let {fadeAnim}=this.state
     let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
 
@@ -160,7 +166,7 @@ class Order extends Component {
                     <Animated.View style={{opacity: fadeAnim}}>
                        
                          {output}
-                         <Text style={styles.orderText}>{this.state.text}</Text> 
+                         <Text style={styles.orderText}>Tilausta luodaan</Text> 
                         
                     </Animated.View>
                 </View>
@@ -174,7 +180,6 @@ class Order extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log("STATE IN CREATEORDER",state);
     return {
         cart: state.cart.orderCart,
         contact: state.user.contact,
