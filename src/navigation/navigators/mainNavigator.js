@@ -7,6 +7,7 @@ import LoginStack from '../navigators/stacks/loginStack'
 import infoStack from '../navigators/stacks/infoStack'
 import DrawerScreen from '../../containers/drawer/screens/drawerScreen' 
 import CustomHeader from '../../app/components/header/customHeader'
+import Home from '../../navigation/navigators/stacks/homeTabStack'
 // 
 
 const MainNavigator = createDrawerNavigator({

@@ -30,7 +30,6 @@ const transitionConfig = () => {
   }
 
 const MainNavigator = createStackNavigator({
-  Methods: {screen: MethodsScreen},
   OrderCreation: {screen: OrderCreationScreen},
   OrderReview : { screen: OrderReviewScreen},
   Payment: {screen: PaymentScreen}, 

@@ -27,10 +27,10 @@ class ProfileTabButton extends Component {
                     </TouchableOpacity>
                 );
             }
-            case "Home": {
+            case "Homeroute": {
                 return (
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate(this.props.route)}
+                        onPress={() => this.props.navigation.navigate('Home')}
                         underlayColor="#2882D8"
                         style={{
                             alignItems: 'center',

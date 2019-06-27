@@ -93,14 +93,19 @@ class Review extends Component {
         //console.log("AFTER REMOVE")
         const resetAction = StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Methods' })],
+            actions: [//NavigationActions.navigate('Tab', {}, 
+                        NavigationActions.navigate({routeName: 'Cart'}),
+                 
+                    ],
           });
+         
         if (this.state.removed) { 
             return (
-                this.props.navigation.dispatch(resetAction)
+        //this.props.navigation.dispatch(resetAction)
+                this.props.navigation.navigate('Homeroute')
             )
         } else {
-            return (
+            return ( 
                 <View>
                     <Text>EI MENNY IHAN PUTKEEN</Text>
                 </View>

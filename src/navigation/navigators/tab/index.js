@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator({
 			showLabel: false
 		})
 	},
-	Home: {
+	Homeroute: {
 		screen: HomeStack,
 		navigationOptions: () => ({
 			secure: false,
@@ -42,7 +42,7 @@ const Tab = createBottomTabNavigator({
 }, {
 	tabBarComponent: CustomTabBar,
 	lazy: true,
-	initialRouteName: 'Home',
+	initialRouteName: 'Homeroute',
 	/*navigationOptions: ({navigation}) => {
 		return {
 			header: null
