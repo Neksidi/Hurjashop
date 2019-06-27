@@ -19,6 +19,7 @@ async function createOrder(order,parent) {
   console.log(order);
   const response = await Api.post(WEB_URL + '/orders', order, false);
   if(!response.error) {
+      console.log("DONE")
       console.log(response);
       return response.body;
   } else {

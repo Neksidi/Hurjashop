@@ -127,6 +127,7 @@ class Product extends Component {
   }
 
   render() {
+    console.log("PRODUCT SCREEN PROPS",this.props)
     let item = this.state.item;	
     
     if(item == null) {
@@ -266,6 +267,7 @@ class Product extends Component {
 
 
 const mapStateToProps = (state) => {
+  console.log("STATE ",state)
   const product = state.product
   const products = state.products.all
   const cart = state.cart.cart

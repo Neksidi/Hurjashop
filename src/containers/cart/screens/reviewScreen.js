@@ -43,8 +43,15 @@ class Review extends Component {
             removed:false,
         }
       }
+    
+    componentWillMount(){
+        console.log("WILLMOUNT")
+        console.log(this.props)
+        console.log(this.state)
+    }
 
     componentDidMount(){
+        console.log("DIDMOUNT")
         this.props.navigation.setParams({
             handleBack: this.removeOrder
           });
@@ -82,11 +89,15 @@ class Review extends Component {
     async responseParser() {
         console.log(this)
         console.log("DELETE FROM REDUX PLEASE")
-        await this.props.deleteOrder()
-        console.log(this.props)
+        //await this.props.deleteOrder()
+        //console.log("AFTER REMOVE")
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Methods' })],
+          });
         if (this.state.removed) { 
             return (
-                this.props.navigation.navigate('Home')
+                this.props.navigation.dispatch(resetAction)
             )
         } else {
             return (
@@ -210,12 +221,13 @@ class Review extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log("STATE IN REVIEWSCREEN: ",state)
     return {
         shipping: state.user.shipping,
         methods: state.user.methods,
         cart: state.cart.cart,
         contact: state.user.contact,
-        order: state.orders.new,
+        order: state.orders.order,
     }
 }
 

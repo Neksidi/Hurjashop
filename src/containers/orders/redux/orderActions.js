@@ -16,9 +16,10 @@ const setOrders = orders => (
     }
 )
 
-const deleteOrder = () => (
+const deleteOrder = order => (
     {
         type: DELETE_ORDER,
+        payload: order,
     }
 )
 

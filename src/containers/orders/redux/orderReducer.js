@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   const orderReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case ADD_ORDER: {
-        state.new = action.payload;
+        state.order = action.payload;
         console.log("wtf")
         return {...state};
       }
@@ -20,7 +20,10 @@ const INITIAL_STATE = {
         return {...state};
       }
       case DELETE_ORDER: {
+        console.log("STATE BEFORE: ",state)
         state.order = []
+        console.log("INSIDE DELETE_ORDER")
+        console.log("STATE: ",state)
         return {...state};
       }
       default:

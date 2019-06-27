@@ -63,7 +63,7 @@ class Order extends Component {
         }
     }*/
     async componentDidMount(){
-        console.log("Creating new order from WillMount");
+        console.log("Creating new order from DidMount");
         this.setState({text:"Luodaan tilausta"})
         Animated.timing(
             this.state.fadeAnim,
@@ -124,14 +124,14 @@ class Order extends Component {
                         }
                     ]
             }
-            console.log(order)            
+            console.log("Order:",order)            
             var newOrder = await createOrder(order,this);
 
             console.log("NewOrder: ",newOrder)
             //Update order to set customer_id into order
-            console.log("Lähdetään päivittelemään tilausta")
-            var updatedOrder = await updateOrder(newOrder,order,this)
-            console.log("Updated order: ",updatedOrder)
+            //console.log("Lähdetään päivittelemään tilausta")
+            //var updatedOrder = await updateOrder(newOrder,order,this)
+            //console.log("Updated order: ",updatedOrder)
             
             console.log("Addind this order:")
             console.log(newOrder);
@@ -168,12 +168,13 @@ class Order extends Component {
                 <CustomModal ref='updateorder' title="Tilausten päivitys epäonnistui" content="Päivitys epäonnistui yritä uudelleen" visible={false} /> 
             </LinearGradient>
     );
-}
+    }
 }
 
 
 
 const mapStateToProps = (state) => {
+    console.log("STATE IN CREATEORDER",state);
     return {
         cart: state.cart.orderCart,
         contact: state.user.contact,
