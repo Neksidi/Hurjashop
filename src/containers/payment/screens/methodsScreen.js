@@ -98,7 +98,6 @@ class Methods extends Component {
         if (prevState.postDelivery === false && this.state.postDelivery === true) {
             console.log("WHY")
         }
-
     }
 	
     handleSubmit = () => {
@@ -126,10 +125,9 @@ class Methods extends Component {
             shipping_total: total
         };
         this.props.addMethods(this.state.methods);
-        const pushAction = StackActions.push({
-            routeName: 'OrderCreation',
-          });
-        this.props.navigation.dispatch(pushAction)
+        console.log("Tänne asti päästiin")
+
+        this.props.navigation.navigate('OrderCreation', {reset:true})
 	};
 	
     async postcodeHandler() {
@@ -234,7 +232,6 @@ class Methods extends Component {
     }
 
 	render() {
-        console.log("PROPSIT OVAT: ",this)
 
         let gradientStyle = this.state.isChecked ? ['#4c669f', '#3b5998', '#192f6a'] : ['#fafafa', '#fafafa'];
         let continueButtonStyle = !this.state.isChecked ? theme.continueButtonDisabled : theme.continueButton;
@@ -306,7 +303,7 @@ class Methods extends Component {
                             <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
                                 <Text 
                                     disabled={!this.state.isChecked}
-                                    onPress={() => { this.handleSubmit(); }} 
+                                    onPress={() => { this.handleSubmit() }} 
                                     style={continueButtonStyle}
                                 >
                                     Jatka

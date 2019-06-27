@@ -154,6 +154,12 @@ class Order extends Component {
     
 
    render() {
+    const forceReset = this.props.navigation.getParam('reset', false);
+    console.log(forceReset)
+    if(forceReset){
+        console.log("forcereset")
+        this.formOrder();
+    }
     let {fadeAnim}=this.state
     let output = (<ActivityIndicator size="large" color={theme.color.highlight.secondary} style={{ marginTop: 20 }} />);
 
