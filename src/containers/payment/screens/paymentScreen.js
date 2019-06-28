@@ -7,7 +7,6 @@ import CustomHeader from '../../../app/components/header/customHeader'
 import { PH_URL } from '../../../app/config'
 import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
-import Success from '../screens/paymentSuccessScreen'
 import CustomModal from '../../../app/components/common/modal'
 import { NavigationEvents } from 'react-navigation';
 
