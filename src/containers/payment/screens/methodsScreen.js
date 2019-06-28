@@ -126,7 +126,7 @@ class Methods extends Component {
         };
         this.props.addMethods(this.state.methods);
         console.log("Tänne asti päästiin")
-
+        //this.props.navigation.navigate('OrderCreation')
         this.props.navigation.navigate('OrderCreation', {reset:true})
 	};
 	
@@ -244,7 +244,7 @@ class Methods extends Component {
         else if (this.state.postDelivery) {
             console.log("Points loading:")
             console.log(this.state.isLoadingPoints);
-			let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : <Loader/>;
+            let postiPoints = !this.state.isLoadingPoints ? this.renderPoints() : <Loader/>;
 			
             return (
                 <LinearGradient 
@@ -292,27 +292,27 @@ class Methods extends Component {
                                 onSubmitEditing={(event) => this.postcodeHandler()} 
                                 />
                             </View>
-                            
+
                             {postiPoints}
 
                             <CheckBox
+                                checkedColor='green'
                                 title='Kotiin'
                                 checked={this.state.homeDelivery}
                                 onPress={() => { this.checkDelivery("home") }}
                             />
-                            <LinearGradient colors={gradientStyle} style={theme.linearGradient}>
-                                <Text 
-                                    disabled={!this.state.isChecked}
-                                    onPress={() => { this.handleSubmit() }} 
-                                    style={continueButtonStyle}
-                                >
-                                    Jatka
-                                </Text>
-                            </LinearGradient>}
-                            <CustomModal ref='getpickups' title="Virhe haettaessa postiosoitetta" content="Yritä uudelleen" visible={false} /> 
+                        <TouchableOpacity
+                            disabled={!this.state.isChecked}
+							onPress={() =>{this.handleSubmit()}}>
+							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
+								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
+							</LinearGradient>
+						</TouchableOpacity>
+
                         </View>
                     </ScrollView>
                 </LinearGradient>
+
             );
         }
         else {
