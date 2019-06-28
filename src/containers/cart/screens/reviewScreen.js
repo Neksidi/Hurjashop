@@ -92,7 +92,7 @@ class Review extends Component {
         //console.log("AFTER REMOVE")
          
         if (this.state.removed) { 
-            //await this.props.deleteOrder()
+            await this.props.deleteOrder()
             //await this.props.addOrder([])
             return (
         //this.props.navigation.dispatch(resetAction)
