@@ -138,6 +138,25 @@ class Payment extends Component {
 			//newCardPayment(1234, "Test order")
 		}
 
+		//TODO: EI SAA lengtiä joten ei toimi
+		//Tällä siis tarkoitus hakea data tuotteista joiden saldoa pitäisi päivitellä woohon & reduxiin
+		getUpdateProducts(){
+			var products=this.props.products;
+			var orders=this.props.order;
+
+			var updateProducts = [];
+
+			for(var i=0;i<products.lenght;i++){
+         for(var j=0;j<orders.line_items.lenght;j++){
+					 if(orders.line_items[j].id==products[i].id){
+						 updateProducts.push(products[i])
+					 }
+				 }
+			}
+			console.log("NÄÄ PÄIVITELLÄÄN")
+			console.log(updateProducts)
+		}
+
     render() {
 			console.log("PAYDAY")
 			console.log(this.props)
@@ -208,7 +227,7 @@ class Payment extends Component {
 				console.log("isPaid & orderUpdated")
 				//TODO: update product ex. stock_quantity when payment 
 				console.log(this.props)
-
+        //this.getUpdateProducts()
 				//TODO: fix navigation logic
 				this.props.navigation.navigate('Home')
 				return (
@@ -229,7 +248,7 @@ class Payment extends Component {
 	}
 }
 const mapStateToProps = (state) => {
-	console.log("STATE IN PAYMENT",state)
+
 	return {
 		payment: state.payment.payment,
 		order: state.orders.order,
