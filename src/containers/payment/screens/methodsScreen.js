@@ -125,9 +125,13 @@ class Methods extends Component {
             shipping_total: total
         };
         this.props.addMethods(this.state.methods);
-        console.log("Tänne asti päästiin")
         //this.props.navigation.navigate('OrderCreation')
-        this.props.navigation.navigate('OrderCreation', {reset:true})
+        //this.props.navigation.navigate('OrderCreation', {reset:true})
+        const pushAction = StackActions.push({
+            routeName: 'OrderCreation',
+          });
+        this.props.navigation.dispatch(pushAction)
+
 	};
 	
     async postcodeHandler() {

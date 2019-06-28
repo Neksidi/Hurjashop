@@ -9,6 +9,7 @@ import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
 import CustomModal from '../../../app/components/common/modal'
 import { NavigationEvents } from 'react-navigation';
+import Success from '../screens/paymentSuccessScreen'
 
 
 //const WIDTH = Dimensions.get("window").width;
@@ -205,6 +206,10 @@ class Payment extends Component {
 			} 
 			else if(this.state.isPaid && this.state.orderUpdated) {
 				console.log("isPaid & orderUpdated")
+				//TODO: update product ex. stock_quantity when payment 
+				console.log(this.props)
+
+				//TODO: fix navigation logic
 				this.props.navigation.navigate('Home')
 				return (
 					<View>
@@ -224,8 +229,11 @@ class Payment extends Component {
 	}
 }
 const mapStateToProps = (state) => {
+	console.log("STATE IN PAYMENT",state)
 	return {
-		payment: state.payment.payment
+		payment: state.payment.payment,
+		order: state.orders.order,
+		products: state.products.all
 	}
 }
 

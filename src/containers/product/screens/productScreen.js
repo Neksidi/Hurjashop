@@ -49,7 +49,7 @@ class Product extends Component {
   componentDidMount() {
     console.log("THISSI ",this.props)
     this.setState({item: this.props.navigation.getParam('item', null)});
-
+    console.log("PRODUCT SCREEN COMPONENTDIDMOUNT PROPS",this)
   }
   
   componentWillMount() {

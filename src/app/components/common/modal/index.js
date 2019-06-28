@@ -117,10 +117,6 @@ buttonAction(){
   }
 
   render() {
-    if (this.props.home){
-      console.log("Meillä on home")
-    }
-
     return(
         <Modal
           isVisible={this.state.visible}
