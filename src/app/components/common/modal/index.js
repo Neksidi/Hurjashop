@@ -3,7 +3,7 @@ import { Text, View, ActivityIndicator, StyleSheet, TouchableOpacity, Dimensions
 import { theme, primaryGradientColorsButton, app_style, modalColors } from '../../../styles/global'
 import Modal from "react-native-modal";
 import LinearGradient from 'react-native-linear-gradient';
-
+import { NavigationActions } from 'react-navigation';
 
 
 const boxWidth = Dimensions.get('window').width * 0.9;
@@ -32,6 +32,10 @@ buttonAction(){
   console.log("inside buttonaction")
   if(this.state.text){
     this.state.parent.navigate(this.state.text)
+    this.hide();
+  }
+  else if (this.props.home){
+    console.log("Home")
     this.hide();
   }
   else{
@@ -113,6 +117,10 @@ buttonAction(){
   }
 
   render() {
+    if (this.props.home){
+      console.log("Meillä on home")
+    }
+
     return(
         <Modal
           isVisible={this.state.visible}

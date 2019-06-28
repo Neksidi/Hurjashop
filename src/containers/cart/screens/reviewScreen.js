@@ -46,8 +46,6 @@ class Review extends Component {
     
     componentWillMount(){
         console.log("WILLMOUNT")
-        console.log(this.props)
-        console.log(this.state)
     }
 
     componentDidMount(){
@@ -88,7 +86,7 @@ class Review extends Component {
 
     async responseParser() {
         console.log(this)
-        console.log("DELETE FROM REDUX PLEASE")
+        //console.log("DELETE FROM REDUX PLEASE")
         //await this.props.deleteOrder()
         //console.log("AFTER REMOVE")
          

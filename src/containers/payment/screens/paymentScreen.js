@@ -9,6 +9,7 @@ import { Button } from 'react-native-elements'
 import { setCardToken, setCardType, setCardPartial, getCardToken, getCardType, getCardPartial } from '../../../app/controllers/secureStorage'
 import Success from '../screens/paymentSuccessScreen'
 import CustomModal from '../../../app/components/common/modal'
+import { NavigationEvents } from 'react-navigation';
 
 
 //const WIDTH = Dimensions.get("window").width;
@@ -205,13 +206,13 @@ class Payment extends Component {
 			} 
 			else if(this.state.isPaid && this.state.orderUpdated) {
 				console.log("isPaid & orderUpdated")
-				//mieti
+				this.props.navigation.navigate('Home')
 				return (
 					<View>
-						<Success data={this.props}/>
+					 <CustomModal ref='done' title="Tilaus maksettu" content="Tilauksesi on suoritettu ja maksettu onnistuneesti. Kiitos tilauksestasi!" visible={true} home={true} /> 
 					</View>
-
 				)
+
 			}
 			else {
 				console.log("Something's wrong")

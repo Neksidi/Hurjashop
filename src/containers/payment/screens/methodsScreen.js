@@ -359,7 +359,7 @@ class Methods extends Component {
 
                         <TouchableOpacity
                             disabled={!this.state.isChecked}
-							onPress={() =>{this.handleSubmit();}}>
+							onPress={() =>{this.handleSubmit()}}>
 							<LinearGradient colors={primaryGradientColorsButton} style={[theme.linearGradient]}>	
 								<Text style={{color: '#fff', fontWeight: 'bold', marginLeft: 10}}>Jatka</Text>
 							</LinearGradient>
